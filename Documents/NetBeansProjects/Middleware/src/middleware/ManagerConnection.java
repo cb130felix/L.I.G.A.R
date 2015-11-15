@@ -5,6 +5,8 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Classe responsável por realizar todo o controle de conexões.
@@ -127,7 +129,18 @@ public class ManagerConnection {
      * caso contrário será 'false'.
      */
     public boolean checkConnection() {
-        return true;
+        try {
+            URL url = new URL("http://www.detran.pe.gov.br/");
+            URLConnection connection = url.openConnection();
+            connection.connect();
+            
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Erro ao tentar se comunicar a http://www.detran.pe.gov.br/");
+            
+            return false;
+        }
     }
 
 }
