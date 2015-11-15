@@ -30,6 +30,7 @@ public class ManagerConnection {
 
     /**
      * Método para envio de pacote UDP via broadcast.
+     *
      * @param data - Mensagem a ser enviada no pacote.
      * @param port - Porta de destino do pacote.
      * @return boolean - Tratamento de possíveis erros.
@@ -37,12 +38,13 @@ public class ManagerConnection {
     public boolean broadcast(byte[] data, int port) {
 
         try {
-            broadcast = new DatagramSocket();
+            this.broadcast = new DatagramSocket();
 
             InetAddress ina = InetAddress.getByName("255.255.255.255"); //InetAdress para o broadcast.
             DatagramPacket udpPacket = new DatagramPacket(data, data.length, ina, port);
 
-            broadcast.send(udpPacket);
+            this.broadcast.send(udpPacket);
+
             return true;
         } catch (Exception e) {
             System.out.println("Erro ao tentar enviar um pacote em broadcast.");
@@ -62,11 +64,13 @@ public class ManagerConnection {
 
         try {
             this.connection = new Socket(serverAdress.getIp(), serverAdress.getPort());
+            
             return true;
         } catch (Exception e) {
             System.out.println("Não foi possível estabelecer uma conexão com o servidor.");
             System.out.println("Erro:");
             e.printStackTrace();
+            
             return false;
         }
     }
@@ -82,19 +86,19 @@ public class ManagerConnection {
      */
     public boolean listener(int port) {
 
-        byte[] receive = new byte[1024];
-        DatagramPacket recebendo = new DatagramPacket(receive, receive.length, ina, porta);
-        conexaoUDP.receive(recebendo);
+        try {
+            this.broadcast = new DatagramSocket(port);
+            byte receivedData[] = new byte[1024];
 
-        Socket conexaoTCP = new Socket(recebendo.getAddress(), porta);
-        System.out.println("conectado");
+            DatagramPacket buffer = new DatagramPacket(receivedData, receivedData.length);
+            this.broadcast.receive(buffer);
 
-        conexaoUDP.close();
-        conexaoTCP.close();
-
-        return true;
-
-        return true;
+            return true;
+        } catch (Exception e) {
+            System.out.println("Erro no listener.");
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
