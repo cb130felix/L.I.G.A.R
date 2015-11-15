@@ -15,6 +15,7 @@ public class Client{
 
     
     //cabeçalho da mensagem(cliente/servidor): id;service;message
+    // exemplo prático: 200;A;qualquermerda(em json)
     
     public ArrayList<ServiceInfo> serviceTable = null;
     public ArrayList<String> sendQueue = null;
