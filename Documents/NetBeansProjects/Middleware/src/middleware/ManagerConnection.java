@@ -1,33 +1,61 @@
 package middleware;
 
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
  * Classe responsável por realizar todo o controle de conexões.
+ *
  * @author Iago
  */
 public class ManagerConnection {
 
-    /** Servidor TCP. */
+    /**
+     * Servidor TCP.
+     */
     private ServerSocket serverSocket;
-    
-    /** Conexão TCP do cliente para o servidor. */
+
+    /**
+     * Conexão TCP do cliente para o servidor.
+     */
     private Socket connection;
-    
-    /** Pacote UDP a ser enviado via broadcast. */
+
+    /**
+     * Pacote UDP a ser enviado via broadcast.
+     */
     private DatagramSocket broadcast;
 
-    
-    /** Método para envio de pacote UDP via broadcast. */
-    public boolean broadcast() {
-        return true;
+    /**
+     * Método para envio de pacote UDP via broadcast.
+     * @param data - Mensagem a ser enviada no pacote.
+     * @param port - Porta de destino do pacote.
+     * @return boolean - Tratamento de possíveis erros.
+     */
+    public boolean broadcast(byte[] data, int port) {
+
+        try {
+            broadcast = new DatagramSocket();
+
+            InetAddress ina = InetAddress.getByName("255.255.255.255"); //InetAdress para o broadcast.
+            DatagramPacket udpPacket = new DatagramPacket(data, data.length, ina, port);
+
+            broadcast.send(udpPacket);
+            return true;
+        } catch (Exception e) {
+            System.out.println("Erro ao tentar enviar um pacote em broadcast.");
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
      * Método para conexão a um servidor via TCP.
-     * @param serverAdress - Contém as informações do servidor que irá ser contactado: IP e Porta.
+     *
+     * @param serverAdress - Contém as informações do servidor que irá ser
+     * contactado: IP e Porta.
      * @return boolean - Tratamento de possíveis erros.
      */
     public boolean connectionServer(Adress serverAdress) {
@@ -46,16 +74,32 @@ public class ManagerConnection {
     //Esse método fica escutando mensagens na porta informada e atualiza
     //o socket dessa classe de acordo com o endereço da máquina que fez a requisição
     /**
-     * Método que faz com que um lado da comunicação fique escutando mensagens em uma porta
+     * Método que faz com que um lado da comunicação fique escutando mensagens
+     * em uma porta
+     *
      * @param port - Porta que ficará escutando.
      * @return boolean - Tratamento de possíveis erros.
      */
     public boolean listener(int port) {
+
+        byte[] receive = new byte[1024];
+        DatagramPacket recebendo = new DatagramPacket(receive, receive.length, ina, porta);
+        conexaoUDP.receive(recebendo);
+
+        Socket conexaoTCP = new Socket(recebendo.getAddress(), porta);
+        System.out.println("conectado");
+
+        conexaoUDP.close();
+        conexaoTCP.close();
+
+        return true;
+
         return true;
     }
 
     /**
      * Método responsável pelo envio de mensagens.
+     *
      * @param data - Dados a serem enviados.
      * @return boolean - Tratamento de possíveis erros.
      */
@@ -65,6 +109,7 @@ public class ManagerConnection {
 
     /**
      * Método responsável pelo recebimento de mensagens.
+     *
      * @return byte[] - Os dados recebidos pela rede serão o retorno do método.
      */
     public byte[] receive() {
@@ -73,7 +118,9 @@ public class ManagerConnection {
 
     /**
      * Checa se há conexão com a Internet.
-     * @return boolean - Se há conexão com a Internet o retorno será 'true', caso contrário será 'false'.
+     *
+     * @return boolean - Se há conexão com a Internet o retorno será 'true',
+     * caso contrário será 'false'.
      */
     public boolean checkConnection() {
         return true;
@@ -100,4 +147,4 @@ data = mc.receive();
 *processa dadados*
 mc.send(data);
 
-*/
+ */
