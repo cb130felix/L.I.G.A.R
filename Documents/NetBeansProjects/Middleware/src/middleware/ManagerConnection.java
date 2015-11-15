@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package middleware;
 
 import java.net.DatagramSocket;
@@ -10,21 +5,31 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- *
+ * Classe responsável por realizar todo o controle de conexões.
  * @author Iago
  */
 public class ManagerConnection {
 
+    /** Servidor TCP. */
     private ServerSocket serverSocket;
+    
+    /** Conexão TCP do cliente para o servidor. */
     private Socket connection;
+    
+    /** Pacote UDP a ser enviado via broadcast. */
     private DatagramSocket broadcast;
 
-    //manda mensagem em broadcast
+    
+    /** Método para envio de pacote UDP via broadcast. */
     public boolean broadcast() {
         return true;
     }
 
-    //Se conecta a uma máquina de acordo com o endereço passado
+    /**
+     * Método para conexão a um servidor via TCP.
+     * @param serverAdress - Contém as informações do servidor que irá ser contactado: IP e Porta.
+     * @return boolean - Tratamento de possíveis erros.
+     */
     public boolean connectionServer(Adress serverAdress) {
 
         try {
@@ -40,20 +45,36 @@ public class ManagerConnection {
 
     //Esse método fica escutando mensagens na porta informada e atualiza
     //o socket dessa classe de acordo com o endereço da máquina que fez a requisição
+    /**
+     * Método que faz com que um lado da comunicação fique escutando mensagens em uma porta
+     * @param port - Porta que ficará escutando.
+     * @return boolean - Tratamento de possíveis erros.
+     */
     public boolean listener(int port) {
         return true;
     }
 
-    //método para envio e recebimento de dados
+    /**
+     * Método responsável pelo envio de mensagens.
+     * @param data - Dados a serem enviados.
+     * @return boolean - Tratamento de possíveis erros.
+     */
     public boolean send(byte[] data) {
         return true;
     }
 
+    /**
+     * Método responsável pelo recebimento de mensagens.
+     * @return byte[] - Os dados recebidos pela rede serão o retorno do método.
+     */
     public byte[] receive() {
         return null;
     }
 
-    //checa se há conexão com a internet
+    /**
+     * Checa se há conexão com a Internet.
+     * @return boolean - Se há conexão com a Internet o retorno será 'true', caso contrário será 'false'.
+     */
     public boolean checkConnection() {
         return true;
     }
