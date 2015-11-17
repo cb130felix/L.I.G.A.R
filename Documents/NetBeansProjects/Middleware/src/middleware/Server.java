@@ -19,10 +19,11 @@ public class Server{
         //cabeçalho da mensagem(cliente/servidor): id;service;message
         // exemplo prático: 200;A;qualquermerda(em json)
     
-        
+        ManagerConnection mc = new ManagerConnection();
 	private ArrayList<ServiceInfo> servicesList = null;
-	private int userCounter;
-
+	private Integer userCounter;
+        private int IDRequest;
+        
 	public boolean addService(ServiceInfo info){
             
             this.servicesList.add(info);
@@ -30,6 +31,22 @@ public class Server{
             return true;
         }
 	
+        
+        public String listenRequest(){
+        
+            byte[] data;
+            String mensage = "";
+            
+            if(mc.listenerTCP() == true){
+            
+                data = mc.receive();
+                mensage = data.toString();
+                this.IDRequest = (int)mensage.charAt(0);
+                
+            }
+            
+            return mensage;
+        }
         
         public void startServer(ServiceInfo info){ // nesse info já tem uma string com a descrição do serviço(String)
                                                    //e o endereço (Adress)
@@ -41,6 +58,6 @@ public class Server{
         
         public boolean removeService(){return true;}
 	public void incrementUserCounter(){}
-	public void listenRequest(){}
+	
 	public void keepServerAlive(){}
 }
