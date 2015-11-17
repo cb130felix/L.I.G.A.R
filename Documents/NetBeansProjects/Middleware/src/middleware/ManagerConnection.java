@@ -1,6 +1,5 @@
 package middleware;
 
-import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -79,8 +78,6 @@ public class ManagerConnection {
         }
     }
 
-    //Esse método fica escutando mensagens na porta informada e atualiza
-    //o socket dessa classe de acordo com o endereço da máquina que fez a requisição
     /**
      * Método que faz com que um lado da comunicação fique escutando mensagens
      * em uma porta
@@ -96,13 +93,28 @@ public class ManagerConnection {
 
             DatagramPacket buffer = new DatagramPacket(receivedData, receivedData.length);
             this.broadcast.receive(buffer);
-            
+
             return buffer;
         } catch (Exception e) {
             System.out.println("Erro no listener.");
             e.printStackTrace();
-            
+
             return null;
+        }
+    }
+
+    /**
+     * Método que vai fazer com que o servidor espere algum cliente se conectar.
+     * 
+     * @return boolean - Se não ocorrer falhas, retorna a 'true', caso contrário
+     * retorna a 'false'.
+     */
+    public boolean listenerTCP() {
+        try {
+            this.connection = this.serverSocket.accept();
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -115,9 +127,8 @@ public class ManagerConnection {
     public boolean send(byte[] data) {
 
         try {
-            OutputStream os = this.connection.getOutputStream();
-            os.write(data);
-            
+        	this.connection.getOutputStream().write(data);
+
             return true;
         } catch (Exception e) {
             System.out.println("Erro ao tentar enviar os dados para o servidor.");
@@ -166,7 +177,6 @@ public class ManagerConnection {
             return false;
         }
     }
-    
 
 }
 
