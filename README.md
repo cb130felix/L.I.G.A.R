@@ -12,4 +12,4 @@ Mensagem do Cliente para o Proxy -> m1||nomeServicoQueQuer
 * exemplo: m1||detran
 
 Mensagem do Cliente para o Servidor -> m2||mensagem
-* exemplo: m2||id||BKV2090
+* exemplo: m2||BKV2090
