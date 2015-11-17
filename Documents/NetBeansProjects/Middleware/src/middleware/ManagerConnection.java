@@ -1,5 +1,6 @@
 package middleware;
 
+import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -7,6 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Scanner;
 
 /**
  * Classe responsável por realizar todo o controle de conexões.
@@ -66,13 +68,13 @@ public class ManagerConnection {
 
         try {
             this.connection = new Socket(serverAdress.getIp(), serverAdress.getPort());
-            
+
             return true;
         } catch (Exception e) {
             System.out.println("Não foi possível estabelecer uma conexão com o servidor.");
             System.out.println("Erro:");
             e.printStackTrace();
-            
+
             return false;
         }
     }
@@ -86,7 +88,7 @@ public class ManagerConnection {
      * @param port - Porta que ficará escutando.
      * @return boolean - Tratamento de possíveis erros.
      */
-    public boolean listener(int port) {
+    public DatagramPacket listenerUDP(int port) {
 
         try {
             this.broadcast = new DatagramSocket(port);
@@ -94,12 +96,13 @@ public class ManagerConnection {
 
             DatagramPacket buffer = new DatagramPacket(receivedData, receivedData.length);
             this.broadcast.receive(buffer);
-
-            return true;
+            
+            return buffer;
         } catch (Exception e) {
             System.out.println("Erro no listener.");
             e.printStackTrace();
-            return false;
+            
+            return null;
         }
     }
 
@@ -110,7 +113,16 @@ public class ManagerConnection {
      * @return boolean - Tratamento de possíveis erros.
      */
     public boolean send(byte[] data) {
-        return true;
+
+        try {
+            OutputStream os = this.connection.getOutputStream();
+            os.write(data);
+            
+            return true;
+        } catch (Exception e) {
+            System.out.println("Erro ao tentar enviar os dados para o servidor.");
+            return false;
+        }
     }
 
     /**
@@ -119,6 +131,17 @@ public class ManagerConnection {
      * @return byte[] - Os dados recebidos pela rede serão o retorno do método.
      */
     public byte[] receive() {
+
+        try {
+            Scanner s = new Scanner(this.connection.getInputStream());
+            byte[] data = s.next().getBytes();
+
+            return data;
+        } catch (Exception e) {
+            System.out.println("Erro ao tentar receber os dados.");
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -130,18 +153,20 @@ public class ManagerConnection {
      */
     public boolean checkConnection() {
         try {
-            URL url = new URL("http://www.detran.pe.gov.br/");
+            URL url = new URL("http://www.google.com/");
             URLConnection connection = url.openConnection();
             connection.connect();
-            
+            System.out.println("Conectado");
+
             return true;
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Erro ao tentar se comunicar a http://www.detran.pe.gov.br/");
-            
+            System.out.println("Sem conexão com a internet.");
+
             return false;
         }
     }
+    
 
 }
 
