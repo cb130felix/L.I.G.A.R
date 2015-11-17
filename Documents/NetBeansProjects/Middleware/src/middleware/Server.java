@@ -24,7 +24,12 @@ public class Server{
 	private Integer userCounter;
         private int IDRequest;
         
-	public boolean addService(ServiceInfo info){
+	public boolean addService(String description, int port){
+            
+            ServiceInfo info = new ServiceInfo();
+            
+            info.setPort(port);
+            info.setService(description);
             
             this.servicesList.add(info);
             
