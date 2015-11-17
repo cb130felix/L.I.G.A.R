@@ -19,7 +19,7 @@ public class Server{
         //cabeçalho da mensagem(cliente/servidor): id;service;message
         // exemplo prático: 200;A;qualquermerda(em json)
     
-        private ManagerConnection mc = new ManagerConnection();
+        
 	private ArrayList<ServiceInfo> servicesList = null;
 	private int userCounter;
 
@@ -34,8 +34,8 @@ public class Server{
         public void startServer(ServiceInfo info){ // nesse info já tem uma string com a descrição do serviço(String)
                                                    //e o endereço (Adress)
             this.addService(info);
-            // ok, aqui vem o método listenTCP de Iago
-        
+            
+            
         }
 
         
