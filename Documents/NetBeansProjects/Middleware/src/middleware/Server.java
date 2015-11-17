@@ -30,19 +30,30 @@ public class Server{
             
             return true;
         }
+
 	
+    public void startManagementServer(){
+    
         
-        public String listenRequest(){
+        ManagerServer mg = new ManagerServer(userCounter,100,servicesList);
+        
+        mg.start();
+    
+    
+    }
+    
+        
+        public String listenRequest(int port){
         
             byte[] data;
             String mensage = "";
             
-            if(mc.listenerTCP() == true){
+            if(mc.listenerTCP(port) == true){
             
                 data = mc.receive();
                 mensage = data.toString();
                 this.IDRequest = (int)mensage.charAt(0);
-                
+                mensage = mensage.substring(1);
             }
             
             return mensage;
