@@ -26,7 +26,7 @@ public class ManagerServer extends Thread{
     
     public void run(){
     
-        String msg = "M0||";
+        String msg = "M0";
         
         while(true){
         
@@ -38,7 +38,7 @@ public class ManagerServer extends Thread{
 
                         msg = msg +this.AtualizaServicos();
 
-                        mc.broadcast(msg.getBytes(), 2424);// MUDAR PARA A PORTA DO PROXY
+                        mc.broadcast(msg.getBytes(), 24240);// PORTA DO PROXY
 
                     }
                 
@@ -58,7 +58,7 @@ public class ManagerServer extends Thread{
         
         for (int x = 0; x < this.servicesList.size(); x++) {
             
-            services = services+this.servicesList.get(x).getService();
+            services = services+"||"+this.servicesList.get(x).getService();
             
         }
         

@@ -32,43 +32,88 @@ public class Server{
         }
 
 	
-    public void startManagementServer(){
+    public void startManagementServer(int edge){// esse edge é o limite de clientes simultâneos
     
-        
-        ManagerServer mg = new ManagerServer(userCounter,100,servicesList);
+        ManagerServer mg = new ManagerServer(userCounter,edge,servicesList);
         
         mg.start();
     
-    
     }
     
-        
-        public String listenRequest(int port){
+        public synchronized String listenRequest(int port){
         
             byte[] data;
             String mensage = "";
             
-            if(mc.listenerTCP(port) == true){
+            try {
+                if(mc.listenerTCP(port) == true){   
             
-                data = mc.receive();
-                mensage = data.toString();
-                this.IDRequest = (int)mensage.charAt(0);
-                mensage = mensage.substring(1);
+                    data = mc.receive();
+                    mensage = data.toString();
+                    this.IDRequest = (int)mensage.charAt(0);
+                    this.userCounter = this.userCounter + 1;
+                    mensage = mensage.substring(1);
+                    
+                }
+            } catch (Exception e) {
             }
             
             return mensage;
         }
+       
+        public synchronized void removeService(String service){
         
-        public void startServer(ServiceInfo info){ // nesse info já tem uma string com a descrição do serviço(String)
-                                                   //e o endereço (Adress)
-            this.addService(info);
+            for (int x = 0; x < this.servicesList.size(); x++) {
+                
+                if(this.servicesList.get(x).getService().equals(service)){
+                
+                    this.servicesList.remove(x);
+                    
+                }
+                
+            }
+        
+        }
+        
+        public synchronized void sendReply(String reply){
+        
+            int tentativas = 0;
+            boolean parar = false;
+            
+            while(!parar){
+            
+                    try {
+
+                        this.mc.send(reply.getBytes());
+
+                    } catch (Exception e) {
+
+                        try {
+                            
+                            wait(4000);
+                            
+                            if(tentativas > 4){
+                            
+                                parar = true; 
+                            
+                            }
+                            else{
+                            
+                             tentativas++;
+                            }
+                            
+                        } catch (Exception e1) {}
+                }
+            
+            }
+            
+            this.userCounter = this.userCounter - 1;
             
             
         }
-
         
-        public boolean removeService(){return true;}
+        /*public boolean removeService(){return true;}
 	public void incrementUserCounter(){}
 	
-	public void keepServerAlive(){}
+	public void keepServerAlive(){}*/
 }
