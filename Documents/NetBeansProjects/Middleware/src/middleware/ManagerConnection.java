@@ -1,5 +1,7 @@
 package middleware;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -7,7 +9,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Scanner;
 
 /**
  * Classe responsável por realizar todo o controle de conexões.
@@ -104,8 +105,9 @@ public class ManagerConnection {
      * @return boolean - Se não ocorrer falhas, retorna a 'true', caso contrário
      * retorna a 'false'.
      */
-    public boolean listenerTCP() {
+    public boolean listenerTCP(int port) {
         try {
+            this.serverSocket = new ServerSocket(port);
             this.connection = this.serverSocket.accept();
 
             return true;
@@ -124,8 +126,11 @@ public class ManagerConnection {
     public boolean send(byte[] data) {
 
         try {
-            this.connection.getOutputStream().write(data);
-
+            DataOutputStream dos = new DataOutputStream(this.connection.getOutputStream());
+            dos.writeInt(data.length);
+            dos.write(data);
+            dos.close();
+            
             return true;
         } catch (Exception e) {
             return false;
@@ -141,9 +146,12 @@ public class ManagerConnection {
     public byte[] receive() {
 
         try {
-            Scanner s = new Scanner(this.connection.getInputStream());
-            byte[] data = s.next().getBytes();
-
+            DataInputStream dis = new DataInputStream(this.connection.getInputStream());
+            int dataLength = dis.readInt();
+            byte[] data = new byte[dataLength];
+            dis.read(data, 0, dataLength);
+            dis.close();
+            
             return data;
         } catch (Exception e) {
             return null;
