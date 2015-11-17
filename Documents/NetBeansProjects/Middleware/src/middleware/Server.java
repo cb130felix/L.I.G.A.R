@@ -34,7 +34,7 @@ public class Server{
         public void startServer(ServiceInfo info){ // nesse info já tem uma string com a descrição do serviço(String)
                                                    //e o endereço (Adress)
             this.addService(info);
-            
+            // ok, aqui vem o método listenTCP de Iago
         
         }
 
