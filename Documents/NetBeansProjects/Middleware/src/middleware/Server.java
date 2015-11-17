@@ -16,13 +16,31 @@ import java.util.ArrayList;
 
 public class Server{
 
+        //cabeçalho da mensagem(cliente/servidor): id;service;message
+        // exemplo prático: 200;A;qualquermerda(em json)
+    
+        private ManagerConnection mc = new ManagerConnection();
 	private ArrayList<ServiceInfo> servicesList = null;
 	private int userCounter;
 
-	public boolean addService(){return true;}
-	public boolean removeService(){return true;}
+	public boolean addService(ServiceInfo info){
+            
+            this.servicesList.add(info);
+            
+            return true;
+        }
+	
+        
+        public void startServer(ServiceInfo info){ // nesse info já tem uma string com a descrição do serviço(String)
+                                                   //e o endereço (Adress)
+            this.addService(info);
+            
+        
+        }
+
+        
+        public boolean removeService(){return true;}
 	public void incrementUserCounter(){}
 	public void listenRequest(){}
 	public void keepServerAlive(){}
-
 }
