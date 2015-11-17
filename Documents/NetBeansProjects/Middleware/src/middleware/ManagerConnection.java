@@ -36,32 +36,32 @@ public class ManagerConnection {
      *
      * @param data - Mensagem a ser enviada no pacote.
      * @param port - Porta de destino do pacote.
-     * @return boolean - Tratamento de possíveis erros.
+     * @return boolean - Retorna 'true' se enviar o pacote com sucesso, retorna
+     * 'false' se der algum erro.
      */
     public boolean broadcast(byte[] data, int port) {
 
         try {
             this.broadcast = new DatagramSocket();
 
-            InetAddress ina = InetAddress.getByName("255.255.255.255"); //InetAdress para o broadcast.
+            InetAddress ina = InetAddress.getByName("255.255.255.255");
             DatagramPacket udpPacket = new DatagramPacket(data, data.length, ina, port);
 
             this.broadcast.send(udpPacket);
 
             return true;
         } catch (Exception e) {
-            System.out.println("Erro ao tentar enviar um pacote em broadcast.");
-            e.printStackTrace();
             return false;
         }
     }
 
     /**
-     * Método para conexão a um servidor via TCP.
+     * Método para um cliente se conectar a um servidor via TCP.
      *
      * @param serverAdress - Contém as informações do servidor que irá ser
      * contactado: IP e Porta.
-     * @return boolean - Tratamento de possíveis erros.
+     * @return boolean - Retorna 'true' se conseguir conectar-se ao servidor,
+     * retorna 'false' se der algum erro.
      */
     public boolean connectionServer(Adress serverAdress) {
 
@@ -70,20 +70,17 @@ public class ManagerConnection {
 
             return true;
         } catch (Exception e) {
-            System.out.println("Não foi possível estabelecer uma conexão com o servidor.");
-            System.out.println("Erro:");
-            e.printStackTrace();
-
             return false;
         }
     }
 
     /**
-     * Método que faz com que um lado da comunicação fique escutando mensagens
-     * em uma porta
+     * Método que faz com que um lado da comunicação fique escutando pacotes via
+     * UDP em uma porta.
      *
      * @param port - Porta que ficará escutando.
-     * @return boolean - Tratamento de possíveis erros.
+     * @return DatagramPacket - O pacote recebido será o retorno, se der erro
+     * irá retornar a 'null'.
      */
     public DatagramPacket listenerUDP(int port) {
 
@@ -96,22 +93,21 @@ public class ManagerConnection {
 
             return buffer;
         } catch (Exception e) {
-            System.out.println("Erro no listener.");
-            e.printStackTrace();
-
             return null;
         }
     }
 
     /**
-     * Método que vai fazer com que o servidor espere algum cliente se conectar.
-     * 
+     * Método que vai fazer com que o servidor espere algum cliente se conectar
+     * via TCP.
+     *
      * @return boolean - Se não ocorrer falhas, retorna a 'true', caso contrário
      * retorna a 'false'.
      */
     public boolean listenerTCP() {
         try {
             this.connection = this.serverSocket.accept();
+
             return true;
         } catch (Exception e) {
             return false;
@@ -119,27 +115,28 @@ public class ManagerConnection {
     }
 
     /**
-     * Método responsável pelo envio de mensagens.
+     * Método responsável pelo envio de dados via TCP.
      *
      * @param data - Dados a serem enviados.
-     * @return boolean - Tratamento de possíveis erros.
+     * @return boolean - Se não ocorrer falhas, retorna a 'true', caso contrário
+     * retorna a 'false'.
      */
     public boolean send(byte[] data) {
 
         try {
-        	this.connection.getOutputStream().write(data);
+            this.connection.getOutputStream().write(data);
 
             return true;
         } catch (Exception e) {
-            System.out.println("Erro ao tentar enviar os dados para o servidor.");
             return false;
         }
     }
 
     /**
-     * Método responsável pelo recebimento de mensagens.
+     * Método responsável pelo recebimento de mensagens via TCP.
      *
-     * @return byte[] - Os dados recebidos pela rede serão o retorno do método.
+     * @return byte[] - Os dados recebidos pela rede serão o retorno do método,
+     * se der erro irá retornar a 'null'.
      */
     public byte[] receive() {
 
@@ -149,11 +146,8 @@ public class ManagerConnection {
 
             return data;
         } catch (Exception e) {
-            System.out.println("Erro ao tentar receber os dados.");
-            e.printStackTrace();
+            return null;
         }
-
-        return null;
     }
 
     /**
@@ -167,13 +161,9 @@ public class ManagerConnection {
             URL url = new URL("http://www.google.com/");
             URLConnection connection = url.openConnection();
             connection.connect();
-            System.out.println("Conectado");
 
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Sem conexão com a internet.");
-
             return false;
         }
     }
