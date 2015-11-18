@@ -26,8 +26,7 @@ public class ManagerConnection {
      * Conexão TCP do cliente para o servidor.
      */
     private Socket connection;
-    
-    
+
     /**
      * Pacote UDP a ser enviado via broadcast.
      */
@@ -82,7 +81,10 @@ public class ManagerConnection {
 
     /**
      * Método que faz com que um lado da comunicação fique escutando pacotes via
-     * UDP em uma porta.
+     * UDP em uma porta. Observação importante: para converter a saída dos bytes
+     * recebidos pelo pacote para String de volta, é só seguir este modelo de
+     * código abaixo: 
+     * String resultado = new String(pacoteRecebido.getData(),"UTF-8");
      *
      * @param port - Porta que ficará escutando.
      * @return DatagramPacket - O pacote recebido será o retorno, se der erro
