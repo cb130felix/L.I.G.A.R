@@ -26,12 +26,7 @@ public class ServiceInfo {
         this.service = service;
     }
 
-    
-    
     public Address getAddress() {
         return address;
-    }
-
-    
-    
+    }    
 }

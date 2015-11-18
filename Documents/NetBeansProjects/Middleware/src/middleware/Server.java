@@ -37,7 +37,7 @@ public class Server{
         
             MapService ms = new MapService();
             ms.name = description;
-            ms.ID = this.mapServices.size()+1;
+            ms.ID = this.mapServices.size();
             this.mapServices.add(ms);
             return true;
         }
