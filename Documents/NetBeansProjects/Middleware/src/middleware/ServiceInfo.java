@@ -11,18 +11,11 @@ package middleware;
  */
 public class ServiceInfo {
     
-    int port;
+    Address address;
     private String service;
 
-    public int getPort(){
-    
-        return this.port;
-    }
-    
-    public void setPort(int port){
-    
-        this.port = port;
-        
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public String getService() {
@@ -32,7 +25,13 @@ public class ServiceInfo {
     public void setService(String service) {
         this.service = service;
     }
-        
+
+    
+    
+    public Address getAddress() {
+        return address;
+    }
+
     
     
 }
