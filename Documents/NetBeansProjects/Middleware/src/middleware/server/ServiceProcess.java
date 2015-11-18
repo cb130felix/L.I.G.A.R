@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package middleware;
+package middleware.server;
 
 /**
  *
  * @author Guto Leoni
  */
-public class MapService {
+public interface ServiceProcess {
     
-    String name;
-    int ID;
-    
+    public byte[] process(byte[] data);
     
 }

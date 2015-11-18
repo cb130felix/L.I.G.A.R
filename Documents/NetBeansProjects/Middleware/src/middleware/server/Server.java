@@ -5,7 +5,7 @@
  */
 
 
-package middleware;
+package middleware.server;
 
 /**
  *
@@ -13,6 +13,8 @@ package middleware;
  */
 
 import java.util.ArrayList;
+import middleware.ManagerConnection;
+import middleware.ServiceInfo;
 
 public class Server{
 
@@ -24,7 +26,7 @@ public class Server{
 	private Integer userCounter;
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
-        ArrayList<ServiceProcess> process = new ArrayList<ServiceProcess>();
+        ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
         
         public Server() {
 
@@ -39,6 +41,7 @@ public class Server{
             ms.name = description;
             ms.ID = this.mapServices.size();
             this.mapServices.add(ms);
+            this.processServices.add(service);
             return true;
         }
 
@@ -49,7 +52,7 @@ public class Server{
             
                 if(mc.listenerTCP(this.port)){
                 
-                    Service serv = new Service(this.mc,this.process,this.mapServices);
+                    Service serv = new Service(this.mc,this.processServices,this.mapServices);
                     
                     serv.start();
                 }

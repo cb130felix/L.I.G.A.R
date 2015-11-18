@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package middleware;
+package middleware.server;
 
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import middleware.ManagerConnection;
 
 /**
  *
