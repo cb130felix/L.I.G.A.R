@@ -102,6 +102,7 @@ public class ManagerConnection {
      * Método que vai fazer com que o servidor espere algum cliente se conectar
      * via TCP.
      *
+     * @param port - Porta a ser escutada pelo servidor.
      * @return boolean - Se não ocorrer falhas, retorna a 'true', caso contrário
      * retorna a 'false'.
      */
