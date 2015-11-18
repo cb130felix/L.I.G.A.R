@@ -5,22 +5,12 @@
  */
 package middleware;
 
-import java.net.Socket;
-
 /**
  *
  * @author Guto Leoni
  */
-public class Service extends Thread{
+public interface ServiceProcess {
     
-    Socket socket = new Socket();
-
-    public Service(Socket s) {
-    
-        this.socket = s;
-        
-    }
-    
-    
+    public byte[] process(byte[] data);
     
 }

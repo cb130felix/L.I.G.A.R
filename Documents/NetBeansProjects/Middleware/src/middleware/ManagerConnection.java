@@ -26,11 +26,16 @@ public class ManagerConnection {
      * Conexão TCP do cliente para o servidor.
      */
     private Socket connection;
-
+    
+    
     /**
      * Pacote UDP a ser enviado via broadcast.
      */
     private DatagramSocket broadcast;
+
+    public Socket getConnection() {
+        return connection;
+    }
 
     /**
      * Método para envio de pacote UDP via broadcast.

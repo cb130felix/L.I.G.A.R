@@ -23,15 +23,31 @@ public class Server{
 	private ArrayList<ServiceInfo> servicesList = null;
 	private Integer userCounter;
         private ArrayList<MapService> services = new ArrayList<MapService>();
-        int port;
+        private int port;
         
-	public boolean addService(String description,Service service){
+	public boolean addService(String description,ServiceProcess service){
         
+            MapService ms = new MapService();
+            ms.name = description;
+            ms.ID = this.services.size()+1;
+            this.services.add(ms);
             return true;
         }
 
 	public void startServer(){
         
+        
+            while(true){
+            
+                if(mc.listenerTCP(this.port)){
+                
+                    Service serv = new Service(mc.getConnection());
+                    
+                    serv.start();
+                }
+                
+            
+            }
             
         }
     
@@ -40,8 +56,17 @@ public class Server{
             this.port = port;
         
         }
+        
+
+        public int getPort() {
+            return port;
+        }
+        
+                
         /*public boolean removeService(){return true;}
 	public void incrementUserCounter(){}
 	
 	public void keepServerAlive(){}*/
+
+        
 }

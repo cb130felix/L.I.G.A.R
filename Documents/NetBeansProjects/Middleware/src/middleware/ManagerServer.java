@@ -44,7 +44,7 @@ public class ManagerServer extends Thread{
                 
                 
             } catch (Exception e) {
-                System.out.println("Erro ao tentar mandar mensagem pra o proxy");
+                System.out.println("Erro ao tentar mandar mensagem pra o proxy");// ISSO VAI MUDAR :V
             }
         
         }
