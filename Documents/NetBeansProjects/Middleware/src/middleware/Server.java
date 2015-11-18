@@ -22,15 +22,23 @@ public class Server{
         ManagerConnection mc = new ManagerConnection();
 	private ArrayList<ServiceInfo> servicesList = null;
 	private Integer userCounter;
-        private ArrayList<MapService> services = new ArrayList<MapService>();
+        private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
+        ArrayList<ServiceProcess> process = new ArrayList<ServiceProcess>();
         
-	public boolean addService(String description,ServiceProcess service){
+        public Server() {
+
+            this.port = 24241;
+
+        }
+        
+        
+        public boolean addService(String description,ServiceProcess service){
         
             MapService ms = new MapService();
             ms.name = description;
-            ms.ID = this.services.size()+1;
-            this.services.add(ms);
+            ms.ID = this.mapServices.size()+1;
+            this.mapServices.add(ms);
             return true;
         }
 
@@ -41,7 +49,7 @@ public class Server{
             
                 if(mc.listenerTCP(this.port)){
                 
-                    Service serv = new Service(mc.getConnection());
+                    Service serv = new Service(this.mc,this.process,this.mapServices);
                     
                     serv.start();
                 }
