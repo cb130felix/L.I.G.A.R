@@ -35,7 +35,7 @@ public class Service extends Thread{
         try {
             
             data = mc.getData();
-            msg = data.toString();// 2||Detran||kcd-1232
+            msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
             mensages = this.TratarString(msg);
             idServico = this.descobreIndiceServico(mensages[1]);
             

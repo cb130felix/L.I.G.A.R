@@ -32,7 +32,7 @@ public class ManagerServer extends Thread{
         
             try {
                 
-                    this.wait(5000);
+                    this.sleep(5000);
 
                     if(this.userCounter < this.edge){
 
