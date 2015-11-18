@@ -18,11 +18,11 @@ public class Service extends Thread{
     
     ManagerConnection mc;
     ArrayList<MapService> mapServices = new ArrayList<MapService>();
-    ArrayList<ServiceProcess> process = new ArrayList<ServiceProcess>();
+    ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
 
     public Service(ManagerConnection mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map) {
         this.mc = mc;
-        this.process = process;
+        this.processServices = process;
         this.mapServices = map;
     }
 
@@ -32,6 +32,7 @@ public class Service extends Thread{
         String msg;
         String[] mensages;
         int idServico;
+        byte[] reply;
         
         try {
             
@@ -42,8 +43,14 @@ public class Service extends Thread{
             
             if(idServico != -1){
             
-                process.get(idServico).process(mensages[2].getBytes());
-            
+              reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
+              
+              msg = mensages[0] + "||" + mensages[2] + "||" + new String(reply,"UTF-8");
+              
+              reply = msg.getBytes();
+              
+              this.mc.sendData(reply);
+              
             }
             
         }catch (Exception e) {

@@ -53,7 +53,6 @@ public class Server{
                 if(mc.listenerTCP(this.port)){
                 
                     Service serv = new Service(this.mc,this.processServices,this.mapServices);
-                    
                     serv.start();
                 }
                 

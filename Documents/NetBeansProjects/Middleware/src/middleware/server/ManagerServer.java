@@ -28,7 +28,7 @@ public class ManagerServer extends Thread{
     
     public void run(){
     
-        String msg = "M0";
+        String msg = "M0";// CABEÇALHO DA MENSAGEM PRO PROXY
         
         while(true){
         
