@@ -16,13 +16,13 @@ import middleware.ServiceInfo;
 public class ManagerServer extends Thread{
     
     Integer userCounter;
-    int edge;
+    int edgeClients;
     ManagerConnection mc = new ManagerConnection();
     private ArrayList<ServiceInfo> servicesList = null;
     
     public ManagerServer(Integer userCounter, int edge ,ArrayList<ServiceInfo> list) {
         this.userCounter = userCounter;
-        this.edge = edge;
+        this.edgeClients = edge;
         this.servicesList = list;
     }
     
@@ -36,7 +36,7 @@ public class ManagerServer extends Thread{
                 
                     this.sleep(5000);
 
-                    if(this.userCounter < this.edge){
+                    if(this.userCounter < this.edgeClients){
 
                         msg = msg +this.AtualizaServicos();
 

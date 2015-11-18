@@ -19,11 +19,13 @@ public class Service extends Thread{
     ManagerConnection mc;
     ArrayList<MapService> mapServices = new ArrayList<MapService>();
     ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
+    Integer userCounter;
 
-    public Service(ManagerConnection mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map) {
+    public Service(ManagerConnection mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,Integer user) {
         this.mc = mc;
         this.processServices = process;
         this.mapServices = map;
+        this.userCounter = user;
     }
 
     public void run(){
@@ -39,18 +41,19 @@ public class Service extends Thread{
             data = mc.getData();
             msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
             mensages = this.TratarString(msg);
-            idServico = this.descobreIndiceServico(mensages[1]);
+            idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
             
             if(idServico != -1){
             
               reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
               
-              msg = mensages[0] + "||" + mensages[2] + "||" + new String(reply,"UTF-8");
+              msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
               
               reply = msg.getBytes();
               
               this.mc.sendData(reply);
               
+              this.decrementsUserCounter();
             }
             
         }catch (Exception e) {
@@ -59,6 +62,12 @@ public class Service extends Thread{
     
     
     }// fim do método run
+    
+    public synchronized void decrementsUserCounter(){
+    
+        this.userCounter = this.userCounter - 1;
+        
+    }
     
     public String[] TratarString(String msg){
     

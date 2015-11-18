@@ -37,27 +37,37 @@ public class Server{
         
         public boolean addService(String description,ServiceProcess service){
         
-            MapService ms = new MapService();
-            ms.name = description;
-            ms.ID = this.mapServices.size();
-            this.mapServices.add(ms);
-            this.processServices.add(service);
-            return true;
+            try {
+                
+                MapService ms = new MapService();
+                ms.name = description;
+                ms.ID = this.mapServices.size();
+                this.mapServices.add(ms);
+                this.processServices.add(service);
+                return true;
+                
+            } catch (Exception e) {
+            
+                System.out.println("Erro ao adicionar servico");
+                return false;
+            }
+            
         }
 
-	public void startServer(){
+	public synchronized void startServer(){
         
         
             while(true){
             
                 if(mc.listenerTCP(this.port)){
                 
-                    Service serv = new Service(this.mc,this.processServices,this.mapServices);
+                    this.userCounter = this.userCounter + 1;
+                    Service serv = new Service(this.mc,this.processServices,this.mapServices,this.userCounter);
                     serv.start();
                 }
                 
             
-            }
+            }// fim do while
             
         }
     
