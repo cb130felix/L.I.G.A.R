@@ -64,7 +64,7 @@ public class ManagerConnection {
      * @return boolean - Retorna 'true' se conseguir conectar-se ao servidor,
      * retorna 'false' se der algum erro.
      */
-    public boolean connectionServer(Adress serverAdress) {
+    public boolean connectionServer(Address serverAdress) {
 
         try {
             this.connection = new Socket(serverAdress.getIp(), serverAdress.getPort());
@@ -123,7 +123,7 @@ public class ManagerConnection {
      * @return boolean - Se não ocorrer falhas, retorna a 'true', caso contrário
      * retorna a 'false'.
      */
-    public boolean send(byte[] data) {
+    public boolean sendData(byte[] data) {
 
         try {
             DataOutputStream dos = new DataOutputStream(this.connection.getOutputStream());
@@ -141,13 +141,13 @@ public class ManagerConnection {
      * Método responsável pelo recebimento de mensagens via TCP.
      *
      * Observação importante: para converter a saída dos bytes recebidos para
-     * String de volta, é só seguir este modelo de código abaixo:
-     * String resultado = new String(arrayDeBytes, "UTF-8");
+     * String de volta, é só seguir este modelo de código abaixo: String
+     * resultado = new String(arrayDeBytes, "UTF-8");
      *
      * @return byte[] - Os dados recebidos pela rede serão o retorno do método,
      * se der erro irá retornar a 'null'.
      */
-    public byte[] receive() {
+    public byte[] getData() {
 
         try {
             DataInputStream dis = new DataInputStream(this.connection.getInputStream());
@@ -174,6 +174,21 @@ public class ManagerConnection {
             URLConnection connection = url.openConnection();
             connection.connect();
 
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    /**
+     * Método que encerra a conexão TCP entre um cliente e servidor.
+     *
+     * @return boolean - Retorna 'true' se encerrar, se não encerrar retorna
+     * 'false'.
+     */
+    public boolean closeConnection() {
+        try {
+            this.connection.close();
             return true;
         } catch (Exception e) {
             return false;
