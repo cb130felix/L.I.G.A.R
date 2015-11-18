@@ -130,7 +130,7 @@ public class ManagerConnection {
             dos.writeInt(data.length);
             dos.write(data);
             dos.close();
-            
+
             return true;
         } catch (Exception e) {
             return false;
@@ -139,6 +139,10 @@ public class ManagerConnection {
 
     /**
      * Método responsável pelo recebimento de mensagens via TCP.
+     *
+     * Observação importante: para converter a saída dos bytes recebidos para
+     * String de volta, é só seguir este modelo de código abaixo:
+     * String resultado = new String(arrayDeBytes, "UTF-8");
      *
      * @return byte[] - Os dados recebidos pela rede serão o retorno do método,
      * se der erro irá retornar a 'null'.
@@ -151,7 +155,7 @@ public class ManagerConnection {
             byte[] data = new byte[dataLength];
             dis.read(data, 0, dataLength);
             dis.close();
-            
+
             return data;
         } catch (Exception e) {
             return null;
