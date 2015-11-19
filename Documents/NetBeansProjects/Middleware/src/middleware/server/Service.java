@@ -53,6 +53,7 @@ public class Service extends Thread{
               
               this.mc.sendData(reply);
               
+              this.mc.closeConnection();
               this.decrementsUserCounter();
             }
             
