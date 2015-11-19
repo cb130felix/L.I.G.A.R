@@ -176,8 +176,8 @@ public class ManagerConnection {
      * Método responsável pelo recebimento de mensagens via TCP.
      *
      * Observação importante: para converter a saída dos bytes recebidos para
-     * String de volta, é só seguir este modelo de código abaixo: String
-     * resultado = new String(arrayDeBytes, "UTF-8");
+     * String de volta, é só seguir este modelo de código abaixo: 
+     * String resultado = new String(arrayDeBytes, "UTF-8");
      *
      * @return byte[] - Os dados recebidos pela rede serão o retorno do método,
      * se der erro irá retornar a 'null'.
@@ -200,6 +200,7 @@ public class ManagerConnection {
     /**
      * Checa se há conexão com a Internet.
      *
+     * O método faz uma tentativa de conexão com o Google. 
      * @return boolean - Se há conexão com a Internet o retorno será 'true',
      * caso contrário será 'false'.
      */
@@ -231,24 +232,3 @@ public class ManagerConnection {
     }
 
 }
-
-// Fluxo de uma aplicação com essa classe:
-/*
-
-Cliente:
-ManagerConnection mc = new ManagerConnection();
-byte[] data;
-mc.connection(endereco);
-mc.send(data);
-mc.listen();
-data = mc.receive();
-
-Server:
-ManagerConnection mc = new ManagerConnection();
-byte[] data;
-mc.listen();
-data = mc.receive();
-*processa dadados*
-mc.send(data);
-
- */
