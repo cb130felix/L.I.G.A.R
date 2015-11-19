@@ -58,6 +58,7 @@ public class Service extends Thread{
             
         }catch (Exception e) {
         
+            System.out.println("Erro ao processar a requisicao");
         }
     
     

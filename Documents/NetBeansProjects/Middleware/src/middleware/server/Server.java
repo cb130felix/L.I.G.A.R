@@ -31,7 +31,7 @@ public class Server{
         public Server() {
 
             this.port = 24241;
-
+            this.userCounter = 0;
         }
         
         
@@ -59,8 +59,10 @@ public class Server{
         
             while(true){
             
+                System.out.println("Esperando...");
                 if(mc.listenerTCP(this.port)){
                 
+                    System.out.println("Uma requisicao!");
                     this.userCounter = this.userCounter + 1;
                     Service serv = new Service(this.mc,this.processServices,this.mapServices,this.userCounter);
                     serv.start();
