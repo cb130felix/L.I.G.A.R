@@ -56,14 +56,15 @@ public class Server{
 
 	public synchronized void startServer(){
         
-        
+            
+            
             while(true){
             
                 System.out.println("Esperando...");
                 if(mc.listenerTCP(this.port)){
-                
                     System.out.println("Uma requisicao!");
                     this.userCounter = this.userCounter + 1;
+                    
                     Service serv = new Service(this.mc,this.processServices,this.mapServices,this.userCounter);
                     serv.start();
                 }
