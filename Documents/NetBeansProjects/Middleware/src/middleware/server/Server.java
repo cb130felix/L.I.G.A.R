@@ -32,7 +32,7 @@ public class Server{
 
             this.port = 24251;
             this.userCounter = 0;
-            mc.setServer(this.port);
+            mc.startServerTCP(this.port);
         }
         
         

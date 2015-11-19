@@ -30,11 +30,9 @@ public class ManagerConnection {
     public ManagerConnection() {
     }
 
-    
     /**
      * Servidor TCP.
      */
-    
     private ServerSocket serverSocket;
 
     /**
@@ -98,8 +96,8 @@ public class ManagerConnection {
      * Método que faz com que um lado da comunicação fique escutando pacotes via
      * UDP em uma porta. Observação importante: para converter a saída dos bytes
      * recebidos pelo pacote para String de volta, é só seguir este modelo de
-     * código abaixo: 
-     * String resultado = new String(pacoteRecebido.getData(),"UTF-8");
+     * código abaixo: String resultado = new
+     * String(pacoteRecebido.getData(),"UTF-8");
      *
      * @param port - Porta que ficará escutando.
      * @return DatagramPacket - O pacote recebido será o retorno, se der erro
@@ -120,26 +118,33 @@ public class ManagerConnection {
         }
     }
 
-    public void setServer(int porta){
+    /**
+     * Método que inicia o servidor TCP.
+     *
+     * @param port - Porta que o servidor vai ficar escutando.
+     * @return boolean - Se conseguiu inicar retorna 'true', se não, retorna
+     * 'false'.
+     */
+    public boolean startServerTCP(int port) {
         try {
-            serverSocket = new ServerSocket(porta);
-        } catch (IOException ex) {
-            Logger.getLogger(ManagerConnection.class.getName()).log(Level.SEVERE, null, ex);
+            serverSocket = new ServerSocket(port);
+            return true;
+        } catch (Exception e) {
+            return false;
         }
     }
-    
+
     /**
      * Método que vai fazer com que o servidor espere algum cliente se conectar
      * via TCP.
      *
-     * @param port - Porta a ser escutada pelo servidor.
      * @return boolean - Se não ocorrer falhas, retorna a 'true', caso contrário
      * retorna a 'false'.
      */
     public boolean listenerTCP() {
         try {
             this.connection = this.serverSocket.accept();
-            
+
             return true;
         } catch (Exception e) {
             return false;
