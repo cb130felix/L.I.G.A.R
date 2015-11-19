@@ -2,6 +2,7 @@ package middleware;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -9,6 +10,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.net.ssl.SSLServerSocket;
 
 /**
  * Classe responsável por realizar todo o controle de conexões.
@@ -17,9 +21,20 @@ import java.net.URLConnection;
  */
 public class ManagerConnection {
 
+    public ManagerConnection(ManagerConnection m) {
+        this.serverSocket = m.serverSocket;
+        this.connection = m.connection;
+        this.broadcast = m.broadcast;
+    }
+
+    public ManagerConnection() {
+    }
+
+    
     /**
      * Servidor TCP.
      */
+    
     private ServerSocket serverSocket;
 
     /**
@@ -105,6 +120,14 @@ public class ManagerConnection {
         }
     }
 
+    public void setServer(int porta){
+        try {
+            serverSocket = new ServerSocket(porta);
+        } catch (IOException ex) {
+            Logger.getLogger(ManagerConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * Método que vai fazer com que o servidor espere algum cliente se conectar
      * via TCP.
@@ -113,11 +136,10 @@ public class ManagerConnection {
      * @return boolean - Se não ocorrer falhas, retorna a 'true', caso contrário
      * retorna a 'false'.
      */
-    public boolean listenerTCP(int port) {
+    public boolean listenerTCP() {
         try {
-            this.serverSocket = new ServerSocket(port);
             this.connection = this.serverSocket.accept();
-
+            
             return true;
         } catch (Exception e) {
             return false;
