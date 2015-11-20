@@ -19,11 +19,13 @@ public class ManagerServer extends Thread{
     int edgeClients;
     ManagerConnection mc = new ManagerConnection();
     private ArrayList<ServiceInfo> servicesList = null;
+    int portServer;
     
-    public ManagerServer(Integer userCounter, int edge ,ArrayList<ServiceInfo> list) {
+    public ManagerServer(Integer userCounter, int edge ,ArrayList<ServiceInfo> list, int port) {
         this.userCounter = userCounter;
         this.edgeClients = edge;
         this.servicesList = list;
+        this.portServer = port;
     }
     
     /**
@@ -32,7 +34,7 @@ public class ManagerServer extends Thread{
      */
     public void run(){
     
-        String msg = "M0";// CABEÇALHO DA MENSAGEM PRO PROXY
+        String msg = "M0||"+this.portServer;// CABEÇALHO DA MENSAGEM PRO PROXY
         
         while(true){
         
