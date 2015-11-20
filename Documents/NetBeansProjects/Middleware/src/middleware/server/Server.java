@@ -88,7 +88,6 @@ public class Server{
                     Service serv = new Service(new ManagerConnection(this.mc),this.processServices,this.mapServices,this.userCounter);
                     serv.start();
                 }
-                
             
             }// fim do while
             

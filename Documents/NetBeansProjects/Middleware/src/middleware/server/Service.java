@@ -47,32 +47,58 @@ public class Service extends Thread{
         String[] mensages;
         int idServico;
         byte[] reply;
+        boolean check = false;
+        int count = 0;
         
-        try {
+       while(!check){
+       
+            try {
             
-            data = mc.getData();
-            msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
-            mensages = this.TratarString(msg);
-            idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
+                    data = mc.getData();
+                    msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
+                    mensages = this.TratarString(msg);
+                    idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
+                    
+                    
+                    if(idServico != -1){
+
+                        reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
+
+                        msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
+
+                        reply = msg.getBytes();
+
+                        this.mc.sendData(reply);
+
+                        this.mc.closeConnection();
+                        this.decrementsUserCounter();
+                      
+                    }
+
             
-            if(idServico != -1){
-            
-              reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
-              
-              msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
-              
-              reply = msg.getBytes();
-              
-              this.mc.sendData(reply);
-              
-              this.mc.closeConnection();
-              this.decrementsUserCounter();
-            }
-            
-        }catch (Exception e) {
+                }catch (Exception e) {
         
-            System.out.println("Erro ao processar a requisicao");
-        }
+                    //System.out.println("Erro ao processar a requisicao");
+                    if(count <= 4){
+                    
+                        System.out.println("Tentativa "+count+" de enviar a resposta");
+                        count++;
+                        
+                        try {
+                            sleep(3000);
+                        } catch (Exception e1) {
+                        }
+                    }
+                    else{
+                    
+                        check = true;
+                        System.out.println("Cliente indisponivel!");
+                    
+                    }
+                    
+                }
+       
+       }
     
     
     }// fim do método run
