@@ -48,7 +48,7 @@ public class Service extends Thread{
         int idServico;
         byte[] reply;
         boolean check = false;
-        int count = 0;
+        int count = 1;
         
        while(!check){
        
@@ -79,7 +79,7 @@ public class Service extends Thread{
                 }catch (Exception e) {
         
                     //System.out.println("Erro ao processar a requisicao");
-                    if(count <= 4){
+                    if(count <= 3){
                     
                         System.out.println("Tentativa "+count+" de enviar a resposta");
                         count++;
