@@ -3,19 +3,35 @@ package middleware.proxy;
 
 /**
  *
- * @author Arthur
+ * @author arthur
  */
 
+import java.net.DatagramPacket;
 import java.util.ArrayList;
+import middleware.ManagerConnection;
 import middleware.ServiceInfo;
 
 public class Proxy{
 
+    ArrayList<ServiceInfo> listServices;
+    
+    public Proxy(){
+        this.listServices = new ArrayList<>();
+        this.listener();
+    }
+    
+    private void listener(){
+        
+        ManagerConnection mc = new ManagerConnection();
+        
+        while (true){
 
-    ArrayList<ServiceInfo> listServices = null;
+            DatagramPacket pckt = mc.listenerUDP(24240);
 
-    public boolean listenServer(){return true;}
-    public boolean listenClient(){return true;}
-
+            if (pckt!=null) {
+                new ManagerProxy(pckt).start();
+            }
+        }
+    }
 
 }
