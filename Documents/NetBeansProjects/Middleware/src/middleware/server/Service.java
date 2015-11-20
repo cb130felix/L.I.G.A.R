@@ -49,7 +49,7 @@ public class Service extends Thread{
         byte[] reply;
         boolean check = false;
         int count = 1;
-        System.out.println("ola");
+        //System.out.println("ola");
        while(!check){
        
             try {
