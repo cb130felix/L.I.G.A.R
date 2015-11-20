@@ -50,7 +50,8 @@ public class Service extends Thread{
         boolean check = false;
         int count = 1;
         //System.out.println("ola");
-       while(!check){
+        
+        while(check == false){
        
             try {
             
@@ -59,7 +60,7 @@ public class Service extends Thread{
                     mensages = this.TratarString(msg);
                     idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
                     
-                    System.out.println("ID: "+idServico);
+                    //System.out.println("ID: "+idServico);
                     if(idServico != -1){
 
                         reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
@@ -106,7 +107,7 @@ public class Service extends Thread{
                     
                 }
        
-       }
+       }// fim do while
     
     
     }// fim do método run

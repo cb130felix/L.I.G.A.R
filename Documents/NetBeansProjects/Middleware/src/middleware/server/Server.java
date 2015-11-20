@@ -85,6 +85,7 @@ public class Server{
                     System.out.println("Uma requisicao!");
                     this.userCounter = this.userCounter + 1;
                     
+                    System.out.println("Iniciando servidor");
                     Service serv = new Service(new ManagerConnection(this.mc),this.processServices,this.mapServices,this.userCounter);
                     serv.start();
                 }
