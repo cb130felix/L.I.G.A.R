@@ -5,16 +5,26 @@
  */
 package middleware;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author LIGAR
  */
-public class ServiceInfo {
+public final class ServiceInfo {
     
-    Address address;
+    ArrayList <Address> address;
     private String service;
+    
+    public ServiceInfo(ArrayList<Address> address, String service){
+        this.address = address;
+        this.service = service;
+        
+        setAddress(address);
+        setService(service);
+    }
 
-    public void setAddress(Address address) {
+    public void setAddress(ArrayList<Address> address) {
         this.address = address;
     }
 
@@ -26,7 +36,8 @@ public class ServiceInfo {
         this.service = service;
     }
 
-    public Address getAddress() {
+    public ArrayList<Address> getAddress() {
         return address;
-    }    
+    }
+   
 }
