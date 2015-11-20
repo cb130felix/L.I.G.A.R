@@ -2,9 +2,10 @@
 package middleware.proxy;
 
 import java.net.DatagramPacket;
+import middleware.ManagerConnection;
 
 /**
- * Classe que irá o destino da mensagem recebida.
+ * Classe que irá o destino da mensagem recebida
  * m0 para requisições de clientes
  * m1 para manter os servidores ativos na tabela
  * 
@@ -15,9 +16,11 @@ import java.net.DatagramPacket;
 public class ManagerProxy extends Thread{
     
     DatagramPacket pckt;
+    ManagerConnection mc;
     
-    public ManagerProxy(DatagramPacket pckt){
+    public ManagerProxy(DatagramPacket pckt, ManagerConnection mc){
         this.pckt = pckt;
+        this.mc = mc;
     }
     
     @Override
@@ -36,8 +39,9 @@ public class ManagerProxy extends Thread{
                 new ManagerTable().addService(data, addressReceived);
                 
             } else if (data[0].equals("m1")){
-                new ManagerTable().sendService(data);
-            
+                String answer = new ManagerTable().sendService(data);
+                mc.sendData(answer.getBytes());
+                
             }
             
         } catch (Exception e){

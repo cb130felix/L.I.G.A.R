@@ -44,7 +44,7 @@ public class Proxy{
             DatagramPacket pckt = mc.listenerUDP(24240);
 
             if (pckt!=null) {
-                new ManagerProxy(pckt).start();
+                new ManagerProxy(pckt, mc).start();
             }
         }
     }

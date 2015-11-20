@@ -19,8 +19,8 @@ public class ManagerTable {
      * No fim, atualiza o TimeAlive do server
      * 
      * 
-     * @param service
-     * @param addressReceived 
+     * @param service Arrays de string com os nomes dos serviços
+     * @param addressReceived String com IP de quem fez a requisição
      */
     public synchronized void addService(String[] service, String addressReceived){
         
@@ -62,18 +62,40 @@ public class ManagerTable {
     }
     
     /**
+     * Método que irá procurar o serviço requisitado (seus ips disponíveis) 
+     * e montar/retornar a string que será enviada para o usuário
      * 
-     * @param service 
+     * @param service Parâmetro que informa o serviço que o cliente quer
+     * @return String com os Ips e portas dos servidores que tem o serviço
      */
-    public void sendService(String[] service){
-    
-    
+    public String sendService(String[] service){
+        
+        Proxy p = Proxy.getInstance();
+        String answer="";
+        
+        for(int i=1; i<service.length; i++){
+            
+            int indexService = this.searchService(service[i]);
+            
+            if (indexService!=-1){
+                
+                for (int y=0; y<p.listServices.get(i).getAddress().size(); y++){
+                    
+                    answer += p.listServices.get(i).getAddress().get(y).getIp() + ":";
+                    answer += p.listServices.get(i).getAddress().get(y).getPort() + ":";
+                }
+                break;
+            }
+        }
+        
+        return answer;
     }
     
     
     /**
      * Método que procura o determinado serviço na tabela (x) e retorna o seu índice
-     * @param x
+     * @param x Termo que irá ser buscado
+     * @return Índice do serviço buscado
      */
     public int searchService(String x){
         
@@ -91,8 +113,9 @@ public class ManagerTable {
      * Método que procura o determinado ip (ip) na lista de um determinado serciço (x)
      * retornando o seu índice
      * 
-     * @param x
-     * @param ip
+     * @param x Índice do serviço em que irá fazer a busca
+     * @param ip Ip que irá ser buscado
+     * @return Índice do ip buscado
      */
     public int searchIp(int x, String ip){
         

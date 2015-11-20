@@ -44,7 +44,8 @@ public class TimeAlive extends Thread{
     /**
      * Método que faz a busca na tabela de ativos verificando os segundos da última 
      * resposta do servidor, caso seja maior que o limite, o remove da lista
-     * @return 
+     * 
+     * @return Retorna True ou False
      */
     public synchronized boolean rmTimeAlive(){
     
@@ -69,8 +70,8 @@ public class TimeAlive extends Thread{
      * Se existir tal ip, apenas atualiza seu registro
      * Se não existir, adiciona esse novo ip e seu registro atual à lista
      * 
-     * @param ip
-     * @return 
+     * @param ip Parâmetro que informa o Ip qie será atualizado ou adicionado
+     * @return Retorna True ou False
      */
     @SuppressWarnings("unchecked")
     public synchronized boolean addTimeAlive(String ip){
