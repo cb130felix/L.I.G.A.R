@@ -6,7 +6,7 @@
 package middleware.server;
 
 /**
- *
+ * Classe que mapeia o nome do serviço ao ID do mesmo
  * @author Guto Leoni
  */
 public class MapService {

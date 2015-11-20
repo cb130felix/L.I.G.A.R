@@ -10,7 +10,7 @@ import middleware.ManagerConnection;
 import middleware.ServiceInfo;
 
 /**
- *
+ * Classe que fará o gerenciamento do servidor
  * @author Guto Leoni
  */
 public class ManagerServer extends Thread{
@@ -26,6 +26,10 @@ public class ManagerServer extends Thread{
         this.servicesList = list;
     }
     
+    /**
+     * Método que irá verificar o nome de clientes conectados ao servidor. Se for maior que o limite de clientes, ele não irá mandar
+     * mensagem para o proxy com suas informações. Caso contrário, ele mandará suas informações (Serviços oferecidos)
+     */
     public void run(){
     
         String msg = "M0";// CABEÇALHO DA MENSAGEM PRO PROXY
@@ -34,7 +38,7 @@ public class ManagerServer extends Thread{
         
             try {
                 
-                    this.sleep(5000);
+                    this.sleep(5000);// Madará mensagens de 5 em 5 segundos
 
                     if(this.userCounter < this.edgeClients){
 
@@ -54,6 +58,10 @@ public class ManagerServer extends Thread{
     
     }
     
+    /**
+     * Método que concatena todos os serviços oferecidos pelo servidor numa string para mandar para o proxy.
+     * @return String com todos os serviços oferecidos, separados com "||".
+     */
     public String AtualizaServicos(){
     
         String services="";

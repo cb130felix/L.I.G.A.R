@@ -21,6 +21,14 @@ public class Service extends Thread{
     ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
     Integer userCounter;
 
+    
+    /**
+     * Construtor do Serviço.
+     * @param mc O gerenciador de conexões para poder utilizar o socket criado.
+     * @param process Array com os objetos cujos métodos dos serviços estão implementados
+     * @param map Array com os mapeamentos entre nome do serviço e o ID do mesmo
+     * @param user Inteiro que conta quantos usuários estão conectados ao servidor
+     */
     public Service(ManagerConnection mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,Integer user) {
         this.mc = mc;
         this.processServices = process;
@@ -28,6 +36,10 @@ public class Service extends Thread{
         this.userCounter = user;
     }
 
+    /**
+     * Método que recebe a mensagem do servidor, faz todo o processamento processamento da requisição e depois retorna a resposta
+     * para o cliente.
+     */
     public void run(){
     
         byte[] data;
@@ -35,42 +47,78 @@ public class Service extends Thread{
         String[] mensages;
         int idServico;
         byte[] reply;
+        boolean check = false;
+        int count = 1;
         
-        try {
+       while(!check){
+       
+            try {
             
-            data = mc.getData();
-            msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
-            mensages = this.TratarString(msg);
-            idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
+                    data = mc.getData();
+                    msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
+                    mensages = this.TratarString(msg);
+                    idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
+                    
+                    
+                    if(idServico != -1){
+
+                        reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
+
+                        msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
+
+                        reply = msg.getBytes();
+
+                        this.mc.sendData(reply);
+
+                        //this.mc.closeConnection();
+                        this.decrementsUserCounter();
+                      
+                    }
+
             
-            if(idServico != -1){
-            
-              reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
-              
-              msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
-              
-              reply = msg.getBytes();
-              
-              this.mc.sendData(reply);
-              
-              this.mc.closeConnection();
-              this.decrementsUserCounter();
-            }
-            
-        }catch (Exception e) {
+                }catch (Exception e) {
         
-            System.out.println("Erro ao processar a requisicao");
-        }
+                    //System.out.println("Erro ao processar a requisicao");
+                    if(count <= 3){
+                    
+                        System.out.println("Tentativa "+count+" de enviar a resposta");
+                        count++;
+                        
+                        try {
+                            sleep(3000);
+                        } catch (Exception e1) {
+                        }
+                    }
+                    else{
+                    
+                        check = true;
+                        System.out.println("Cliente indisponivel!");
+                    
+                    }
+                    
+                }
+       
+       }
     
     
     }// fim do método run
     
+    /**
+     * Método que decrementa o número de usuários
+     */
     public synchronized void decrementsUserCounter(){
     
         this.userCounter = this.userCounter - 1;
         
     }
     
+    
+    /**
+     * Método que quebra as mensagens enviadas pelo cliente
+     * @param msg Mensagem a ser quebrada. Padrão: Id_da_mensagem||nome_do_serviço||mensagem. Exemplo: 2||Detran||kcd-1232
+     * @return Um vetor de String com os componentes do cabeçalho e a mensagem. Exemplo: mensagens[0] == 2, mensagens[1] == Detran
+     * mensagens[3] == kcd-1232
+     */
     public String[] TratarString(String msg){
     
         String[] mensages = msg.split("||");
@@ -78,11 +126,16 @@ public class Service extends Thread{
         return mensages;
     }
     
-    public int descobreIndiceServico(String mensage){
+    /**
+     * Método que, dado o nome do serviço, retorna o índice desse serviço no vetor processServices.
+     * @param nome Nome do serviço
+     * @return o índice do serviço no vetor. Caso não ache, ele retorna -1
+     */
+    public int descobreIndiceServico(String nome){
     
         for (int x = 0; x < this.mapServices.size(); x++) {
                 
-                if(this.mapServices.get(x).name.equals(mensage)){
+                if(this.mapServices.get(x).name.equals(nome)){
                 
                     return x;
                 
