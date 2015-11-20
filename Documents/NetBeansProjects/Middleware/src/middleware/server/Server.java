@@ -27,7 +27,12 @@ public class Server{
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
         ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
+        int edgeClients;
         
+        
+        /**
+         * Construtor do servidor
+         */
         public Server() {
 
             this.port = 24251;
@@ -36,6 +41,12 @@ public class Server{
         }
         
         
+        /**
+         * Método para adicionar um novo servico provido pelo servidor.
+         * @param description nome do serviço
+         * @param service Objeto que possui os métodos do serviço oferecido pelo servidor.
+         * @return 
+         */
         public boolean addService(String description,ServiceProcess service){
         
             try {
@@ -55,9 +66,16 @@ public class Server{
             
         }
 
+        /**
+         * Método para inicializar o servidor. Esse método inicia o gerenciador do servidor e faz com que ele comece a escutar
+         * requisições.
+         */
 	public synchronized void startServer(){
         
             
+            ManagerServer ms = new ManagerServer(userCounter, edgeClients, servicesList);
+            
+            ms.start();
             
             while(true){
             
