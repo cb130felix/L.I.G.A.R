@@ -5,8 +5,8 @@ Padrões:
 Porta que o Proxy escuta -> 24240
 Separação das mensagens do cabeçalho -> ||
 
-Mensagem do Servidor para o Proxy -> m0||nomeServicoDisp0||nomeServicoDisp1||...||nomeServicoDispN
-* exemplo: m0||detran||facebook||subway
+Mensagem do Servidor para o Proxy -> m0||porta||nomeServicoDisp0||nomeServicoDisp1||...||nomeServicoDispN
+* exemplo: m0||24251||detran||facebook||subway
 
 Mensagem do Cliente para o Proxy -> m1||nomeServicoQueQuer
 * exemplo: m1||detran
