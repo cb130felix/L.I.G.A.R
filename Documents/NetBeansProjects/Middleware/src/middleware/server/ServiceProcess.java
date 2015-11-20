@@ -6,7 +6,7 @@
 package middleware.server;
 
 /**
- *
+ * Interface a ser implementada pela classe que tem os métodos do serviço.
  * @author Guto Leoni
  */
 public interface ServiceProcess {
