@@ -68,7 +68,10 @@ public class Service extends Thread{
 
                         reply = msg.getBytes();
 
-                        this.mc.sendData(reply);
+                        if(this.mc.sendData(reply)){
+                        
+                            System.out.println("Mandou!");
+                        }
 
                         //this.mc.closeConnection();
                         this.decrementsUserCounter();
