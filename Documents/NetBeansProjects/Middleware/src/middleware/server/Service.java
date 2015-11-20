@@ -59,7 +59,7 @@ public class Service extends Thread{
                     mensages = this.TratarString(msg);
                     idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
                     
-                    
+                    System.out.println("ID: "+idServico);
                     if(idServico != -1){
 
                         reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
@@ -77,7 +77,12 @@ public class Service extends Thread{
                         this.decrementsUserCounter();
                       
                     }
-
+                    
+                    else{
+                    
+                        this.mc.sendData("Servico nao encontrado...".getBytes());
+                        this.decrementsUserCounter();
+                    }
             
                 }catch (Exception e) {
         
