@@ -29,16 +29,26 @@ public class Server{
         ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
         int edgeClients;
         
-        
-        /**
-         * Construtor do servidor
-         */
-        public Server() {
-
+       /**
+        * Construtor do servidor
+        * @param edgeClient Limite de clientes simultâneos no servidor
+        */
+        public Server(int edgeClient) {
+            
+            this.edgeClients = edgeClient;
             this.port = 24251;
             this.userCounter = 0;
             mc.startServerTCP(this.port);
         }
+
+        public Server() {
+
+            this.edgeClients = 100;
+            this.port = 24251;
+            this.userCounter = 0;
+            mc.startServerTCP(this.port);
+        }
+        
         
         
         /**
