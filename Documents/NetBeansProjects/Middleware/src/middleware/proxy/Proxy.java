@@ -41,11 +41,14 @@ public class Proxy{
         
         while (true){
 
+            System.out.println("Esperando conexão...");
             DatagramPacket pckt = mc.listenerUDP(24240);
-
+            System.out.println("Pacote recebido de: " + pckt.getAddress().getHostAddress() + "\n");
+            
             if (pckt!=null) {
                 new ManagerProxy(pckt, mc).start();
             }
+            
         }
     }
 }

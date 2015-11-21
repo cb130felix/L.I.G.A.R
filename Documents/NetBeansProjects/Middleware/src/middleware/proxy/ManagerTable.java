@@ -25,7 +25,7 @@ public class ManagerTable {
     public synchronized void addService(String[] service, String addressReceived){
         
         Proxy p = Proxy.getInstance();
-        int port = Integer.parseInt(service[1]);
+        int port = Integer.parseInt(service[1].trim());
         
         for (int i=2; i<service.length; i++){
             
