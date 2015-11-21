@@ -74,7 +74,8 @@ public class Service extends Thread{
                         
                         if(mc.sendData(reply)){
                         
-                            System.out.println("Mandou!");
+                            //System.out.println("Mandou!");
+                            check = true;
                         }
 
                         //this.mc.closeConnection();
