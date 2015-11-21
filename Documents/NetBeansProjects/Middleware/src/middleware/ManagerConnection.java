@@ -164,7 +164,7 @@ public class ManagerConnection {
             DataOutputStream dos = new DataOutputStream(this.connection.getOutputStream());
             dos.writeInt(data.length);
             dos.write(data);
-            dos.close();
+            //dos.close();
 
             return true;
         } catch (Exception e) {
@@ -189,7 +189,7 @@ public class ManagerConnection {
             int dataLength = dis.readInt();
             byte[] data = new byte[dataLength];
             dis.read(data, 0, dataLength);
-            dis.close();
+            //dis.close();
 
             return data;
         } catch (Exception e) {
