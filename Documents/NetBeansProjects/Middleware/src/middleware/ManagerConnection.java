@@ -111,7 +111,7 @@ public class ManagerConnection {
 
             DatagramPacket buffer = new DatagramPacket(receivedData, receivedData.length);
             this.broadcast.receive(buffer);
-            this.broadcast.disconnect();
+            this.broadcast.close();
 
             return buffer;
         } catch (Exception e) {
