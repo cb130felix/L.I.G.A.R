@@ -2,6 +2,7 @@
 package middleware.proxy;
 
 import java.net.DatagramPacket;
+import java.util.regex.Pattern;
 import middleware.ManagerConnection;
 
 /**
@@ -27,25 +28,25 @@ public class ManagerProxy extends Thread{
     public void run(){
     
         try{
-    
+            
             String addressReceived = pckt.getAddress().getHostAddress();
             addressReceived = addressReceived.replace("/", "");
             
-            String dataReceived = new String(pckt.getData(), "UTF-8");
-            
-            String[] data = dataReceived.split("||");
+            String dataReceived = new String(pckt.getData(), "UTF-8");            
+            String[] data = dataReceived.split(Pattern.quote("||"));
             
             if (data[0].equals("M0")) {
+                
                 new ManagerTable().addService(data, addressReceived);
                 
             } else if (data[0].equals("M1")){
-                String answer = new ManagerTable().sendService(data);
-                mc.sendData(answer.getBytes());
+//                String answer = new ManagerTable().sendService(data);
+//                mc.sendData(answer.getBytes());
                 
             }
             
         } catch (Exception e){
-            System.out.println("A:001");
+            System.out.println("A:001: " + e);
         }
     }
 }
