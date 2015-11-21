@@ -66,7 +66,6 @@ public class ManagerConnection {
             DatagramPacket udpPacket = new DatagramPacket(data, data.length, ina, port);
 
             this.broadcast.send(udpPacket);
-            this.broadcast.disconnect();
 
             return true;
         } catch (Exception e) {
