@@ -60,22 +60,19 @@ public class Service extends Thread{
                     msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
                     mensages = this.TratarString(msg);
                     
-                    for (int i = 0; i < mensages.length; i++) {
-                        System.out.println("Olha: "+mensages[i]);
-                    }
-                    
                     idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
                     
-                    System.out.println("ID: "+idServico);
+                   
                     if(idServico != -1){
 
                         reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
 
                         msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
-
+                        
+                        //System.out.println("Olha a mensagem enviada: "+msg);
                         reply = msg.getBytes();
-
-                        if(this.mc.sendData(reply)){
+                        
+                        if(mc.sendData(reply)){
                         
                             System.out.println("Mandou!");
                         }
@@ -151,7 +148,7 @@ public class Service extends Thread{
     
         for (int x = 0; x < this.mapServices.size(); x++) {
                 
-                System.out.println("Nome do servico procurado: "+nome+" servicos disponiveis: "+this.mapServices.get(x).name);
+                //System.out.println("Nome do servico procurado: "+nome+" servicos disponiveis: "+this.mapServices.get(x).name);
             
                 if(this.mapServices.get(x).name.equals(nome)){
                 

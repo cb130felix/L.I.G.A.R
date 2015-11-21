@@ -84,7 +84,7 @@ public class Server{
                 if(mc.listenerTCP()){
                     System.out.println("Uma requisicao!");
                     this.userCounter = this.userCounter + 1;
-                    
+                    //System.out.println("lol");
                     
                     Service serv = new Service(new ManagerConnection(this.mc),this.processServices,this.mapServices,this.userCounter);
                     serv.start();
