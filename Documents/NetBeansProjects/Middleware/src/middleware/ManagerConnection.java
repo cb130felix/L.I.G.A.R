@@ -66,6 +66,7 @@ public class ManagerConnection {
             DatagramPacket udpPacket = new DatagramPacket(data, data.length, ina, port);
 
             this.broadcast.send(udpPacket);
+            this.broadcast.disconnect();
 
             return true;
         } catch (Exception e) {
@@ -111,6 +112,7 @@ public class ManagerConnection {
 
             DatagramPacket buffer = new DatagramPacket(receivedData, receivedData.length);
             this.broadcast.receive(buffer);
+            this.broadcast.disconnect();
 
             return buffer;
         } catch (Exception e) {
