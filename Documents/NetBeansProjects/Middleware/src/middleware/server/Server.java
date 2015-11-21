@@ -83,8 +83,8 @@ public class Server{
 	public synchronized void startServer(){
         
             
-            //ManagerServer ms = new ManagerServer(userCounter, edgeClients, servicesList,this.port);
-            //ms.start();
+            ManagerServer ms = new ManagerServer(userCounter, edgeClients, mapServices,this.port);
+            ms.start();
             
             while(true){
             
