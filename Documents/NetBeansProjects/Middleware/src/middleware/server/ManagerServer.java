@@ -46,7 +46,10 @@ public class ManagerServer extends Thread{
 
                         msg = msg +this.AtualizaServicos();
 
-                        mc.broadcast(msg.getBytes(), 24240);// PORTA DO PROXY
+                        if(mc.broadcast(msg.getBytes(), 24240)){// PORTA DO PROXY
+                            
+                            msg = "M0||"+this.portServer;
+                        }
 
                     }
                 
