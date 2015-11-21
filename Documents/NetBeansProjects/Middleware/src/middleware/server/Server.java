@@ -18,12 +18,9 @@ import middleware.ServiceInfo;
 
 public class Server{
 
-        //cabeçalho da mensagem(cliente/servidor): id;service;message
-        // exemplo prático: 200;A;qualquermerda(em json)
     
         ManagerConnection mc = new ManagerConnection();
-	//private ArrayList<ServiceInfo> servicesList = null;
-	private Integer userCounter;
+	public Integer userCounter;
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
         ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
@@ -80,10 +77,10 @@ public class Server{
          * Método para inicializar o servidor. Esse método inicia o gerenciador do servidor e faz com que ele comece a escutar
          * requisições.
          */
-	public synchronized void startServer(){
+	public void startServer(){
         
             
-            ManagerServer ms = new ManagerServer(userCounter, edgeClients, mapServices,this.port);
+            ManagerServer ms = new ManagerServer(this.userCounter, edgeClients, mapServices,this.port);
             ms.start();
             
             while(true){
@@ -91,8 +88,11 @@ public class Server{
                 System.out.println("Esperando....");
                  
                 if(mc.listenerTCP()){
+                     //System.out.println("Valor antes: "+this.userCounter);
                     System.out.println("Uma requisicao!");
-                    this.userCounter = this.userCounter + 1;
+                    
+                    this.IncrementUser();
+                    //System.out.println("Numero de usuario no servidor: "+this.userCounter);
                     //System.out.println("lol");
                     
                     Service serv = new Service(new ManagerConnection(this.mc),this.processServices,this.mapServices,this.userCounter);
@@ -115,6 +115,11 @@ public class Server{
             return port;
         }
         
+        public synchronized void IncrementUser(){
+        
+            this.userCounter = this.userCounter + 1;
+        
+        }
                 
         /*public boolean removeService(){return true;}
 	public void incrementUserCounter(){}

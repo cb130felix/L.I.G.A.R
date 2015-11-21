@@ -20,7 +20,7 @@ public class Service extends Thread{
     ManagerConnection mc;
     ArrayList<MapService> mapServices = new ArrayList<MapService>();
     ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
-    Integer userCounter;
+    public Integer userCounter;
 
     
     /**
@@ -74,12 +74,11 @@ public class Service extends Thread{
                         
                         if(mc.sendData(reply)){
                         
-                            //System.out.println("Mandou!");
+                            this.decrementsUserCounter();
                             check = true;
+                            //System.out.println("contador: "+this.userCounter);
                         }
 
-                        //this.mc.closeConnection();
-                        this.decrementsUserCounter();
                       
                     }
                     

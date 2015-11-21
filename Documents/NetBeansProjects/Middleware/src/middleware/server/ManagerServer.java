@@ -15,7 +15,7 @@ import middleware.ServiceInfo;
  */
 public class ManagerServer extends Thread{
     
-    Integer userCounter;
+    public Integer userCounter;
     int edgeClients;
     ManagerConnection mc = new ManagerConnection();
     private ArrayList<MapService> Services = new ArrayList<MapService>();
@@ -33,6 +33,13 @@ public class ManagerServer extends Thread{
      * mensagem para o proxy com suas informações. Caso contrário, ele mandará suas informações (Serviços oferecidos)
      */
     public void run(){
+    
+        this.sendMensageToProxy();
+        
+    
+    }
+    
+    public synchronized void sendMensageToProxy(){
     
         String msg = "M0||"+this.portServer;// CABEÇALHO DA MENSAGEM PRO PROXY
         
@@ -59,9 +66,9 @@ public class ManagerServer extends Thread{
             }
         
         }
-        
     
     }
+    
     
     /**
      * Método que concatena todos os serviços oferecidos pelo servidor numa string para mandar para o proxy.
