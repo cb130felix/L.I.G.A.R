@@ -40,7 +40,7 @@ public class ManagerServer extends Thread{
         
             try {
                 
-                    this.sleep(5000);// Madará mensagens de 5 em 5 segundos
+                    sleep(5000);// Madará mensagens de 5 em 5 segundos
 
                     if(this.userCounter < this.edgeClients){
 
