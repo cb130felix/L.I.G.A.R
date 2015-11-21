@@ -18,13 +18,13 @@ public class ManagerServer extends Thread{
     Integer userCounter;
     int edgeClients;
     ManagerConnection mc = new ManagerConnection();
-    private ArrayList<ServiceInfo> servicesList = null;
+    private ArrayList<MapService> Services = new ArrayList<MapService>();
     int portServer;
     
-    public ManagerServer(Integer userCounter, int edge ,ArrayList<ServiceInfo> list, int port) {
+    public ManagerServer(Integer userCounter, int edge ,ArrayList<MapService> list, int port) {
         this.userCounter = userCounter;
         this.edgeClients = edge;
-        this.servicesList = list;
+        this.Services = list;
         this.portServer = port;
     }
     
@@ -71,9 +71,9 @@ public class ManagerServer extends Thread{
     
         String services="";
         
-        for (int x = 0; x < this.servicesList.size(); x++) {
+        for (int x = 0; x < this.Services.size(); x++) {
             
-            services = services+"||"+this.servicesList.get(x).getService();
+            services = services+"||"+this.Services.get(x).name;
             
         }
         

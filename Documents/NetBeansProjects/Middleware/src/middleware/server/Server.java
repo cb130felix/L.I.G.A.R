@@ -22,7 +22,7 @@ public class Server{
         // exemplo prático: 200;A;qualquermerda(em json)
     
         ManagerConnection mc = new ManagerConnection();
-	private ArrayList<ServiceInfo> servicesList = null;
+	//private ArrayList<ServiceInfo> servicesList = null;
 	private Integer userCounter;
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
@@ -83,12 +83,12 @@ public class Server{
 	public synchronized void startServer(){
         
             
-            ManagerServer ms = new ManagerServer(userCounter, edgeClients, servicesList,this.port);
-            ms.start();
+            //ManagerServer ms = new ManagerServer(userCounter, edgeClients, servicesList,this.port);
+            //ms.start();
             
             while(true){
             
-                System.out.println("Esperando...");
+                System.out.println("Esperando....");
                  
                 if(mc.listenerTCP()){
                     System.out.println("Uma requisicao!");
