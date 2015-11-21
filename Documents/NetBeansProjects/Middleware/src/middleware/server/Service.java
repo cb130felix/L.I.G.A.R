@@ -87,7 +87,7 @@ public class Service extends Thread{
                         
                         this.mc.sendData("Servico nao encontrado...".getBytes());
                         
-                        //this.decrementsUserCounter();
+                        this.decrementsUserCounter();
                     }
             
                 }catch (Exception e) {
