@@ -8,6 +8,7 @@ package middleware.server;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 import middleware.ManagerConnection;
 
 /**
@@ -58,9 +59,14 @@ public class Service extends Thread{
                     data = mc.getData();
                     msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
                     mensages = this.TratarString(msg);
+                    
+                    for (int i = 0; i < mensages.length; i++) {
+                        System.out.println("Olha: "+mensages[i]);
+                    }
+                    
                     idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
                     
-                    //System.out.println("ID: "+idServico);
+                    System.out.println("ID: "+idServico);
                     if(idServico != -1){
 
                         reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
@@ -80,9 +86,10 @@ public class Service extends Thread{
                     }
                     
                     else{
-                    
+                        
                         this.mc.sendData("Servico nao encontrado...".getBytes());
-                        this.decrementsUserCounter();
+                        
+                        //this.decrementsUserCounter();
                     }
             
                 }catch (Exception e) {
@@ -130,7 +137,7 @@ public class Service extends Thread{
      */
     public String[] TratarString(String msg){
     
-        String[] mensages = msg.split("||");
+        String[] mensages = msg.split(Pattern.quote("||"));
         
         return mensages;
     }
@@ -144,6 +151,8 @@ public class Service extends Thread{
     
         for (int x = 0; x < this.mapServices.size(); x++) {
                 
+                System.out.println("Nome do servico procurado: "+nome+" servicos disponiveis: "+this.mapServices.get(x).name);
+            
                 if(this.mapServices.get(x).name.equals(nome)){
                 
                     return x;
