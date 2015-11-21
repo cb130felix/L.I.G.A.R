@@ -35,10 +35,10 @@ public class ManagerProxy extends Thread{
             
             String[] data = dataReceived.split("||");
             
-            if (data[0].equals("m0")) {
+            if (data[0].equals("M0")) {
                 new ManagerTable().addService(data, addressReceived);
                 
-            } else if (data[0].equals("m1")){
+            } else if (data[0].equals("M1")){
                 String answer = new ManagerTable().sendService(data);
                 mc.sendData(answer.getBytes());
                 
