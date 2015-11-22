@@ -76,7 +76,7 @@ public class Service extends Thread{
                         
                             this.decrementsUserCounter();
                             check = true;
-                            //System.out.println("contador: "+this.userCounter);
+                            System.out.println("contador: "+this.userCounter);
                         }
 
                       

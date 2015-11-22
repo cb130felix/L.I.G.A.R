@@ -34,7 +34,7 @@ public class Server{
             
             this.edgeClients = edgeClient;
             this.port = 24251;
-            this.userCounter = 0;
+            this.userCounter = new Integer(0);
             mc.startServerTCP(this.port);
         }
 
@@ -42,7 +42,7 @@ public class Server{
 
             this.edgeClients = 100;
             this.port = 24251;
-            this.userCounter = 0;
+            this.userCounter = new Integer(0);
             mc.startServerTCP(this.port);
         }
         
@@ -92,7 +92,7 @@ public class Server{
                     System.out.println("Uma requisicao!");
                     
                     this.IncrementUser();
-                    //System.out.println("Numero de usuario no servidor: "+this.userCounter);
+                    System.out.println("Numero de usuario no servidor: "+this.userCounter);
                     //System.out.println("lol");
                     
                     Service serv = new Service(new ConnectionManager(this.mc),this.processServices,this.mapServices,this.userCounter);
