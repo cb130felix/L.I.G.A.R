@@ -85,8 +85,8 @@ public class Service extends Thread{
                     else{
                         
                         this.mc.sendData("Servico nao encontrado...".getBytes());
-                        
                         this.decrementsUserCounter();
+                        check = true;
                     }
             
                 }catch (Exception e) {
@@ -110,7 +110,7 @@ public class Service extends Thread{
                     }
                     
                 }
-       
+            
        }// fim do while
     
     
