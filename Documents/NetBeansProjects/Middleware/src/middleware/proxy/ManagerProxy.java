@@ -40,8 +40,8 @@ public class ManagerProxy extends Thread{
                 new ManagerTable().addService(data, addressReceived);
                 
             } else if (data[0].equals("M1")){
-//                String answer = new ManagerTable().sendService(data);
-//                mc.sendData(answer.getBytes());
+                String answer = new ManagerTable().sendService(data);
+                mc.sendData(answer.getBytes());
                 
             }
             

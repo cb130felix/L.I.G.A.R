@@ -74,7 +74,7 @@ public class ManagerTable {
         
         for(int i=1; i<service.length; i++){
             
-            int indexService = this.searchService(service[i]);
+            int indexService = this.searchService(service[i].trim());
             
             if (indexService!=-1){
                 
