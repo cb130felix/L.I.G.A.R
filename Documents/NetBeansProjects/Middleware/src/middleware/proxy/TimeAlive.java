@@ -98,7 +98,13 @@ public class TimeAlive extends Thread{
         
         return true;
     }
-
+    
+    /**
+     * Método que irá remover determinado ip da lista de serviços
+     * 
+     * @param ip Parâmetro que identifica o ip que será retirado
+     * @return Retorna True ou False
+     */
     public synchronized boolean rmIpService(ArrayList ip){ 
         
         Proxy p = Proxy.getInstance();
@@ -121,6 +127,9 @@ public class TimeAlive extends Thread{
     }
     
     
+    /**
+     * Imprime a lista de serviços do proxy
+     */
     public synchronized void estadoProxy(){
 
         Proxy p = Proxy.getInstance();
