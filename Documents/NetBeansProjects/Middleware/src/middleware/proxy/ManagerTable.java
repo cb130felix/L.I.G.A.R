@@ -32,7 +32,7 @@ public class ManagerTable {
             int indexService = this.searchService(service[i]);
             
             if (indexService!=-1){
-                
+        
                 int indexIp = this.searchIp(indexService, addressReceived);
             
                 if (indexIp!=-1){

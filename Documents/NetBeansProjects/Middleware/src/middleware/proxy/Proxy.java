@@ -29,8 +29,8 @@ public class Proxy{
     
     // Iniciando proxy
     public void startProxy(){
-        this.listener();
         TimeAlive.getInstance().start();
+        this.listener();        
     }
     
     // Método para escutar uma porta UDP. 
@@ -40,15 +40,15 @@ public class Proxy{
         ConnectionManager mc = new ConnectionManager();
         
         while (true){
-
-            System.out.println("Esperando conexão...");
+                        
+//            System.out.println("Esperando conexão...");
             DatagramPacket pckt = mc.listenerUDP(24240);
             
             if (pckt!=null) {
-                System.out.println("Pacote recebido de: " + pckt.getAddress().getHostAddress() + "\n");
+//                System.out.println("Pacote recebido de: " + pckt.getAddress().getHostAddress() + "\n");
                 new ManagerProxy(pckt, mc).start();
             }
             
         }
-    }
+    }    
 }

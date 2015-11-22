@@ -31,7 +31,10 @@ public class TimeAlive extends Thread{
         try {
             
             while(true){
-                Thread.sleep(10000);
+                
+                this.estadoProxy();
+                
+                Thread.sleep(10000);    
                 this.rmTimeAlive();
             }
             
@@ -57,6 +60,7 @@ public class TimeAlive extends Thread{
             long now = rightNow.getTimeInMillis();
             
             if ((now-saved)>11000){
+                this.rmIpService(this.tableTime.get(i));
                 tableTime.remove(i);
             }
         }
@@ -81,12 +85,11 @@ public class TimeAlive extends Thread{
         for (int i=0; i<tableTime.size(); i++){
         
             if (tableTime.get(i).get(0).equals(ip)){
-                
                 tableTime.get(i).set(1, rightNow.getTimeInMillis());
                 return true;
             }
         }
-        
+
         ArrayList<Object> novo = new ArrayList<>();
         novo.add(ip);
         novo.add(rightNow.getTimeInMillis());
@@ -95,4 +98,53 @@ public class TimeAlive extends Thread{
         
         return true;
     }
+
+    public synchronized boolean rmIpService(ArrayList ip){ 
+        
+        Proxy p = Proxy.getInstance();
+        
+        for(int i=p.listServices.size()-1; i==0; i--){
+            for(int y=p.listServices.get(i).getAddress().size()-1; y==0; y--){
+                
+                if (p.listServices.get(i).getAddress().get(y).getIp().equals(ip.get(0))){
+                    p.listServices.get(i).getAddress().remove(y);
+                }
+            }
+            
+            if(p.listServices.get(i).getAddress().isEmpty()){
+                        
+                p.listServices.remove(i);
+            }
+        }
+        
+        return true;
+    }
+    
+    
+    public synchronized void estadoProxy(){
+
+        Proxy p = Proxy.getInstance();
+        
+        System.out.println("\n###### Estado dos Serviços do Proxy ######");
+        
+        if (p.listServices.size()>0){
+            
+            for(int i=0; i<p.listServices.size(); i++){
+
+                System.out.println("Serviço: "+p.listServices.get(i).getService());
+
+                for(int y=0; y<p.listServices.get(i).getAddress().size(); y++){
+                    System.out.println("   - "+p.listServices.get(i).getAddress().get(y).getIp()+":"+p.listServices.get(i).getAddress().get(y).getPort());
+                }
+
+            }
+            
+        } else{
+        
+            System.out.println("Não há serviços no momento.");    
+        }
+        
+        System.out.println("##########################################\n");
+    }
 }
+
