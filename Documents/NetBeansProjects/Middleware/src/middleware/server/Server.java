@@ -85,7 +85,7 @@ public class Server{
 	public void startServer(){
         
             
-            ManagerServer ms = new ManagerServer(this.userCounter, edgeClients, mapServices,this.port);
+            ManagerServer ms = new ManagerServer(this.userCounter, this.edgeClients, this.mapServices,this.port);
             ms.start();
             
             while(true){
@@ -125,11 +125,6 @@ public class Server{
             this.userCounter = this.userCounter + 1;
         
         }
-                
-        /*public boolean removeService(){return true;}
-	public void incrementUserCounter(){}
-	
-	public void keepServerAlive(){}*/
 
         
 }
