@@ -1,4 +1,4 @@
-package middleware;
+package middleware.communication;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -13,6 +13,7 @@ import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.net.ssl.SSLServerSocket;
+import middleware.Address;
 
 /**
  * Classe responsável por realizar todo o controle de conexões.

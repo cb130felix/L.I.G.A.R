@@ -3,7 +3,7 @@ package middleware.proxy;
 
 import java.net.DatagramPacket;
 import java.util.regex.Pattern;
-import middleware.ManagerConnection;
+import middleware.communication.ManagerConnection;
 
 /**
  * Classe que irá o destino da mensagem recebida

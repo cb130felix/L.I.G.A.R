@@ -13,7 +13,7 @@ package middleware.server;
  */
 
 import java.util.ArrayList;
-import middleware.ManagerConnection;
+import middleware.communication.ManagerConnection;
 import middleware.ServiceInfo;
 
 public class Server{

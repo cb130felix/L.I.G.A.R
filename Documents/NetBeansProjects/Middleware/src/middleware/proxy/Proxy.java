@@ -8,7 +8,7 @@ package middleware.proxy;
 
 import java.net.DatagramPacket;
 import java.util.ArrayList;
-import middleware.ManagerConnection;
+import middleware.communication.ManagerConnection;
 import middleware.ServiceInfo;
 
 public class Proxy{
