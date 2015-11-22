@@ -74,7 +74,7 @@ public class Client {
                 }
             }
 
-            serviceTable = new ArrayList<>();
+            serviceTable = new ArrayList<>(); //dúvida aqui 
             Address address;
             ArrayList<Address> arrayListAddress = new ArrayList<>();
 
