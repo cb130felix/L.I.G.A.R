@@ -3,7 +3,7 @@ package middleware.proxy;
 
 import java.util.ArrayList;
 import middleware.Address;
-import middleware.ServiceInfo;
+import middleware.client.ServiceInfo;
 
 /**
  * Classe que irá cuidar em adicionar, procurar e enviar informações dos serviços

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package middleware;
+package middleware.client;
 
 import java.util.ArrayList;
+import middleware.Address;
 
 /**
  *

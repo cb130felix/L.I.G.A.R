@@ -7,7 +7,7 @@ package middleware.server;
 
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
-import middleware.ServiceInfo;
+import middleware.client.ServiceInfo;
 
 /**
  * Classe que fará o gerenciamento do servidor
