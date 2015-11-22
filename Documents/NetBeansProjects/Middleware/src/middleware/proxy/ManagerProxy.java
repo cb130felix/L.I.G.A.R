@@ -40,7 +40,12 @@ public class ManagerProxy extends Thread{
                 new ManagerTable().addService(data, addressReceived);
                 
             } else if (data[0].equals("M1")){
+                
+                System.out.print("Requisição do usuário: "+addressReceived+", para serviço: "+data[1]);
+                
                 String answer = new ManagerTable().sendService(data);
+                
+                System.out.println(" ----> Mensagem de envio: "+answer);
                 mc.sendData(answer.getBytes());
                 
             }

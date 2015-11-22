@@ -78,10 +78,11 @@ public class ManagerTable {
             
             if (indexService!=-1){
                 
-                for (int y=0; y<p.listServices.get(i).getAddress().size(); y++){
+                for (int y=0; y<p.listServices.get(indexService).getAddress().size(); y++){
                     
-                    answer += p.listServices.get(i).getAddress().get(y).getIp() + ":";
-                    answer += p.listServices.get(i).getAddress().get(y).getPort() + ":";
+                    answer += p.listServices.get(indexService).getAddress().get(y).getIp() + ":";
+                    answer += p.listServices.get(indexService).getAddress().get(y).getPort();
+                    if (y<p.listServices.get(indexService).getAddress().size()-1) answer += "||";
                 }
                 break;
             }
