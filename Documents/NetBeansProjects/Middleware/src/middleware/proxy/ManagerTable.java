@@ -22,15 +22,15 @@ public class ManagerTable {
      * @param service Arrays de string com os nomes dos serviços
      * @param addressReceived String com IP de quem fez a requisição
      */
-    public synchronized void addService(String[] service, String addressReceived){
+    public void addService(String[] service, String addressReceived){
         
         Proxy p = Proxy.getInstance();
         int port = Integer.parseInt(service[1].trim());
         
         for (int i=2; i<service.length; i++){
             
-            int indexService = this.searchService(service[i]);
-            
+            int indexService = this.searchService(service[i].trim());
+
             if (indexService!=-1){
         
                 int indexIp = this.searchIp(indexService, addressReceived);
@@ -46,11 +46,10 @@ public class ManagerTable {
                 }
                 
             } else {
-                
                 ArrayList<Address> aux = new ArrayList<>();
                 aux.add(new Address(addressReceived, port));
                 
-                ServiceInfo s = new ServiceInfo(aux, service[i]);
+                ServiceInfo s = new ServiceInfo(aux, service[i].trim());
                 
                 p.listServices.add(s);
                 
@@ -102,7 +101,6 @@ public class ManagerTable {
         Proxy p = Proxy.getInstance();
         
         for(int i=0; i<p.listServices.size(); i++){
-                
             if (p.listServices.get(i).getService().equals(x)) return i;    
         }
         

@@ -54,17 +54,17 @@ public class TimeAlive extends Thread{
     
         Calendar rightNow = Calendar.getInstance();
         
-        for(int i=tableTime.size()-1; i==0; i--){
-        
+        for(int i=tableTime.size()-1; i>=0; i--){
+
             long saved = (long)tableTime.get(i).get(1);
             long now = rightNow.getTimeInMillis();
             
             if ((now-saved)>11000){
                 this.rmIpService(this.tableTime.get(i));
-                tableTime.remove(i);
+                this.tableTime.remove(i);
             }
         }
-        
+                
         return true;
     }
     
@@ -103,8 +103,8 @@ public class TimeAlive extends Thread{
         
         Proxy p = Proxy.getInstance();
         
-        for(int i=p.listServices.size()-1; i==0; i--){
-            for(int y=p.listServices.get(i).getAddress().size()-1; y==0; y--){
+        for(int i=p.listServices.size()-1; i>=0; i--){
+            for(int y=p.listServices.get(i).getAddress().size()-1; y>=0; y--){
                 
                 if (p.listServices.get(i).getAddress().get(y).getIp().equals(ip.get(0))){
                     p.listServices.get(i).getAddress().remove(y);
