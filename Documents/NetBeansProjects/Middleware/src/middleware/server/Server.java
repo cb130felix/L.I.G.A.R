@@ -38,6 +38,11 @@ public class Server{
             mc.startServerTCP(this.port);
         }
 
+        /**
+         * Construtor do servidor. Quando não é fornecido o número limte de usuários,
+         * o valor padrão é 100.
+         *
+         */
         public Server() {
 
             this.edgeClients = 100;
