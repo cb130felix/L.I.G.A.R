@@ -8,7 +8,7 @@ package middleware.proxy;
 
 import java.net.DatagramPacket;
 import java.util.ArrayList;
-import middleware.communication.ManagerConnection;
+import middleware.communication.ConnectionManager;
 import middleware.ServiceInfo;
 
 public class Proxy{
@@ -37,7 +37,7 @@ public class Proxy{
     // Quando conectar, chama o método 'ManagerProxy' e depois volta a escutar
     private void listener(){
         
-        ManagerConnection mc = new ManagerConnection();
+        ConnectionManager mc = new ConnectionManager();
         
         while (true){
 

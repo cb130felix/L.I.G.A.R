@@ -3,7 +3,7 @@ package middleware.proxy;
 
 import java.net.DatagramPacket;
 import java.util.regex.Pattern;
-import middleware.communication.ManagerConnection;
+import middleware.communication.ConnectionManager;
 
 /**
  * Classe que irá o destino da mensagem recebida
@@ -17,9 +17,9 @@ import middleware.communication.ManagerConnection;
 public class ManagerProxy extends Thread{
     
     DatagramPacket pckt;
-    ManagerConnection mc;
+    ConnectionManager mc;
     
-    public ManagerProxy(DatagramPacket pckt, ManagerConnection mc){
+    public ManagerProxy(DatagramPacket pckt, ConnectionManager mc){
         this.pckt = pckt;
         this.mc = mc;
     }

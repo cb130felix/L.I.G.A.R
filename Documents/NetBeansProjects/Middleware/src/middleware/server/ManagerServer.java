@@ -6,7 +6,7 @@
 package middleware.server;
 
 import java.util.ArrayList;
-import middleware.communication.ManagerConnection;
+import middleware.communication.ConnectionManager;
 import middleware.ServiceInfo;
 
 /**
@@ -17,7 +17,7 @@ public class ManagerServer extends Thread{
     
     public Integer userCounter;
     int edgeClients;
-    ManagerConnection mc = new ManagerConnection();
+    ConnectionManager mc = new ConnectionManager();
     private ArrayList<MapService> Services = new ArrayList<MapService>();
     int portServer;
     

@@ -20,15 +20,15 @@ import middleware.Address;
  *
  * @author Iago
  */
-public class ManagerConnection {
+public class ConnectionManager {
 
-    public ManagerConnection(ManagerConnection m) {
+    public ConnectionManager(ConnectionManager m) {
         this.serverSocket = m.serverSocket;
         this.connection = m.connection;
         this.broadcast = m.broadcast;
     }
 
-    public ManagerConnection() {
+    public ConnectionManager() {
     }
 
     /**

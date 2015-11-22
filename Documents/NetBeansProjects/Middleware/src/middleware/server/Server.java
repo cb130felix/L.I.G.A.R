@@ -13,13 +13,13 @@ package middleware.server;
  */
 
 import java.util.ArrayList;
-import middleware.communication.ManagerConnection;
+import middleware.communication.ConnectionManager;
 import middleware.ServiceInfo;
 
 public class Server{
 
     
-        ManagerConnection mc = new ManagerConnection();
+        ConnectionManager mc = new ConnectionManager();
 	public Integer userCounter;
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
@@ -95,7 +95,7 @@ public class Server{
                     //System.out.println("Numero de usuario no servidor: "+this.userCounter);
                     //System.out.println("lol");
                     
-                    Service serv = new Service(new ManagerConnection(this.mc),this.processServices,this.mapServices,this.userCounter);
+                    Service serv = new Service(new ConnectionManager(this.mc),this.processServices,this.mapServices,this.userCounter);
                     serv.start();
                     
                 }

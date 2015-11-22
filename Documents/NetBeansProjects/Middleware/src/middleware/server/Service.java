@@ -9,7 +9,7 @@ import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
-import middleware.communication.ManagerConnection;
+import middleware.communication.ConnectionManager;
 
 /**
  *
@@ -17,7 +17,7 @@ import middleware.communication.ManagerConnection;
  */
 public class Service extends Thread{
     
-    ManagerConnection mc;
+    ConnectionManager mc;
     ArrayList<MapService> mapServices = new ArrayList<MapService>();
     ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
     public Integer userCounter;
@@ -30,7 +30,7 @@ public class Service extends Thread{
      * @param map Array com os mapeamentos entre nome do serviço e o ID do mesmo
      * @param user Inteiro que conta quantos usuários estão conectados ao servidor
      */
-    public Service(ManagerConnection mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,Integer user) {
+    public Service(ConnectionManager mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,Integer user) {
         this.mc = mc;
         this.processServices = process;
         this.mapServices = map;
