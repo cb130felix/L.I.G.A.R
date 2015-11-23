@@ -34,7 +34,9 @@ public class ConnectionManager {
     public ConnectionManager() throws SocketException {
 
     }
-
+    
+    private int timeout = 4000;
+    
     /**
      * Servidor TCP.
      */
@@ -90,6 +92,7 @@ public class ConnectionManager {
 
         try {
             this.connection = new Socket(serverAdress.getIp(), serverAdress.getPort());
+            this.connection.setSoTimeout(timeout);
             return true;
         } catch (Exception e) {
             return false;
@@ -151,6 +154,7 @@ public class ConnectionManager {
     public boolean listenerTCP() {
         try {
             this.connection = this.serverSocket.accept();
+            this.connection.setSoTimeout(timeout);
 
             return true;
         } catch (Exception e) {
