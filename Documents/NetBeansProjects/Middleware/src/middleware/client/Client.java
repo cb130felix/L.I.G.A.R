@@ -34,6 +34,8 @@ public class Client {
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
     public int sendMessage(String message, String service, DataHandler dataHandler) {
         
+        message = service + "||" + message; // adicionando cabeçalho
+        
         DataSender ds = new DataSender(service, messageId, message.getBytes(), this.serviceTable, dataHandler);
         ds.start();
         messageId++;
