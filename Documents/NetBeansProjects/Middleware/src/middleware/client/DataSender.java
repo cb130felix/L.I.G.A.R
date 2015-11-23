@@ -91,12 +91,14 @@ public class DataSender extends Thread {
             }
             
             //fica tentando enviar os dados
+            
             if(mc.connectionServer(adrs)){
                 System.out.println("Conectou ao servidor!");
                 mc.sendData(data);
                 try {
                     String result = new String(mc.getData(), "UTF-8");
                     this.dataHandler.handler(this.id, result);
+                    dataSent = true;
                 } catch (UnsupportedEncodingException ex) {
                     Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
                 }

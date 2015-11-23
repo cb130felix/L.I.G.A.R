@@ -24,9 +24,18 @@ public class Client {
     
 
     public Client() {
-        
         messageId = 0;
         serviceTable = new ArrayList<>();
+        
+        
+        //teste de serviços
+        Address address = new Address("128.0.0.1", 24251);
+        ArrayList<Address> lista = new ArrayList<>();
+        lista.add(address);
+        ServiceInfo sf = new ServiceInfo(lista, "detran");
+        this.serviceTable.add(sf);
+        
+        
         
     }
 

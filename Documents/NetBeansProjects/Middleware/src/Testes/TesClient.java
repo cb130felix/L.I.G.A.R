@@ -7,6 +7,7 @@ package Testes;
 
 import java.util.ArrayList;
 import middleware.Middleware;
+import middleware.client.DataHandler;
 
 /**
  *
@@ -21,7 +22,15 @@ public class TesClient {
         // TODO code application logic here
     
         Middleware mid = new Middleware();
-
+        DataHandler handler;
+        handler = new DataHandler() {
+            
+            @Override
+            public void handler(int id, String message) {
+                System.out.println("recebeu mensagem!");
+            }
+        };
+        mid.client.sendMessage("pej3163", "detran", handler);
         
         
         
