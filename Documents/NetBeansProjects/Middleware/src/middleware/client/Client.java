@@ -29,7 +29,7 @@ public class Client {
         
         
         //teste de serviços
-        Address address = new Address("128.0.0.1", 24251);
+        Address address = new Address("127.0.0.1", 45000);
         ArrayList<Address> lista = new ArrayList<>();
         lista.add(address);
         ServiceInfo sf = new ServiceInfo(lista, "detran");
@@ -42,6 +42,7 @@ public class Client {
     //@Renan
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
     public int sendMessage(String message, String service, DataHandler dataHandler) {
+        
         
         message = service + "||" + message; // adicionando cabeçalho
         
