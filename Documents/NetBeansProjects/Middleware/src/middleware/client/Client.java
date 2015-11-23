@@ -17,25 +17,29 @@ public class Client {
 
     //cabeçalho da mensagem(cliente/servidor): id;service;message
     // exemplo prático: 200;A;qualquermerda(em json)
+    
+    int messageId;
     public ArrayList<ServiceInfo> serviceTable = null;
-    public ArrayList<String> sendQueue = null;
-    public ArrayList<String> receiveQueue = null;
+    //public ArrayList<Message> messageQueue = null;
+    
 
     public Client() {
+        
+        messageId = 0;
         serviceTable = new ArrayList<>();
+        
     }
 
     //@Renan
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
-    public boolean sendMessage(String message, String service) {
-        return true;
+    public int sendMessage(String message, String service, DataHandler dataHandler) {
+        
+               
+        messageId++;
+        return messageId;
+    
     }
 
-    //@Renan
-    //Recebe a mensagem dos servidores, de acordo com as requisições enviadas
-    public boolean receiveMessage() {
-        return true;
-    }
 
     /**
      * Método que manda broadcast para os proxys e preenche a tabela
