@@ -86,7 +86,6 @@ public class ConnectionManager {
 
         try {
             this.connection = new Socket(serverAdress.getIp(), serverAdress.getPort());
-
             return true;
         } catch (Exception e) {
             return false;
