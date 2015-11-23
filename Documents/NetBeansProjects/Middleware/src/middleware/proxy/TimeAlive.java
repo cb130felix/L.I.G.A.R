@@ -140,7 +140,7 @@ public class TimeAlive extends Thread{
             
             for(int i=0; i<p.listServices.size(); i++){
 
-                System.out.println("Serviço: "+p.listServices.get(i).getService());
+                System.out.println("Serviço: " + p.listServices.get(i).getService());
 
                 for(int y=0; y<p.listServices.get(i).getAddress().size(); y++){
                     System.out.println("   - "+p.listServices.get(i).getAddress().get(y).getIp()+":"+p.listServices.get(i).getAddress().get(y).getPort());
