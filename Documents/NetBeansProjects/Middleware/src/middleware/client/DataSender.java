@@ -6,6 +6,10 @@
 package middleware.client;
 
 import java.util.ArrayList;
+import middleware.Address;
+import middleware.ServiceInfo;
+
+import middleware.communication.ConnectionManager;
 
 /**
  *
@@ -49,6 +53,13 @@ public class DataSender extends Thread {
         while(!dataSent){
             
             //fica tentando enviar os dados
+            ServiceInfo si = this.getServiceInfo();
+            ConnectionManager mc = new ConnectionManager();
+//            Address a = this.getServiceInfo();
+            
+//            mc.connectionServer();
+        
+            
             
         }
         

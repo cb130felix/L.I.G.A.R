@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import middleware.Address;
+import middleware.ServiceInfo;
 import middleware.communication.ConnectionManager;
 
 /**

@@ -9,7 +9,7 @@ package middleware.proxy;
 import java.net.DatagramPacket;
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
-import middleware.client.ServiceInfo;
+import middleware.ServiceInfo;
 
 public class Proxy{
 
