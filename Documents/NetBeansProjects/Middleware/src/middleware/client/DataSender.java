@@ -16,18 +16,41 @@ public class DataSender extends Thread {
     byte[] data;
     ArrayList<ServiceInfo> serviceTable;
     DataHandler dataHandler;
+    boolean dataSent;
 
     public DataSender(byte[] data, ArrayList<ServiceInfo> serviceTable, DataHandler dataHandler) {
         this.data = data;
         this.serviceTable = serviceTable;
         this.dataHandler = dataHandler;
+        this.dataSent = false;
+        
     }
          
      
+    public synchronized ServiceInfo getServiceInfo(){
+        
+        if(this.serviceTable.size() > 0){
+            return this.serviceTable.get(0);
+        }else{
+            return null;
+        }
+        
+    }
+    
+    public synchronized boolean deleteServiceInfo(ServiceInfo serviceInfo){
+    
+        this.serviceTable.remove(serviceInfo);
+        return true;
+        
+    }
      
     public void run(){
-    
-        
+
+        while(!dataSent){
+            
+            //fica tentando enviar os dados
+            
+        }
         
     
     }
