@@ -5,6 +5,7 @@
  */
 package middleware.server;
 
+import java.net.SocketException;
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
 import middleware.ServiceInfo;
@@ -17,11 +18,12 @@ public class ManagerServer extends Thread{
     
     public Integer userCounter;
     int edgeClients;
-    ConnectionManager mc = new ConnectionManager();
+    ConnectionManager mc;
     private ArrayList<MapService> Services = new ArrayList<MapService>();
     int portServer;
     
-    public ManagerServer(Integer userCounter, int edge ,ArrayList<MapService> list, int port) {
+    public ManagerServer(Integer userCounter, int edge ,ArrayList<MapService> list, int port) throws SocketException {
+        this.mc = new ConnectionManager();
         this.userCounter = userCounter;
         this.edgeClients = edge;
         this.Services = list;

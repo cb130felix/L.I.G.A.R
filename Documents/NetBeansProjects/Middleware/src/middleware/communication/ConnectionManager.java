@@ -8,6 +8,7 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.logging.Level;
@@ -22,13 +23,16 @@ import middleware.Address;
  */
 public class ConnectionManager {
 
-    public ConnectionManager(ConnectionManager m) {
+    public ConnectionManager(ConnectionManager m) throws SocketException {
         this.serverSocket = m.serverSocket;
         this.connection = m.connection;
         this.broadcast = m.broadcast;
+        
+        
     }
 
-    public ConnectionManager() {
+    public ConnectionManager() throws SocketException {
+
     }
 
     /**
@@ -129,6 +133,8 @@ public class ConnectionManager {
     public boolean startServerTCP(int port) {
         try {
             serverSocket = new ServerSocket(port);
+            serverSocket.setReuseAddress(true);
+
             return true;
         } catch (Exception e) {
             return false;

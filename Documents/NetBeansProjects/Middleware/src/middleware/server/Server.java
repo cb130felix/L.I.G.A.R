@@ -12,6 +12,7 @@ package middleware.server;
  * @author Guto
  */
 
+import java.net.SocketException;
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
 import middleware.ServiceInfo;
@@ -19,7 +20,7 @@ import middleware.ServiceInfo;
 public class Server{
 
     
-        ConnectionManager mc = new ConnectionManager();
+        ConnectionManager mc;
 	public Integer userCounter;
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
@@ -30,7 +31,8 @@ public class Server{
         * Construtor do servidor
         * @param edgeClient Limite de clientes simultâneos no servidor
         */
-        public Server(int edgeClient) {
+        public Server(int edgeClient) throws SocketException {
+        this.mc = new ConnectionManager();
             
             this.edgeClients = edgeClient;
             this.port = 45000;
@@ -43,7 +45,8 @@ public class Server{
          * o valor padrão é 100.
          *
          */
-        public Server() {
+        public Server() throws SocketException {
+        this.mc = new ConnectionManager();
 
             this.edgeClients = 100;
             this.port = 45000;
@@ -82,7 +85,7 @@ public class Server{
          * Método para inicializar o servidor. Esse método inicia o gerenciador do servidor e faz com que ele comece a escutar
          * requisições.
          */
-	public void startServer(){
+	public void startServer() throws SocketException{
         
             
             ManagerServer ms = new ManagerServer(this.userCounter, this.edgeClients, this.mapServices,this.port);

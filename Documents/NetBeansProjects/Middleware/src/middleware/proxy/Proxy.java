@@ -7,6 +7,7 @@ package middleware.proxy;
  */
 
 import java.net.DatagramPacket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
 import middleware.ServiceInfo;
@@ -28,14 +29,14 @@ public class Proxy{
     
     
     // Iniciando proxy
-    public void startProxy(){
+    public void startProxy() throws SocketException{
         TimeAlive.getInstance().start();
         this.listener();        
     }
     
     // Método para escutar uma porta UDP. 
     // Quando conectar, chama o método 'ManagerProxy' e depois volta a escutar
-    private void listener(){
+    private void listener() throws SocketException{
         
         ConnectionManager mc = new ConnectionManager();
         

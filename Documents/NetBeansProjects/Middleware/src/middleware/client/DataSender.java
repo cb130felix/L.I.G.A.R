@@ -6,6 +6,7 @@
 package middleware.client;
 
 import java.io.UnsupportedEncodingException;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -70,7 +71,12 @@ public class DataSender extends Thread {
     public void run(){
     
     Address adrs = null;
-    ConnectionManager mc = new ConnectionManager();
+    ConnectionManager mc = null;
+        try {
+            mc = new ConnectionManager();
+        } catch (SocketException ex) {
+            Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
+        }
             
         while(!dataSent){
             
