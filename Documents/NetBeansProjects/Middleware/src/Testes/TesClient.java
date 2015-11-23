@@ -12,7 +12,7 @@ import middleware.Middleware;
  *
  * @author LIGAR
  */
-public class ProjetoSD {
+public class TesClient {
 
     /**
      * @param args the command line arguments
@@ -21,8 +21,10 @@ public class ProjetoSD {
         // TODO code application logic here
     
         Middleware mid = new Middleware();
-        mid.server.startServer();
-    
+
+        
+        
+        
     }
     
 }
