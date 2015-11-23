@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package middleware;
+package Testes;
 
 import java.util.ArrayList;
+import middleware.Middleware;
 
 /**
  *
@@ -19,7 +20,8 @@ public class ProjetoSD {
     public static void main(String[] args) {
         // TODO code application logic here
     
-        
+        Middleware mid = new Middleware();
+        mid.server.startServer();
     
     }
     

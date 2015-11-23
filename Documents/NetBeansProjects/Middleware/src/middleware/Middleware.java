@@ -15,14 +15,14 @@ import middleware.server.Server;
  */
 public class Middleware {
     
-    Client client;
-    Proxy proxy;
-    Server server;
+    public Client client;
+    public Proxy proxy;
+    public Server server;
 
-    public Middleware(Client client, Proxy proxy, Server server) {
-        this.client = client;
-        this.proxy = proxy;
-        this.server = server;
+    public Middleware() {
+        this.client = new Client();
+        this.proxy = Proxy.getInstance();
+        this.server = new Server();
     }
     
     
