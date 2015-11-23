@@ -33,7 +33,7 @@ public class Server{
         public Server(int edgeClient) {
             
             this.edgeClients = edgeClient;
-            this.port = 34251;
+            this.port = 45000;
             this.userCounter = new Integer(0);
             mc.startServerTCP(this.port);
         }
@@ -46,7 +46,7 @@ public class Server{
         public Server() {
 
             this.edgeClients = 100;
-            this.port = 34251;
+            this.port = 45000;
             this.userCounter = new Integer(0);
             mc.startServerTCP(this.port);
         }
