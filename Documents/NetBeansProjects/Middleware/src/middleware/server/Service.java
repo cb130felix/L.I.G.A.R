@@ -77,7 +77,7 @@ public class Service extends Thread{
                             this.decrementsUserCounter();
                             check = true;
                             System.out.println("contador: "+this.userCounter);
-                            mc.closeConnection();
+                            
                         }
 
                       
@@ -88,7 +88,7 @@ public class Service extends Thread{
                         this.mc.sendData("Servico nao encontrado...".getBytes());
                         this.decrementsUserCounter();
                         check = true;
-                        mc.closeConnection();
+                        
                     }
             
                 }catch (Exception e) {
