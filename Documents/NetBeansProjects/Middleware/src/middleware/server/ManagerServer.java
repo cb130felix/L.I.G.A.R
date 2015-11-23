@@ -35,7 +35,7 @@ public class ManagerServer extends Thread{
     public void run(){
     
         this.sendMensageToProxy();
-        
+        // teste
     
     }
     
