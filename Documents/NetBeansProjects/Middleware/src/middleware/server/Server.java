@@ -19,7 +19,7 @@ import middleware.ServiceInfo;
 
 public class Server{
 
-    
+        
         ConnectionManager mc;
 	public Integer userCounter;
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
@@ -35,7 +35,7 @@ public class Server{
         this.mc = new ConnectionManager();
             
             this.edgeClients = edgeClient;
-            this.port = 45000;
+            this.port = 24246;
             this.userCounter = new Integer(0);
             mc.startServerTCP(this.port);
         }
@@ -49,7 +49,7 @@ public class Server{
         this.mc = new ConnectionManager();
 
             this.edgeClients = 100;
-            this.port = 45000;
+            this.port = 24246;
             this.userCounter = new Integer(0);
             mc.startServerTCP(this.port);
         }

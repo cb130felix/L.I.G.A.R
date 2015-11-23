@@ -5,6 +5,7 @@
  */
 package Testes;
 
+import java.net.SocketException;
 import middleware.Middleware;
 
 /**
@@ -13,7 +14,7 @@ import middleware.Middleware;
  */
 public class TestProxy {
     
-     public static void main(String[] args) {
+     public static void main(String[] args) throws SocketException {
         // TODO code application logic here
     
         Middleware mid = new Middleware();

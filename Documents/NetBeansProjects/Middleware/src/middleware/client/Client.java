@@ -29,7 +29,7 @@ public class Client {
         
         
         //teste de serviços
-        Address address = new Address("127.0.0.1", 45000);
+        Address address = new Address("127.0.0.1", 24246);
         ArrayList<Address> lista = new ArrayList<>();
         lista.add(address);
         ServiceInfo sf = new ServiceInfo(lista, "detran");

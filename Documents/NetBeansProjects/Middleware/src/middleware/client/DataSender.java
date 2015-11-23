@@ -5,7 +5,8 @@
  */
 package middleware.client;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
+import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -96,24 +97,32 @@ public class DataSender extends Thread {
                 
             }
             
-            //fica tentando enviar os dados
-            
-            if(mc.connectionServer(adrs)){
+            try{
+                
+                mc.connectionServer(adrs);
                 System.out.println("Conectou ao servidor!");
                 mc.sendData(data);
-                try {
-                    String result = new String(mc.getData(), "UTF-8");
-                    this.dataHandler.handler(this.id, result);
+                System.out.println("enviou dados");
                     dataSent = true;
-                } catch (UnsupportedEncodingException ex) {
-                    Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                mc.closeConnection();
+//                    
+//                    try {
+//                        String result = new String(mc.getData(), "UTF-8");
+//                        this.dataHandler.handler(this.id, result);
+//                        dataSent = true;
+//                    } catch (UnsupportedEncodingException ex) {
+//                        Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+                    
+                    mc.closeConnection();
+                    
+                    System.out.println("Conexão fechada: " + mc.getConnection().isClosed());
                 
-                
-            }else{
+            
+            }catch(Exception ex){
                 System.out.println("O servidor não foi encontrado...");
             }
+            
+                
         
             
             
