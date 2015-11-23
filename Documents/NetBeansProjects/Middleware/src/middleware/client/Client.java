@@ -16,12 +16,11 @@ import middleware.communication.ConnectionManager;
  */
 public class Client {
 
-    //cabeçalho da mensagem(cliente/servidor): id;service;message
-    // exemplo prático: 200;A;qualquermerda(em json)
+    //cabeçalho da mensagem(cliente/servidor): id||service||message
+    // exemplo prático: 200||A||qualquermerda(em json)
     
     int messageId;
     public ArrayList<ServiceInfo> serviceTable = null; // IMPORTANTE: serviceTable É UMA REGIÃO CRÍTICA!!!!!!!
-    //public ArrayList<Message> messageQueue = null;
     
 
     public Client() {
@@ -35,7 +34,7 @@ public class Client {
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
     public int sendMessage(String message, String service, DataHandler dataHandler) {
         
-        DataSender ds = new DataSender(message.getBytes(), this.serviceTable, dataHandler);
+        DataSender ds = new DataSender(service, messageId, message.getBytes(), this.serviceTable, dataHandler);
         ds.start();
         messageId++;
         return messageId;

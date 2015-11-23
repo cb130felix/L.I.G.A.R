@@ -5,7 +5,10 @@
  */
 package middleware.client;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import middleware.Address;
 import middleware.ServiceInfo;
 
@@ -17,12 +20,17 @@ import middleware.communication.ConnectionManager;
  */
 public class DataSender extends Thread {
     
+    int id;
     byte[] data;
     ArrayList<ServiceInfo> serviceTable;
     DataHandler dataHandler;
     boolean dataSent;
-
-    public DataSender(byte[] data, ArrayList<ServiceInfo> serviceTable, DataHandler dataHandler) {
+    String service;
+    
+    public DataSender(String service,int id, byte[] data, ArrayList<ServiceInfo> serviceTable, DataHandler dataHandler) {
+        
+        this.id = id;
+        this.service = service;
         this.data = data;
         this.serviceTable = serviceTable;
         this.dataHandler = dataHandler;
@@ -31,33 +39,73 @@ public class DataSender extends Thread {
     }
          
      
-    public synchronized ServiceInfo getServiceInfo(){
+    public synchronized Address getAddress(){
         
-        if(this.serviceTable.size() > 0){
-            return this.serviceTable.get(0);
-        }else{
-            return null;
+        for(int i = 0; i < this.serviceTable.size(); i++){
+            
+            //se o serviço existir na serviceTable e houver pelo menos um endereço disponível, pega o primeiro endererço
+            if((this.serviceTable.get(i).getService().equals(this.service)) && (this.serviceTable.get(i).getAddress().size() > 0)){
+                return this.serviceTable.get(i).getAddress().get(0);
+            }
+            
         }
+        
+        return null;
         
     }
     
-    public synchronized boolean deleteServiceInfo(ServiceInfo serviceInfo){
+    public synchronized boolean deleteAddress(Address address){
     
-        this.serviceTable.remove(serviceInfo);
+        for(int i = 0; i < this.serviceTable.size(); i++){
+            if(this.serviceTable.get(i).getService().equals(this.service)){
+
+                this.serviceTable.get(i).getAddress().remove(address);
+                
+            }
+        }
         return true;
         
     }
      
     public void run(){
-
+    
+    Address adrs = null;
+    ConnectionManager mc = new ConnectionManager();
+            
         while(!dataSent){
             
-            //fica tentando enviar os dados
-            ServiceInfo si = this.getServiceInfo();
-            ConnectionManager mc = new ConnectionManager();
-//            Address a = this.getServiceInfo();
+            while(adrs == null){
+                
+                adrs = this.getAddress();
+                if(adrs == null){
+                    System.out.println("Serviço desconhecido...");
+                }else{
+                    System.out.println("Serviço conhecido!");
+                }
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
             
-//            mc.connectionServer();
+            //fica tentando enviar os dados
+            if(mc.connectionServer(adrs)){
+                System.out.println("Conectou ao servidor!");
+                mc.sendData(data);
+                try {
+                    String result = new String(mc.getData(), "UTF-8");
+                    this.dataHandler.handler(this.id, result);
+                } catch (UnsupportedEncodingException ex) {
+                    Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                mc.closeConnection();
+                
+                
+            }else{
+                System.out.println("O servidor não foi encontrado...");
+            }
         
             
             
