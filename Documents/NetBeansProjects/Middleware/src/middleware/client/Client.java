@@ -21,6 +21,10 @@ public class Client {
     public ArrayList<String> sendQueue = null;
     public ArrayList<String> receiveQueue = null;
 
+    public Client() {
+        serviceTable = new ArrayList<>();
+    }
+
     //@Renan
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
     public boolean sendMessage(String message, String service) {
@@ -74,7 +78,6 @@ public class Client {
                 }
             }
 
-            serviceTable = new ArrayList<>(); //dúvida aqui 
             Address address;
             ArrayList<Address> arrayListAddress = new ArrayList<>();
 
