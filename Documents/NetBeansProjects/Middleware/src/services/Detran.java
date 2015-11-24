@@ -16,15 +16,15 @@ import middleware.server.ServiceProcess;
 public class Detran implements ServiceProcess {
     
     @Override
-    public byte[] process(byte[] data) {
+    public byte[] process(String placa) {
         
-        String placa ="";
+        /*String placa ="";
 
         try {
             placa = new String(data, "UTF-8");
         } catch (Exception ex) {
             System.out.println("S:erro " + ex);
-        }
+        }*/
         
         String importante="";
         ArrayList<String> aux = new ArrayList<>();
