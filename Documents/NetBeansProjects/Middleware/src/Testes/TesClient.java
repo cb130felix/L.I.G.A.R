@@ -5,6 +5,7 @@
  */
 package Testes;
 
+import java.net.SocketException;
 import java.util.ArrayList;
 import middleware.Middleware;
 import middleware.client.DataHandler;
@@ -18,7 +19,7 @@ public class TesClient {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SocketException {
         // TODO code application logic here
     
         Middleware mid = new Middleware();
@@ -27,7 +28,7 @@ public class TesClient {
             
             @Override
             public void handler(int id, String message) {
-                System.out.println("recebeu mensagem!");
+                System.out.println(message);
             }
         };
         mid.client.sendMessage("pej3163", "detran", handler);

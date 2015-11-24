@@ -29,9 +29,10 @@ public class Client {
         
         
         //teste de serviços
-        Address address = new Address("127.0.0.1", 24246);
+        
         ArrayList<Address> lista = new ArrayList<>();
-        lista.add(address);
+        lista.add(new Address("127.0.0.1", 24247));
+        lista.add(new Address("127.0.0.1", 24246));
         ServiceInfo sf = new ServiceInfo(lista, "detran");
         this.serviceTable.add(sf);
         
@@ -44,7 +45,7 @@ public class Client {
     public int sendMessage(String message, String service, DataHandler dataHandler) {
         
         
-        message = service + "||" + message; // adicionando cabeçalho
+        message = messageId + "||" + service + "||" + message; // adicionando cabeçalho
         
         DataSender ds = new DataSender(service, messageId, message.getBytes(), this.serviceTable, dataHandler);
         ds.start();

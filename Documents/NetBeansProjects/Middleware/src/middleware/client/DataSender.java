@@ -42,6 +42,7 @@ public class DataSender extends Thread {
          
      
     public synchronized Address getAddress(){
+
         
         for(int i = 0; i < this.serviceTable.size(); i++){
             
@@ -51,7 +52,6 @@ public class DataSender extends Thread {
             }
             
         }
-        
         return null;
         
     }
@@ -71,6 +71,7 @@ public class DataSender extends Thread {
      
     public void run(){
     
+    int attempt=0;
     Address adrs = null;
     ConnectionManager mc = null;
         try {
@@ -82,7 +83,7 @@ public class DataSender extends Thread {
         while(!dataSent){
             
             while(adrs == null){
-                
+                System.out.println("Tenando pegar algo...");
                 adrs = this.getAddress();
                 if(adrs == null){
                     System.out.println("Serviço desconhecido...");
@@ -97,31 +98,30 @@ public class DataSender extends Thread {
                 
             }
             
-            try{
-                
-                mc.connectionServer(adrs);
-                System.out.println("Conectou ao servidor!");
-                mc.sendData(data);
-                System.out.println("enviou dados");
-                    dataSent = true;
-//                    
-//                    try {
-//                        String result = new String(mc.getData(), "UTF-8");
-//                        this.dataHandler.handler(this.id, result);
-//                        dataSent = true;
-//                    } catch (UnsupportedEncodingException ex) {
-//                        Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-                    
+            while(attempt < 3){
+                System.out.println("Tentando conectar ao servidor...("+attempt+")");
+                try{
+
+                    mc.connectionServer(adrs);
+                    mc.sendData(this.data);
+                    byte[] data2 = mc.getData();
+                    String result = new String(data2, "UTF-8");
                     mc.closeConnection();
+                    dataSent = true;
+                    dataHandler.handler(id, result);
+                    break;
                     
-                    System.out.println("Conexão fechada: " + mc.getConnection().isClosed());
+                }catch(Exception ex){
+                    System.out.println("O servidor não foi encontrado...");
+                    attempt++;
+                }
                 
-            
-            }catch(Exception ex){
-                System.out.println("O servidor não foi encontrado...");
             }
             
+            System.out.println("Deletando servidor da lista de serviços...");
+            deleteAddress(adrs);
+            adrs = null;
+            attempt = 0;
                 
         
             

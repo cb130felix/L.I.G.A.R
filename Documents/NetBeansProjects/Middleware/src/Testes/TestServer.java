@@ -7,6 +7,8 @@ package Testes;
 
 import java.net.SocketException;
 import middleware.Middleware;
+import middleware.server.Server;
+import middleware.server.ServiceProcess;
 import services.Detran;
 
 /**
@@ -18,10 +20,14 @@ public class TestServer {
      public static void main(String[] args) throws SocketException {
         // TODO code application logic here
     
-        Detran detran = new Detran();
-        Middleware mid = new Middleware();
-        mid.server.addService("detran", detran);
-        mid.server.startServer();
+           
+        Server s = new Server();
+        
+        Detran serv2 = new Detran();
+                
+        s.addService("detran", serv2);
+        s.setPort(24246);
+        s.startServer();
         
         
     }
