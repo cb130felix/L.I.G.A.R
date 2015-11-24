@@ -65,8 +65,9 @@ public class Service extends Thread{
                    
                     if(idServico != -1){
                         
-                        System.out.println("ID: "+idServico);
-                        reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
+                        //System.out.println("ID: "+idServico);
+                        
+                        reply =  this.processServices.get(idServico).process(mensages[2]);
 
                         msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
                         

@@ -11,6 +11,6 @@ package middleware.server;
  */
 public interface ServiceProcess {
     
-    public byte[] process(byte[] data);
+    public byte[] process(String mensage);
     
 }
