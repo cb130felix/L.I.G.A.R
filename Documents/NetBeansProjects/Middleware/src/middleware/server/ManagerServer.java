@@ -16,13 +16,13 @@ import middleware.ServiceInfo;
  */
 public class ManagerServer extends Thread{
     
-    public Integer userCounter;
+    public UserCounter userCounter;
     int edgeClients;
     ConnectionManager mc;
     private ArrayList<MapService> Services = new ArrayList<MapService>();
     int portServer;
     
-    public ManagerServer(Integer userCounter, int edge ,ArrayList<MapService> list, int port) throws SocketException {
+    public ManagerServer(UserCounter userCounter, int edge ,ArrayList<MapService> list, int port) throws SocketException {
         this.mc = new ConnectionManager();
         this.userCounter = userCounter;
         this.edgeClients = edge;
@@ -51,7 +51,7 @@ public class ManagerServer extends Thread{
                 
                     sleep(5000);// Madará mensagens de 5 em 5 segundos
 
-                    if(this.userCounter < this.edgeClients){
+                    if(this.userCounter.cont < this.edgeClients){
 
                         msg = msg +this.AtualizaServicos();
 

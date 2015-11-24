@@ -20,29 +20,32 @@ import middleware.ServiceInfo;
 public class Server{
 
         
-        ConnectionManager mc;
-	public Integer userCounter;
+        public ConnectionManager mc;
+	public UserCounter userCounter;
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
-        ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
-        int edgeClients;
+        public ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
+        public int edgeClients;
+        private boolean enableProxy;
         
        /**
         * Construtor do servidor
         * @param edgeClient Limite de clientes simultâneos no servidor
+        * @param proxy variável que habilita o proxy
         */
-        public Server(int edgeClient) throws SocketException {
+        public Server(int edgeClient, boolean proxy){
         this.mc = new ConnectionManager();
             
             this.edgeClients = edgeClient;
             this.port = 24246;
-            this.userCounter = new Integer(0);
+            this.userCounter = new UserCounter(0);
+            this.enableProxy = proxy;
             //mc.startServerTCP(this.port);
         }
 
         /**
          * Construtor do servidor. Quando não é fornecido o número limte de usuários,
-         * o valor padrão é 100.
+         * o valor padrão é 100 e o proxy é ativado por padrão.
          *
          */
         public Server() throws SocketException {
@@ -50,7 +53,8 @@ public class Server{
 
             this.edgeClients = 100;
             this.port = 24246;
-            this.userCounter = new Integer(0);
+            this.userCounter = new UserCounter(0);
+            this.enableProxy = true;
             //mc.startServerTCP(this.port);
         }
         
@@ -92,8 +96,12 @@ public class Server{
                 System.out.println("Servidor pronto!");
             }
             
-            ManagerServer ms = new ManagerServer(this.userCounter, this.edgeClients, this.mapServices,this.port);
-            ms.start();
+            if(this.enableProxy == true){
+            
+                ManagerServer ms = new ManagerServer(this.userCounter, this.edgeClients, this.mapServices,this.port);
+                ms.start();
+                
+            }
             
             while(true){
             
@@ -104,7 +112,7 @@ public class Server{
                     System.out.println("Uma requisicao!");
                     
                     this.IncrementUser();
-                    System.out.println("Numero de usuario no servidor: "+this.userCounter);
+                    System.out.println("Numero de usuario no servidor: "+this.userCounter.cont);
                     //System.out.println("lol");
                     
                     Service serv = new Service(new ConnectionManager(this.mc),this.processServices,this.mapServices,this.userCounter);
@@ -129,7 +137,7 @@ public class Server{
         
         public synchronized void IncrementUser(){
         
-            this.userCounter = this.userCounter + 1;
+            this.userCounter.cont++;
         
         }
 

@@ -20,7 +20,7 @@ public class Service extends Thread{
     ConnectionManager mc;
     ArrayList<MapService> mapServices = new ArrayList<MapService>();
     ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
-    public Integer userCounter;
+    public UserCounter userCounter;
 
     
     /**
@@ -30,7 +30,7 @@ public class Service extends Thread{
      * @param map Array com os mapeamentos entre nome do serviço e o ID do mesmo
      * @param user Inteiro que conta quantos usuários estão conectados ao servidor
      */
-    public Service(ConnectionManager mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,Integer user) {
+    public Service(ConnectionManager mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,UserCounter user) {
         this.mc = mc;
         this.processServices = process;
         this.mapServices = map;
@@ -64,7 +64,8 @@ public class Service extends Thread{
                     
                    
                     if(idServico != -1){
-
+                        
+                        System.out.println("ID: "+idServico);
                         reply =  this.processServices.get(idServico).process(mensages[2].getBytes());
 
                         msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
@@ -76,7 +77,7 @@ public class Service extends Thread{
                         
                             this.decrementsUserCounter();
                             check = true;
-                            System.out.println("contador: "+this.userCounter);
+                            System.out.println("contador: "+this.userCounter.cont);
                             
                         }
 
@@ -124,7 +125,7 @@ public class Service extends Thread{
      */
     public synchronized void decrementsUserCounter(){
     
-        this.userCounter = this.userCounter - 1;
+        this.userCounter.cont = this.userCounter.cont - 1;
         
     }
     
