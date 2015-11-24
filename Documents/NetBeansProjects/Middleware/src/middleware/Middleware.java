@@ -5,6 +5,7 @@
  */
 package middleware;
 
+import java.net.SocketException;
 import middleware.client.Client;
 import middleware.proxy.Proxy;
 import middleware.server.Server;
@@ -19,7 +20,7 @@ public class Middleware {
     public Proxy proxy;
     public Server server;
 
-    public Middleware() {
+    public Middleware() throws SocketException {
         this.client = new Client();
         this.proxy = Proxy.getInstance();
         this.server = new Server();
