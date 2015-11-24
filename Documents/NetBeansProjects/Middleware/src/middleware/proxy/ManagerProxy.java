@@ -43,10 +43,11 @@ public class ManagerProxy extends Thread{
                 
                 System.out.print("Requisição do usuário: "+addressReceived+", para serviço: "+data[1]);
                 
-                String answer = new ManagerTable().sendService(data);
+                String answer = data[1].trim() + "||" + new ManagerTable().sendService(data); 
                 
                 System.out.println(" ----> Mensagem de envio: "+answer);
-                mc.sendData(answer.getBytes());
+                //mc.sendData(answer.getBytes());
+                mc.broadcast(answer.getBytes(), 6969);
                 
             }
             

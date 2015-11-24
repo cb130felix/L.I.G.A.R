@@ -14,7 +14,7 @@ import middleware.Middleware;
  */
 public class TestProxy {
     
-     public static void main(String[] args) throws SocketException {
+     public static void main(String[] args) throws SocketException, InterruptedException {
         // TODO code application logic here
     
         Middleware mid = new Middleware();

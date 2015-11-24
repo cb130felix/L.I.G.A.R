@@ -23,16 +23,17 @@ public class Client {
     public ArrayList<ServiceInfo> serviceTable = null; // IMPORTANTE: serviceTable É UMA REGIÃO CRÍTICA!!!!!!!
     
 
-    public Client() {
+    public Client() throws InterruptedException {
         messageId = 0;
         serviceTable = new ArrayList<>();
         
-        
         //teste de serviços
-        
+        SearchService ss = new SearchService(serviceTable);
+        ss.start();
+//        ss.wait();
         ArrayList<Address> lista = new ArrayList<>();
-        lista.add(new Address("127.0.0.1", 24247));
-        lista.add(new Address("127.0.0.1", 24246));
+        //lista.add(new Address("127.0.0.1", 24247));
+        //lista.add(new Address("127.0.0.1", 24246));
         ServiceInfo sf = new ServiceInfo(lista, "detran");
         this.serviceTable.add(sf);
         
@@ -43,6 +44,15 @@ public class Client {
     //@Renan
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
     public int sendMessage(String message, String service, DataHandler dataHandler) {
+
+        //Adicionando serviço na serviceTable caso ele não exista
+        int i;
+        for (i = 0; i < this.serviceTable.size(); i++) {
+            if(this.serviceTable.get(i).getService().equals(service)) break;
+        }
+        if(i == this.serviceTable.size()){
+            this.serviceTable.add(new ServiceInfo(new ArrayList<Address>(), service));
+        }
         
         
         message = messageId + "||" + service + "||" + message; // adicionando cabeçalho
@@ -66,40 +76,42 @@ public class Client {
      * espera, e retorna '3' caso não haja servidor disponível para o serviço
      * requisitado.
      */
-    public int searchService(String service, String nameOfService) {
+    public int searchService(String nameOfService) {
+        String cab = "M1";
         try {
             //fazendo broadcast 
-            String stringOfMessege = service + "||" + nameOfService;
+            String stringOfMessege = cab + "||" + nameOfService;
             byte[] sendData = stringOfMessege.getBytes();
             ConnectionManager mc = new ConnectionManager();
-            mc.broadcast(sendData, 24240);
-
-            //recebendo resposta do broadcast
-            DatagramPacket receiveData = mc.listenerUDP(24240);
-            String messege = Arrays.toString(receiveData.getData());
-
+//            mc.broadcast(sendData, 24240);
+//
+//            //recebendo resposta do broadcast
+//            DatagramPacket receiveData = mc.listenerUDP(24240); //lembrar de definir taime alte(lembrar que isso significa time out)
+//            String messege = Arrays.toString(receiveData.getData());
+            String message = " "; 
             int counter = 0;
-            while (messege.equals(" ")) {
+            do{
+
                 if (counter == 3) {
                     return 3;
                 }
                 try {
                     Thread.sleep(3000);
                     mc.broadcast(sendData, 24240);
-                    receiveData = mc.listenerUDP(24240);
-                    messege = Arrays.toString(receiveData.getData());
+                    DatagramPacket receiveData = mc.listenerUDP(24240);
+                    message = Arrays.toString(receiveData.getData());
 
                     counter++;
                 } catch (InterruptedException ex) {
                     Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
                     return 2;
                 }
-            }
+            }while (message.equals(" "));
 
             Address address;
             ArrayList<Address> arrayListAddress = new ArrayList<>();
 
-            String[] mTempFirstDivision = messege.split(Pattern.quote("||"));
+            String[] mTempFirstDivision = message.split(Pattern.quote("||"));
             String[] mTempSecondDivision;
 
             for (String mTempFirstDivision1 : mTempFirstDivision) {
@@ -107,7 +119,7 @@ public class Client {
                 address = new Address(mTempSecondDivision[0], Integer.parseInt(mTempSecondDivision[1]));
                 arrayListAddress.add(address);
             }
-            serviceTable.add(new ServiceInfo(arrayListAddress, service));
+            serviceTable.add(new ServiceInfo(arrayListAddress, nameOfService));
 
         } catch (Exception e) {
             return 1;

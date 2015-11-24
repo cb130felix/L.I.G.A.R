@@ -48,7 +48,8 @@ public class DataSender extends Thread {
             
             //se o serviço existir na serviceTable e houver pelo menos um endereço disponível, pega o primeiro endererço
             if((this.serviceTable.get(i).getService().equals(this.service)) && (this.serviceTable.get(i).getAddress().size() > 0)){
-                return this.serviceTable.get(i).getAddress().get(0);
+                Address adrs = new Address(this.serviceTable.get(i).getAddress().get(0).getIp(), this.serviceTable.get(i).getAddress().get(0).getPort());
+                return adrs;
             }
             
         }
@@ -60,8 +61,12 @@ public class DataSender extends Thread {
     
         for(int i = 0; i < this.serviceTable.size(); i++){
             if(this.serviceTable.get(i).getService().equals(this.service)){
-
-                this.serviceTable.get(i).getAddress().remove(address);
+                for (int j = 0; j < this.serviceTable.get(i).getAddress().size(); j++) {
+                    if(this.serviceTable.get(i).getAddress().get(j).getIp().equals(address.getIp()) && this.serviceTable.get(i).getAddress().get(j).getPort() == address.getPort()){
+                        this.serviceTable.get(i).getAddress().remove(j);
+                    }
+                }
+                //this.serviceTable.get(i).getAddress().remove(address);
                 
             }
         }
@@ -74,11 +79,7 @@ public class DataSender extends Thread {
     int attempt=0;
     Address adrs = null;
     ConnectionManager mc = null;
-        try {
-            mc = new ConnectionManager();
-        } catch (SocketException ex) {
-            Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    mc = new ConnectionManager();
             
         while(!dataSent){
             
@@ -117,12 +118,12 @@ public class DataSender extends Thread {
                 }
                 
             }
-            
-            System.out.println("Deletando servidor da lista de serviços...");
-            deleteAddress(adrs);
-            adrs = null;
-            attempt = 0;
-                
+            if(attempt >= 3){
+                System.out.println("Deletando servidor da lista de serviços...");
+                deleteAddress(adrs);
+                adrs = null;
+                attempt = 0;
+            }
         
             
             

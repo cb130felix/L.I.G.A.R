@@ -19,7 +19,7 @@ public class TesClient {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SocketException {
+    public static void main(String[] args) throws SocketException, InterruptedException {
         // TODO code application logic here
     
         Middleware mid = new Middleware();
@@ -31,9 +31,13 @@ public class TesClient {
                 System.out.println(message);
             }
         };
+        
+        
         mid.client.sendMessage("pej3163", "detran", handler);
         //teste
         
+        Thread.sleep(10000);
+        mid.client.sendMessage("pej3163", "detran", handler);
         
     }
     
