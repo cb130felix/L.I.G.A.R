@@ -23,15 +23,13 @@ import middleware.Address;
  */
 public class ConnectionManager {
 
-    public ConnectionManager(ConnectionManager m) throws SocketException {
+    public ConnectionManager(ConnectionManager m){
         this.serverSocket = m.serverSocket;
         this.connection = m.connection;
         this.broadcast = m.broadcast;
-        
-        
     }
 
-    public ConnectionManager() throws SocketException {
+    public ConnectionManager() {
 
     }
     
