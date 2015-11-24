@@ -114,7 +114,8 @@ public class Service extends Thread{
                 }
             
        }// fim do while
-    
+        
+        this.mc.closeConnection();
     
     }// fim do método run
     
