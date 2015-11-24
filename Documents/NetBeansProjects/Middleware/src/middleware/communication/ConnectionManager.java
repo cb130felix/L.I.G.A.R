@@ -155,8 +155,7 @@ public class ConnectionManager {
     public boolean listenerTCP() {
         try {
             this.connection = this.serverSocket.accept();
-            this.connection.setSoTimeout(timeout);
-
+            
             return true;
         } catch (Exception e) {
             return false;
