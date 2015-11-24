@@ -37,7 +37,7 @@ public class Server{
             this.edgeClients = edgeClient;
             this.port = 24246;
             this.userCounter = new Integer(0);
-            mc.startServerTCP(this.port);
+            //mc.startServerTCP(this.port);
         }
 
         /**
@@ -51,7 +51,7 @@ public class Server{
             this.edgeClients = 100;
             this.port = 24246;
             this.userCounter = new Integer(0);
-            mc.startServerTCP(this.port);
+            //mc.startServerTCP(this.port);
         }
         
         
@@ -87,6 +87,10 @@ public class Server{
          */
 	public void startServer() throws SocketException{
         
+            if(mc.startServerTCP(this.port)){
+            
+                System.out.println("Servidor pronto!");
+            }
             
             ManagerServer ms = new ManagerServer(this.userCounter, this.edgeClients, this.mapServices,this.port);
             ms.start();
