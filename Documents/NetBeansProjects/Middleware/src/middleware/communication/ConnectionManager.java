@@ -136,8 +136,6 @@ public class ConnectionManager {
     public boolean startServerTCP(int port) {
         try {
             serverSocket = new ServerSocket(port);
-            serverSocket.setSoTimeout(timeout);
-            serverSocket.setReuseAddress(true);
 
             return true;
         } catch (Exception e) {
