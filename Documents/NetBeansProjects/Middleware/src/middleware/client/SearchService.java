@@ -29,6 +29,7 @@ public class SearchService extends Thread {
 
     public void run() {
 
+        ArrayList<Address> arrayListAddress = new ArrayList<Address>();
         String[] result = null;
         String[] mTempFirstDivision;
         String[] mTempSecondDivision;
@@ -82,17 +83,22 @@ public class SearchService extends Thread {
                         }
                     } while (message.equals(" "));
 
-                    Address address;
-                    ArrayList<Address> arrayListAddress = new ArrayList<>();
+                    
 
                     mTempFirstDivision = result[1].split(Pattern.quote("||"));
                     
-
+                    
                     for (String mTempFirstDivision1 : mTempFirstDivision) {
-                        mTempSecondDivision = mTempFirstDivision1.split(":");
-                        address = new Address(mTempSecondDivision[0], Integer.parseInt(mTempSecondDivision[1]));
-                        arrayListAddress.add(address);
+
+                        mTempSecondDivision = mTempFirstDivision1.split(Pattern.quote(":"));
+                        System.out.println("----> CHEGOU AQUI!!!");
+                        System.out.println("------>Total: " + mTempFirstDivision1);
+                        System.out.println("p1: " + mTempSecondDivision[0] + " / p2: " + Integer.parseInt(mTempSecondDivision[1]));
+                        arrayListAddress.add(new Address(mTempSecondDivision[0], Integer.parseInt(mTempSecondDivision[1])));
+                        System.out.println("Passei do erro");
+                            
                     }
+
                     serviceTable.add(new ServiceInfo(arrayListAddress, nameOfService));
                     for (int j = 0; j < 10; j++) {
                         System.out.println("Adicionando servico; Nome:" + nameOfService + " / endereco: " + arrayListAddress.get(j).getIp() + "/" + arrayListAddress.get(j).getPort());

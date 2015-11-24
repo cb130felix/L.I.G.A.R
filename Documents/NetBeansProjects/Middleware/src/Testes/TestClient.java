@@ -14,7 +14,7 @@ import middleware.client.DataHandler;
  *
  * @author LIGAR
  */
-public class TesClient {
+public class TestClient {
 
     /**
      * @param args the command line arguments
