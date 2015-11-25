@@ -18,16 +18,27 @@ import middleware.Address;
  */
 public class ConnectionManager {
 
+    /**
+     * Construtor alternativo que irá construir um novo objeto de gerenciador
+     * de comunicações com a referência passada.
+     * @param m - Gerenciador de comunicação a ser referenciado.
+     */
     public ConnectionManager(ConnectionManager m){
         this.serverSocket = m.serverSocket;
         this.connection = m.connection;
         this.broadcast = m.broadcast;
     }
 
+    /**
+     * Construtor padrão da classe.
+     */
     public ConnectionManager() {
 
     }
     
+    /**
+     * Timeout de UDP.
+     */
     private final int timeout = 4000;
     
     /**
@@ -85,7 +96,7 @@ public class ConnectionManager {
 
         try {
             this.connection = new Socket(serverAdress.getIp(), serverAdress.getPort());
-            this.connection.setSoTimeout(timeout);
+            //this.connection.setSoTimeout(timeout);
             return true;
         } catch (Exception e) {
             return false;
@@ -107,7 +118,7 @@ public class ConnectionManager {
 
         try {
             this.broadcast = new DatagramSocket(port);
-            this.broadcast.setSoTimeout(timeout);
+            this.broadcast.setSoTimeout(this.timeout);
             byte receivedData[] = new byte[1024];
 
             DatagramPacket buffer = new DatagramPacket(receivedData, receivedData.length);
