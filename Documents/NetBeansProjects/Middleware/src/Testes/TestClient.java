@@ -32,12 +32,12 @@ public class TestClient {
             }
         };
         
+        while(true){
+
+            mid.client.sendMessage("pej3163", "detran", handler);
+            Thread.sleep(10000);
         
-        mid.client.sendMessage("pej3163", "detran", handler);
-        //teste
-        
-        Thread.sleep(10000);
-        mid.client.sendMessage("pej3163", "detran", handler);
+        }
         
     }
     

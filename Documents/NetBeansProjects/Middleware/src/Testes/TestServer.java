@@ -20,13 +20,12 @@ public class TestServer {
      public static void main(String[] args) throws SocketException {
         // TODO code application logic here
     
-           
         Server s = new Server();
         
         Detran serv2 = new Detran();
                 
         s.addService("detran", serv2);
-        s.setPort(24246);
+        s.setPort(24247);
         s.startServer();
         
         

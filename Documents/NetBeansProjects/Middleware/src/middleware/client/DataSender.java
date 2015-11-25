@@ -28,8 +28,9 @@ public class DataSender extends Thread {
     DataHandler dataHandler;
     boolean dataSent;
     String service;
+    SearchService ss;
     
-    public DataSender(String service,int id, byte[] data, ArrayList<ServiceInfo> serviceTable, DataHandler dataHandler) {
+    public DataSender(String service,int id, byte[] data, ArrayList<ServiceInfo> serviceTable, DataHandler dataHandler, SearchService ss) {
         
         this.id = id;
         this.service = service;
@@ -37,6 +38,7 @@ public class DataSender extends Thread {
         this.serviceTable = serviceTable;
         this.dataHandler = dataHandler;
         this.dataSent = false;
+        this.ss = ss;
         
     }
          
@@ -73,7 +75,19 @@ public class DataSender extends Thread {
         return true;
         
     }
-     
+    
+    public synchronized void wakeSearchService(){
+        
+        if(ss.getState().WAITING == Thread.State.WAITING){
+            synchronized(this.ss){
+                System.out.println("Acordando!!!!!");
+                ss.notify();
+            }
+            
+        }
+    
+    }
+    
     public void run(){
     
     int attempt=0;
@@ -84,6 +98,10 @@ public class DataSender extends Thread {
         while(!dataSent){
             
             while(adrs == null){
+                
+                //checa se a SearchServico tá dormindo, se não estiver, acorda ele
+              
+                wakeSearchService();
                 System.out.println("Tenando pegar algo...");
                 adrs = this.getAddress();
                 if(adrs == null){

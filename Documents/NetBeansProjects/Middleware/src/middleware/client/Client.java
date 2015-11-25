@@ -21,15 +21,16 @@ public class Client {
     
     int messageId;
     public ArrayList<ServiceInfo> serviceTable = null; // IMPORTANTE: serviceTable É UMA REGIÃO CRÍTICA!!!!!!!
-    
+    SearchService searchService;
 
     public Client() throws InterruptedException {
         messageId = 0;
         serviceTable = new ArrayList<>();
         
+        
         //teste de serviços
-        SearchService ss = new SearchService(serviceTable);
-        ss.start();
+        searchService = new SearchService(serviceTable);
+        searchService.start();
 //        ss.wait();
         ArrayList<Address> lista = new ArrayList<>();
         //lista.add(new Address("127.0.0.1", 24247));
@@ -57,7 +58,7 @@ public class Client {
         
         message = messageId + "||" + service + "||" + message; // adicionando cabeçalho
         
-        DataSender ds = new DataSender(service, messageId, message.getBytes(), this.serviceTable, dataHandler);
+        DataSender ds = new DataSender(service, messageId, message.getBytes(), this.serviceTable, dataHandler, searchService);
         ds.start();
         messageId++;
         return messageId;
@@ -76,56 +77,56 @@ public class Client {
      * espera, e retorna '3' caso não haja servidor disponível para o serviço
      * requisitado.
      */
-    public int searchService(String nameOfService) {
-        String cab = "M1";
-        try {
-            //fazendo broadcast 
-            String stringOfMessege = cab + "||" + nameOfService;
-            byte[] sendData = stringOfMessege.getBytes();
-            ConnectionManager mc = new ConnectionManager();
-//            mc.broadcast(sendData, 24240);
+//    public int searchService(String nameOfService) {
+//        String cab = "M1";
+//        try {
+//            //fazendo broadcast 
+//            String stringOfMessege = cab + "||" + nameOfService;
+//            byte[] sendData = stringOfMessege.getBytes();
+//            ConnectionManager mc = new ConnectionManager();
+////            mc.broadcast(sendData, 24240);
+////
+////            //recebendo resposta do broadcast
+////            DatagramPacket receiveData = mc.listenerUDP(24240); //lembrar de definir taime alte(lembrar que isso significa time out)
+////            String messege = Arrays.toString(receiveData.getData());
+//            String message = " "; 
+//            int counter = 0;
+//            do{
 //
-//            //recebendo resposta do broadcast
-//            DatagramPacket receiveData = mc.listenerUDP(24240); //lembrar de definir taime alte(lembrar que isso significa time out)
-//            String messege = Arrays.toString(receiveData.getData());
-            String message = " "; 
-            int counter = 0;
-            do{
-
-                if (counter == 3) {
-                    return 3;
-                }
-                try {
-                    Thread.sleep(3000);
-                    mc.broadcast(sendData, 24240);
-                    DatagramPacket receiveData = mc.listenerUDP(24240);
-                    message = Arrays.toString(receiveData.getData());
-
-                    counter++;
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                    return 2;
-                }
-            }while (message.equals(" "));
-
-            Address address;
-            ArrayList<Address> arrayListAddress = new ArrayList<>();
-
-            String[] mTempFirstDivision = message.split(Pattern.quote("||"));
-            String[] mTempSecondDivision;
-
-            for (String mTempFirstDivision1 : mTempFirstDivision) {
-                mTempSecondDivision = mTempFirstDivision1.split(":");
-                address = new Address(mTempSecondDivision[0], Integer.parseInt(mTempSecondDivision[1]));
-                arrayListAddress.add(address);
-            }
-            serviceTable.add(new ServiceInfo(arrayListAddress, nameOfService));
-
-        } catch (Exception e) {
-            return 1;
-        }
-
-        return 0;
-    }
+//                if (counter == 3) {
+//                    return 3;
+//                }
+//                try {
+//                    Thread.sleep(3000);
+//                    mc.broadcast(sendData, 24240);
+//                    DatagramPacket receiveData = mc.listenerUDP(24240);
+//                    message = Arrays.toString(receiveData.getData());
+//
+//                    counter++;
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//                    return 2;
+//                }
+//            }while (message.equals(" "));
+//
+//            Address address;
+//            ArrayList<Address> arrayListAddress = new ArrayList<>();
+//
+//            String[] mTempFirstDivision = message.split(Pattern.quote("||"));
+//            String[] mTempSecondDivision;
+//
+//            for (String mTempFirstDivision1 : mTempFirstDivision) {
+//                mTempSecondDivision = mTempFirstDivision1.split(":");
+//                address = new Address(mTempSecondDivision[0], Integer.parseInt(mTempSecondDivision[1]));
+//                arrayListAddress.add(address);
+//            }
+//            serviceTable.add(new ServiceInfo(arrayListAddress, nameOfService));
+//
+//        } catch (Exception e) {
+//            return 1;
+//        }
+//
+//        return 0;
+//    }
 
 }
