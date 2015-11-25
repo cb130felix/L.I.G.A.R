@@ -127,6 +127,7 @@ public class ConnectionManager {
 
             return buffer;
         } catch (Exception e) {
+            this.broadcast.close();
             return null;
         }
     }
