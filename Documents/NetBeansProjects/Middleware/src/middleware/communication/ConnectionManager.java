@@ -114,11 +114,13 @@ public class ConnectionManager {
      * @return DatagramPacket - O pacote recebido será o retorno, se der erro
      * irá retornar a 'null'.
      */
-    public DatagramPacket listenerUDP(int port) {
+    public DatagramPacket listenerUDP(int port, boolean useTimeout) {
 
         try {
             this.broadcast = new DatagramSocket(port);
-            this.broadcast.setSoTimeout(this.timeout);
+            if(useTimeout){
+                this.broadcast.setSoTimeout(this.timeout);
+            }
             byte receivedData[] = new byte[1024];
 
             DatagramPacket buffer = new DatagramPacket(receivedData, receivedData.length);
