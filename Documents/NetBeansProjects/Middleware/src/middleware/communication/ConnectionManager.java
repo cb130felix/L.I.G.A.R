@@ -19,11 +19,12 @@ import middleware.Address;
 public class ConnectionManager {
 
     /**
-     * Construtor alternativo que irá construir um novo objeto de gerenciador
-     * de comunicações com a referência passada.
+     * Construtor alternativo que irá construir um novo objeto de gerenciador de
+     * comunicações com a referência passada.
+     *
      * @param m - Gerenciador de comunicação a ser referenciado.
      */
-    public ConnectionManager(ConnectionManager m){
+    public ConnectionManager(ConnectionManager m) {
         this.serverSocket = m.serverSocket;
         this.connection = m.connection;
         this.broadcast = m.broadcast;
@@ -35,12 +36,12 @@ public class ConnectionManager {
     public ConnectionManager() {
 
     }
-    
+
     /**
      * Timeout de UDP.
      */
     private final int timeout = 4000;
-    
+
     /**
      * Servidor TCP.
      */
@@ -111,6 +112,8 @@ public class ConnectionManager {
      * String(pacoteRecebido.getData(),"UTF-8");
      *
      * @param port - Porta que ficará escutando.
+     * @param useTimeout - Parâmetro que vai indicar se vai usar o listener com
+     * timeout.
      * @return DatagramPacket - O pacote recebido será o retorno, se der erro
      * irá retornar a 'null'.
      */
@@ -118,7 +121,7 @@ public class ConnectionManager {
 
         try {
             this.broadcast = new DatagramSocket(port);
-            if(useTimeout){
+            if (useTimeout) {
                 this.broadcast.setSoTimeout(this.timeout);
             }
             byte receivedData[] = new byte[1024];
@@ -161,7 +164,7 @@ public class ConnectionManager {
     public boolean listenerTCP() {
         try {
             this.connection = this.serverSocket.accept();
-            
+
             return true;
         } catch (Exception e) {
             return false;
@@ -193,8 +196,8 @@ public class ConnectionManager {
      * Método responsável pelo recebimento de mensagens via TCP.
      *
      * Observação importante: para converter a saída dos bytes recebidos para
-     * String de volta, é só seguir este modelo de código abaixo: 
-     * String resultado = new String(arrayDeBytes, "UTF-8");
+     * String de volta, é só seguir este modelo de código abaixo: String
+     * resultado = new String(arrayDeBytes, "UTF-8");
      *
      * @return byte[] - Os dados recebidos pela rede serão o retorno do método,
      * se der erro irá retornar a 'null'.
@@ -217,7 +220,8 @@ public class ConnectionManager {
     /**
      * Checa se há conexão com a Internet.
      *
-     * O método faz uma tentativa de conexão com o Google. 
+     * O método faz uma tentativa de conexão com o Google.
+     *
      * @return boolean - Se há conexão com a Internet o retorno será 'true',
      * caso contrário será 'false'.
      */
