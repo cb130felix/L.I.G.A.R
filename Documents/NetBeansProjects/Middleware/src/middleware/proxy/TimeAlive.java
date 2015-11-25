@@ -34,7 +34,7 @@ public class TimeAlive extends Thread{
                 
                 this.estadoProxy();
                 
-                Thread.sleep(10000);    
+                Thread.sleep(5000);    
                 this.rmTimeAlive();
             }
             
@@ -56,10 +56,10 @@ public class TimeAlive extends Thread{
         
         for(int i=tableTime.size()-1; i>=0; i--){
 
-            long saved = (long)tableTime.get(i).get(1);
+            long saved = (long)tableTime.get(i).get(2);
             long now = rightNow.getTimeInMillis();
             
-            if ((now-saved)>11000){
+            if ((now-saved)>5000){
                 this.rmIpService(this.tableTime.get(i));
                 this.tableTime.remove(i);
             }
@@ -75,23 +75,25 @@ public class TimeAlive extends Thread{
      * Se não existir, adiciona esse novo ip e seu registro atual à lista
      * 
      * @param ip Parâmetro que informa o Ip qie será atualizado ou adicionado
+     * @param port porta do serviço
      * @return Retorna True ou False
      */
     @SuppressWarnings("unchecked")
-    public synchronized boolean addTimeAlive(String ip){
+    public synchronized boolean addTimeAlive(String ip, int port){
         
         Calendar rightNow = Calendar.getInstance();
         
         for (int i=0; i<tableTime.size(); i++){
         
-            if (tableTime.get(i).get(0).equals(ip)){
-                tableTime.get(i).set(1, rightNow.getTimeInMillis());
+            if (tableTime.get(i).get(0).equals(ip) && tableTime.get(i).get(1).equals(port)){
+                tableTime.get(i).set(2, rightNow.getTimeInMillis());
                 return true;
             }
         }
 
         ArrayList<Object> novo = new ArrayList<>();
         novo.add(ip);
+        novo.add(port);
         novo.add(rightNow.getTimeInMillis());
         
         tableTime.add(novo);
@@ -112,7 +114,8 @@ public class TimeAlive extends Thread{
         for(int i=p.listServices.size()-1; i>=0; i--){
             for(int y=p.listServices.get(i).getAddress().size()-1; y>=0; y--){
                 
-                if (p.listServices.get(i).getAddress().get(y).getIp().equals(ip.get(0))){
+                if (ip.get(0).equals(p.listServices.get(i).getAddress().get(y).getIp()) &&
+                    ip.get(1).equals(p.listServices.get(i).getAddress().get(y).getPort())){
                     p.listServices.get(i).getAddress().remove(y);
                 }
             }

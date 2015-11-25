@@ -33,16 +33,16 @@ public class ManagerTable {
 
             if (indexService!=-1){
         
-                int indexIp = this.searchIp(indexService, addressReceived);
+                int indexIp = this.searchIp(indexService, addressReceived, port);
             
                 if (indexIp!=-1){
-                    TimeAlive.getInstance().addTimeAlive(addressReceived);
+                    TimeAlive.getInstance().addTimeAlive(addressReceived, port);
                     
                 } else{
                     Address aux = new Address(addressReceived, port);
                     p.listServices.get(indexService).getAddress().add(aux);
                     
-                    TimeAlive.getInstance().addTimeAlive(addressReceived);
+                    TimeAlive.getInstance().addTimeAlive(addressReceived, port);
                 }
                 
             } else {
@@ -53,7 +53,7 @@ public class ManagerTable {
                 
                 p.listServices.add(s);
                 
-                TimeAlive.getInstance().addTimeAlive(addressReceived);
+                TimeAlive.getInstance().addTimeAlive(addressReceived, port);
             }
             
         }
@@ -114,19 +114,19 @@ public class ManagerTable {
      * 
      * @param x Índice do serviço em que irá fazer a busca
      * @param ip Ip que irá ser buscado
+     * @param port porta do serviço
      * @return Índice do ip buscado
      */
-    public int searchIp(int x, String ip){
+    public int searchIp(int x, String ip, int port){
         
         Proxy p = Proxy.getInstance();
         
         for(int i=0; i<p.listServices.get(x).getAddress().size(); i++){
                 
-            if (p.listServices.get(x).getAddress().get(i).getIp().equals(ip)) return i;
+            if (p.listServices.get(x).getAddress().get(i).getIp().equals(ip) && 
+                p.listServices.get(x).getAddress().get(i).getPort() == port) return i;
         }
         
         return -1;
     }
-    
-    
 }
