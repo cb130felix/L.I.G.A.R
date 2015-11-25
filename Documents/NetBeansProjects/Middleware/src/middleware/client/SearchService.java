@@ -49,43 +49,33 @@ public class SearchService extends Thread {
                         //fazendo broadcast 
                         String stringOfMessege = header + "||" + nameOfService;
                         byte[] sendData = stringOfMessege.getBytes();
-                        ConnectionManager mc = new ConnectionManager();
+                        
     //            mc.broadcast(sendData, 24240);
     //
     //            //recebendo resposta do broadcast
     //            DatagramPacket receiveData = mc.listenerUDP(24240); //lembrar de definir taime alte(lembrar que isso significa time out)
     //            String messege = Arrays.toString(receiveData.getData());
                         String message = " ";
-                        int counter = 0;
                         do {
-                            System.out.println("->Tentando procurar serviço["+nameOfService+"] tentativa: "+counter);
-
-                            if (counter == 3) {
-                                //return 3;
-                            }
-                            try {
-
-                                Thread.sleep(3000);
-                                mc.broadcast(sendData, 24240);
-
-                                do{
-                                    System.out.println("------------------------travei");
-                                    DatagramPacket receiveData = mc.listenerUDP(6969); //precisa colocar um timeout nesse socket aqui aqui
-                                    System.out.println("----------------------detravei!");
+                            System.out.println("->Tentando procurar serviço: ["+nameOfService+"]");
+                            ConnectionManager mc = new ConnectionManager();
+                            mc.broadcast(sendData, 24240);
+                            do{
+                                System.out.println("------------------------travei");
+                                
+                                DatagramPacket receiveData = mc.listenerUDP(6969, true); //precisa colocar um timeout nesse socket aqui aqui
+                                System.out.println("----------------------detravei!");
+                                if(receiveData != null){
+                                    //conseguiu mensagem do proxy
                                     message = new String(receiveData.getData(),"UTF-8");
                                     result = message.split(Pattern.quote("||"), 2);
-                                    
-
                                     System.out.println("->conseguiu pegar servico:" + message + " / Service: " + result[0]);
-                                }while(!result[0].equals(nameOfService));
-
-                                counter++;
-
-                            } catch (InterruptedException ex) {
-                                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-                                System.out.println("->Treta na hora de pegar serviço...");
-                            //return 2;
-                            }
+                                }else{
+                                    //proxy não respondeu
+                                    break;
+                                    
+                                }
+                            }while(!result[0].equals(nameOfService));
                             
                         } while (message.equals(" "));
 
@@ -117,11 +107,18 @@ public class SearchService extends Thread {
                 }
                 System.out.println("ciclo");
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(SearchService.class.getName()).log(Level.SEVERE, null, ex);
+            }
             synchronized(this){
             
                 try {
                     System.out.println("dormindo zZzZzzz");
                     this.wait();
+                    
+
                 } catch (InterruptedException ex) {
                     Logger.getLogger(SearchService.class.getName()).log(Level.SEVERE, null, ex);
                 }

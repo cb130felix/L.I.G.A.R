@@ -25,7 +25,7 @@ public class TestServer {
         Detran serv2 = new Detran();
                 
         s.addService("detran", serv2);
-        s.setPort(24247);
+        s.setPort(24245);
         s.startServer();
         
         
