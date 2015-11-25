@@ -2,18 +2,13 @@ package middleware.communication;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.net.ssl.SSLServerSocket;
 import middleware.Address;
 
 /**
@@ -33,7 +28,7 @@ public class ConnectionManager {
 
     }
     
-    private int timeout = 4000;
+    private final int timeout = 4000;
     
     /**
      * Servidor TCP.
@@ -112,6 +107,7 @@ public class ConnectionManager {
 
         try {
             this.broadcast = new DatagramSocket(port);
+            this.broadcast.setSoTimeout(timeout);
             byte receivedData[] = new byte[1024];
 
             DatagramPacket buffer = new DatagramPacket(receivedData, receivedData.length);
