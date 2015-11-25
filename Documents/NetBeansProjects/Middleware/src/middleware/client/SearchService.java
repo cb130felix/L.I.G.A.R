@@ -21,12 +21,13 @@ import middleware.communication.ConnectionManager;
  */
 public class SearchService extends Thread {
 
-    
+    public boolean loop = true;
     ArrayList<ServiceInfo> serviceTable;
 
     public SearchService(ArrayList<ServiceInfo> serviceTable) {
         this.serviceTable = serviceTable;
     }
+    
 
     public void run() {
 
@@ -36,8 +37,8 @@ public class SearchService extends Thread {
         String[] mTempFirstDivision;
         String[] mTempSecondDivision;
         String nameOfService = "";
-
-        while (true) {
+        
+        while (loop) {
 
             for (int i = 0; i < serviceTable.size(); i++) {
                 System.out.println("ciclo");

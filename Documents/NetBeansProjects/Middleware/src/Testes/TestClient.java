@@ -20,25 +20,28 @@ public class TestClient {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SocketException, InterruptedException {
-        // TODO code application logic here
     
         Middleware mid = new Middleware();
+
+        //Handler do client
         DataHandler handler;
         handler = new DataHandler() {
             
             @Override
             public void handler(int id, String message) {
-                System.out.println(message);
+                System.out.println("-------------------------------------------------------------");
+                System.out.println("Hey! Resposta da requisicao de id["+id+"] recebida: "+ message);
+                System.out.println("-------------------------------------------------------------");
             }
         };
         
-//        while(true){
+        mid.client.startClient();
 
-            mid.client.sendMessage("pej3163", "detran", handler);
-            Thread.sleep(1000);
+        mid.client.sendMessage("pej3163", "detran", handler);
+        mid.client.sendMessage("pfv3163", "detran", handler);
         
-//        }
-        
+        mid.client.stopClient();
+
     }
     
 }

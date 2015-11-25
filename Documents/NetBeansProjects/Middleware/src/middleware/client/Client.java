@@ -20,26 +20,39 @@ public class Client {
     // exemplo prático: 200||A||qualquermerda(em json)
     
     int messageId;
+    ArrayList<DataSender> messageQueue;
     public ArrayList<ServiceInfo> serviceTable = null; // IMPORTANTE: serviceTable É UMA REGIÃO CRÍTICA!!!!!!!
     SearchService searchService;
 
     public Client() throws InterruptedException {
         messageId = 0;
+        messageQueue = new ArrayList<>();
         serviceTable = new ArrayList<>();
         
         
-        //teste de serviços
+        
+    }
+    
+    public boolean startClient(){
         searchService = new SearchService(serviceTable);
         searchService.start();
-//        ss.wait();
-        ArrayList<Address> lista = new ArrayList<>();
-        //lista.add(new Address("127.0.0.1", 24247));
-        //lista.add(new Address("127.0.0.1", 24246));
-        ServiceInfo sf = new ServiceInfo(lista, "detran");
-        this.serviceTable.add(sf);
+        return true;
+    }
+    
+    public boolean stopClient(){
         
-        
-        
+        for (int i = 0; i < messageQueue.size(); i++) {
+            try{
+                messageQueue.get(i).join();
+            }catch(Exception ex){
+                
+            }
+        }
+        synchronized(searchService){
+            searchService.loop = false;
+            searchService.notify();
+        }
+        return true;
     }
 
     //@Renan
@@ -59,7 +72,9 @@ public class Client {
         message = messageId + "||" + service + "||" + message; // adicionando cabeçalho
         
         DataSender ds = new DataSender(service, messageId, message.getBytes(), this.serviceTable, dataHandler, searchService);
+        messageQueue.add(ds);
         ds.start();
+        
         messageId++;
         return messageId;
     
