@@ -53,13 +53,9 @@ public class ConnectionManager {
     private Socket connection;
 
     /**
-     * Pacote UDP a ser enviado via broadcast.
+     * Comunicação UDP.
      */
     private DatagramSocket broadcast;
-
-    public Socket getConnection() {
-        return connection;
-    }
 
     /**
      * Método para envio de pacote UDP via broadcast.
@@ -228,8 +224,8 @@ public class ConnectionManager {
     public boolean checkConnection() {
         try {
             URL url = new URL("http://www.google.com/");
-            URLConnection connection = url.openConnection();
-            connection.connect();
+            URLConnection urlConn = url.openConnection();
+            urlConn.connect();
 
             return true;
         } catch (Exception e) {
