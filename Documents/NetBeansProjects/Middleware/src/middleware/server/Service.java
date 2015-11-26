@@ -68,7 +68,7 @@ public class Service extends Thread{
                         //System.out.println("ID: "+idServico);
                         
                         reply =  this.processServices.get(idServico).process(mensages[2]);
-
+                       
                         msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
                         
                         //System.out.println("Olha a mensagem enviada: "+msg);
@@ -108,6 +108,7 @@ public class Service extends Thread{
                     }
                     else{
                     
+                        this.decrementsUserCounter();
                         check = true;
                         System.out.println("Cliente indisponivel!");
                     
