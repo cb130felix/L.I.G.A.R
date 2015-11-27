@@ -11,4 +11,6 @@ package Testes;
  */
 public class Pergunta {
     
+    String placa;
+    
 }
