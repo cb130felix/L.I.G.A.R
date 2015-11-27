@@ -5,6 +5,7 @@
  */
 package middleware.server;
 
+import com.google.gson.Gson;
 import java.io.InputStream;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -65,8 +66,9 @@ public class Service extends Thread{
                    
                     if(idServico != -1){
                         
-                        //System.out.println("ID: "+idServico);
+                        
                         reply =  this.processServices.get(idServico).process(mensages[2]);
+                       
                        
                         msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
                         
@@ -77,7 +79,7 @@ public class Service extends Thread{
                         
                             this.decrementsUserCounter();
                             check = true;
-                            System.out.println("contador: "+this.userCounter.cont);
+                            //System.out.println("contador: "+this.userCounter.cont);
                             
                         }
 
