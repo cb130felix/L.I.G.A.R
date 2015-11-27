@@ -28,17 +28,15 @@ public class TestClient {
         handler = new DataHandler() {
             
             @Override
-            public void handler(int id, String message) {
-                System.out.println("-------------------------------------------------------------");
-                System.out.println("Hey! Resposta da requisicao de id["+id+"] recebida: "+ message);
-                System.out.println("-------------------------------------------------------------");
+            public void handler(int id, Object o) {
+                
             }
         };
         
         mid.client.startClient();
 
-        mid.client.sendMessage("pej3163", "detran", handler);
-        mid.client.sendMessage("pfv3163", "detran", handler);
+        mid.client.sendMessage(new Pergunta(), "detran", handler, Resposta.class);
+        mid.client.sendMessage(new Pergunta(), "detran", handler, Resposta.class);
         
         mid.client.stopClient();
 

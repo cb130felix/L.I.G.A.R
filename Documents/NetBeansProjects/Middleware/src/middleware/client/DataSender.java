@@ -5,6 +5,7 @@
  */
 package middleware.client;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
@@ -29,8 +30,9 @@ public class DataSender extends Thread {
     boolean dataSent;
     String service;
     SearchService ss;
+    Class c;
     
-    public DataSender(String service,int id, byte[] data, ArrayList<ServiceInfo> serviceTable, DataHandler dataHandler, SearchService ss) {
+    public DataSender(String service,int id, byte[] data, ArrayList<ServiceInfo> serviceTable, DataHandler dataHandler, SearchService ss, Class c) {
         
         this.id = id;
         this.service = service;
@@ -39,7 +41,7 @@ public class DataSender extends Thread {
         this.dataHandler = dataHandler;
         this.dataSent = false;
         this.ss = ss;
-        
+        this.c = c;
     }
          
      
@@ -126,8 +128,11 @@ public class DataSender extends Thread {
                     byte[] data2 = mc.getData();
                     String result = new String(data2, "UTF-8");
                     mc.closeConnection();
+                    
                     dataSent = true;
-                    dataHandler.handler(id, result);
+                    Gson gson = new Gson();
+                    Object o = gson.fromJson(result, c);
+                    dataHandler.handler(id, o);
                     break;
                     
                 }catch(Exception ex){

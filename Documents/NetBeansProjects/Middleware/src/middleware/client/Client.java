@@ -1,6 +1,7 @@
 package middleware.client;
 
 
+import com.google.gson.Gson;
 import java.net.DatagramPacket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,15 +59,18 @@ public class Client {
 
     //@Renan
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
-//    
-//    public int sendMessage(Object o, String service, DataHandler dataHandler){
-//        Gson gson = new Gson();
-//        String json = gson.toJson(o);
-//        sendMessage(json, service, dataHandler);
-//        return 0;
-//    }
-//    
-    public int sendMessage(String message, String service, DataHandler dataHandler) {
+    
+    public int sendMessage(Object o, String service, DataHandler dataHandler, Class c){
+        
+        Gson gson = new Gson();
+        String json = gson.toJson(o);
+        String message = messageId + "||" + service + "||" + json; // adicionando cabeçalho
+        sendMessage(message.getBytes(), service, dataHandler, c);
+        
+        return 0;
+    }
+    
+    public int sendMessage(byte[] message, String service, DataHandler dataHandler, Class c) {
 
         //Adicionando serviço na serviceTable caso ele não exista
         int i;
@@ -78,9 +82,7 @@ public class Client {
         }
         
         
-        message = messageId + "||" + service + "||" + message; // adicionando cabeçalho
-        
-        DataSender ds = new DataSender(service, messageId, message.getBytes(), this.serviceTable, dataHandler, searchService);
+        DataSender ds = new DataSender(service, messageId, message, this.serviceTable, dataHandler, searchService, c);
         messageQueue.add(ds);
         ds.start();
         
