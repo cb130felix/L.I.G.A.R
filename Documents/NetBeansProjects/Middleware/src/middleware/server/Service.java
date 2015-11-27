@@ -60,22 +60,20 @@ public class Service extends Thread{
             try {
             
                     data = mc.getData();
-                    msg = new String(data, "UTF-8");// 2||Detran||kcd-1232
-                    mensages = this.TratarString(msg);
+                    msg = new String(data, "UTF-8");//Detran||kcd-1232
+                    mensages = this.SeparateString(msg);
                     
-                    idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
+                    idServico = this.discoveryIndexService(mensages[0]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
                     
                     if(idServico != -1){
                         
                         Gson gson = new Gson();
                         
-                        Object object = gson.fromJson(mensages[2], this.classObject.get(idServico));
+                        Object object = gson.fromJson(mensages[1], this.classObject.get(idServico));
                         
                         object =  this.processServices.get(idServico).process(object);
                        
                         reply = gson.toJson(object);
-                        
-                        reply = mensages[0] + "||" + mensages[1] + "||"+reply ;
                         
                         //System.out.println("Olha a mensagem enviada: "+reply);
                         
@@ -143,7 +141,7 @@ public class Service extends Thread{
      * @return Um vetor de String com os componentes do cabeçalho e a mensagem. Exemplo: mensagens[0] == 2, mensagens[1] == Detran
      * mensagens[3] == kcd-1232
      */
-    public String[] TratarString(String msg){
+    public String[] SeparateString(String msg){
     
         String[] mensages = msg.split(Pattern.quote("||"));
         
@@ -155,7 +153,7 @@ public class Service extends Thread{
      * @param nome Nome do serviço
      * @return o índice do serviço no vetor. Caso não ache, ele retorna -1
      */
-    public int descobreIndiceServico(String nome){
+    public int discoveryIndexService(String nome){
     
         for (int x = 0; x < this.mapServices.size(); x++) {
                 
