@@ -22,6 +22,7 @@ public class Service extends Thread{
     ArrayList<MapService> mapServices = new ArrayList<MapService>();
     ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
     public UserCounter userCounter;
+    public ArrayList<Class> classObject = new ArrayList<Class>();
 
     
     /**
@@ -31,11 +32,12 @@ public class Service extends Thread{
      * @param map Array com os mapeamentos entre nome do serviço e o ID do mesmo
      * @param user Inteiro que conta quantos usuários estão conectados ao servidor
      */
-    public Service(ConnectionManager mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,UserCounter user) {
+    public Service(ConnectionManager mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,UserCounter user,ArrayList<Class> obj) {
         this.mc = mc;
         this.processServices = process;
         this.mapServices = map;
         this.userCounter = user;
+        this.classObject = obj;
     }
 
     /**
@@ -48,7 +50,7 @@ public class Service extends Thread{
         String msg;
         String[] mensages;
         int idServico;
-        byte[] reply;
+        String reply;
         boolean check = false;
         int count = 1;
         //System.out.println("ola");
@@ -63,19 +65,21 @@ public class Service extends Thread{
                     
                     idServico = this.descobreIndiceServico(mensages[1]);// NESSE CASO ELE VAI ESTAR PASSANDO Detran
                     
-                   
                     if(idServico != -1){
                         
+                        Gson gson = new Gson();
                         
-                        reply =  this.processServices.get(idServico).process(mensages[2]);
+                        Object object = gson.fromJson(mensages[2], this.classObject.get(idServico));
+                        
+                        object =  this.processServices.get(idServico).process(object);
                        
-                       
-                        msg = mensages[0] + "||" + mensages[1] + "||" + new String(reply,"UTF-8");
+                        reply = gson.toJson(object);
                         
-                        //System.out.println("Olha a mensagem enviada: "+msg);
-                        reply = msg.getBytes();
+                        reply = mensages[0] + "||" + mensages[1] + "||"+reply ;
                         
-                        if(mc.sendData(reply)){
+                        //System.out.println("Olha a mensagem enviada: "+reply);
+                        
+                        if(mc.sendData(reply.getBytes())){
                         
                             this.decrementsUserCounter();
                             check = true;

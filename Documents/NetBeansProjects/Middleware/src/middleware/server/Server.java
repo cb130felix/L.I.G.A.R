@@ -27,6 +27,7 @@ public class Server{
         public ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
         public int edgeClients;
         private boolean enableProxy;
+        public ArrayList<Class> classObject = new ArrayList<Class>();
         
        /**
         * Construtor do servidor
@@ -66,7 +67,7 @@ public class Server{
          * @param service Objeto que possui os métodos do serviço oferecido pelo servidor.
          * @return 
          */
-        public boolean addService(String description,ServiceProcess service){
+        public boolean addService(String description,ServiceProcess service,Class obj){
         
             try {
                 
@@ -75,6 +76,7 @@ public class Server{
                 ms.ID = this.mapServices.size();
                 this.mapServices.add(ms);
                 this.processServices.add(service);
+                this.classObject.add(obj);
                 return true;
                 
             } catch (Exception e) {
@@ -115,7 +117,7 @@ public class Server{
                     System.out.println("Numero de usuario no servidor: "+this.userCounter.cont);
                     //System.out.println("lol");
                     
-                    Service serv = new Service(new ConnectionManager(this.mc),this.processServices,this.mapServices,this.userCounter);
+                    Service serv = new Service(new ConnectionManager(this.mc),this.processServices,this.mapServices,this.userCounter,this.classObject);
                     serv.start();
                     
                 }
