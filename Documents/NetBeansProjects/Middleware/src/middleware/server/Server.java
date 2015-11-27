@@ -65,6 +65,7 @@ public class Server{
          * Método para adicionar um novo servico provido pelo servidor.
          * @param description nome do serviço
          * @param service Objeto que possui os métodos do serviço oferecido pelo servidor.
+         * @param obj .Class da classe cujos objetos vão ser enviados e recevidos pela rede
          * @return 
          */
         public boolean addService(String description,ServiceProcess service,Class obj){
