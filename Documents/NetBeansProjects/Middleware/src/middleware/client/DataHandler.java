@@ -11,6 +11,6 @@ package middleware.client;
  */
 public interface DataHandler {
    
-    public void handler(int id, String message);    
+    public void handler(int id, Object o);    
     
 }
