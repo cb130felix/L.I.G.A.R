@@ -113,7 +113,7 @@ public class Server{
                     
                     this.IncrementUser();
                     System.out.println("Numero de usuario no servidor: "+this.userCounter.cont);
-                    //System.out.println("lol");
+                    System.out.println("lol");
                     
                     Service serv = new Service(new ConnectionManager(this.mc),this.processServices,this.mapServices,this.userCounter);
                     serv.start();
