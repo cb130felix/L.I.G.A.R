@@ -1,5 +1,6 @@
 package middleware.client;
 
+
 import java.net.DatagramPacket;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -57,6 +58,14 @@ public class Client {
 
     //@Renan
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
+//    
+//    public int sendMessage(Object o, String service, DataHandler dataHandler){
+//        Gson gson = new Gson();
+//        String json = gson.toJson(o);
+//        sendMessage(json, service, dataHandler);
+//        return 0;
+//    }
+//    
     public int sendMessage(String message, String service, DataHandler dataHandler) {
 
         //Adicionando serviço na serviceTable caso ele não exista
