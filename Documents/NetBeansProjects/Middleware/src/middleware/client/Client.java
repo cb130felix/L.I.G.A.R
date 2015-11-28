@@ -21,6 +21,7 @@ public class Client {
     SearchService searchService;
 
     public Client() throws InterruptedException {
+        
         messageId = 0;
         messageQueue = new ArrayList<>();
         serviceTable = new ArrayList<>();
@@ -36,6 +37,7 @@ public class Client {
     
     public boolean startClient(){
         searchService = new SearchService(serviceTable);
+        searchService.setName("SearchService");
         searchService.start();
         return true;
     }
@@ -45,19 +47,26 @@ public class Client {
      * @return true ou false, dependendo do sucesso da operação
      */
     
-    public boolean stopClient(){
+    public synchronized boolean stopClient(){
         
+        Thread.yield();
+
         for (int i = 0; i < messageQueue.size(); i++) {
             try{
                 messageQueue.get(i).join();
             }catch(Exception ex){
-               
+                System.out.println("opa... Erro no join para finalizar a Thread");
             }
         }
+        try{
+        while(searchService.getState() != Thread.State.WAITING){
+            System.out.println("Ela não tava dormindo!");
+        }    
         synchronized(searchService){
             searchService.loop = false;
             searchService.notify();
         }
+        }catch(Exception ex){}
         return true;
     }
 
@@ -93,9 +102,9 @@ public class Client {
         Gson gson = new Gson();
         String json = gson.toJson(question);
         String message = service + "||" + json; // adicionando cabeçalho
-        sendMessage(message.getBytes(), service, dataHandler, response);
+        return sendMessage(message.getBytes(), service, dataHandler, response);
         
-        return 0;
+        
     }
     
     private int sendMessage(byte[] message, String service, DataHandler dataHandler, Class c) {
@@ -109,14 +118,38 @@ public class Client {
             this.serviceTable.add(new ServiceInfo(new ArrayList<Address>(), service));
         }
         
+        int thisId = messageId;
         
-        DataSender ds = new DataSender(service, messageId, message, this.serviceTable, dataHandler, searchService, c);
+        DataSender ds = new DataSender(service, thisId, message, this.serviceTable, dataHandler, searchService, c);
+        ds.setName("["+thisId+"]Message");
         messageQueue.add(ds);
         ds.start();
         
         messageId++;
-        return messageId;
+        return thisId;
     
+    }
+    
+    /**
+     * Esse método força o Cliente a dessistir de uma determinada conversa com o servidor em andamento,
+     * para isso basta informar o id da mensagem enviada ao servidor.
+     * @param messadeId numero de Id da mensagem enviada ao servidor, OU -1 para finalizar todas as mensagens em andamento
+     * @return 
+     */
+    public synchronized boolean stopMessage(int messadeId){
+    
+        ThreadGroup g = new ThreadGroup(null);
+        
+        
+        for (int i = 0; i < this.messageQueue.size(); i++) {
+            if((this.messageQueue.get(i).id == messadeId) || (messadeId == -1)){
+                this.messageQueue.get(i).dataSent = true;
+            }
+        }
+        
+        
+        return true;
+        
     }
 
 }

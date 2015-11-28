@@ -24,7 +24,7 @@ public class DataSender extends Thread {
     byte[] data;
     ArrayList<ServiceInfo> serviceTable;
     DataHandler dataHandler;
-    boolean dataSent;
+    public boolean dataSent;
     String service;
     SearchService ss;
     Class c;
@@ -95,11 +95,11 @@ public class DataSender extends Thread {
     mc = new ConnectionManager();
             
         while(!dataSent){
-            
             while(adrs == null){
                 
                 //checa se a SearchServico tá dormindo, se não estiver, acorda ele
-              
+                System.out.println("Datasent: " + dataSent);
+                if(dataSent == true) break;
                 wakeSearchService();
                 System.out.println("Tenando pegar algo...");
                 adrs = this.getAddress();
@@ -113,6 +113,7 @@ public class DataSender extends Thread {
                 } catch (InterruptedException ex) {
                     Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                
                 
             }
             

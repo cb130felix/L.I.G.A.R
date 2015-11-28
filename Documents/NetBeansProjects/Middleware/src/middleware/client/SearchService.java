@@ -20,6 +20,7 @@ import middleware.communication.ConnectionManager;
  */
 public class SearchService extends Thread {
 
+    
     public boolean loop = true;
     ArrayList<ServiceInfo> serviceTable;
 
@@ -75,9 +76,10 @@ public class SearchService extends Thread {
                                     break;
                                     
                                 }
+                                
                             }while(!result[0].equals(nameOfService));
                             
-                        } while (message.equals(" "));
+                        } while (message.equals(" ") );
 
 
 
@@ -114,17 +116,16 @@ public class SearchService extends Thread {
             }
             synchronized(this){
             
+            System.out.println("hey!");
                 try {
                     System.out.println("dormindo zZzZzzz");
                     this.wait();
-                    
 
                 } catch (InterruptedException ex) {
                     Logger.getLogger(SearchService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             
             }
-            
         }
 
     }
