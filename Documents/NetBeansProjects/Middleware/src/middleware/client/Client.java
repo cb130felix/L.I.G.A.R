@@ -35,11 +35,21 @@ public class Client {
         
     }
     
+    /**
+     * Configura o client para inciar a troca de mensagens com o servidor
+     * @return true ou false, dependendo do sucesso da operação
+     */
+    
     public boolean startClient(){
         searchService = new SearchService(serviceTable);
         searchService.start();
         return true;
     }
+    
+    /**
+     * Espera o fim das transações dos dados solicitados pelo client e então finaliza o Client
+     * @return true ou false, dependendo do sucesso da operação
+     */
     
     public boolean stopClient(){
         
@@ -47,7 +57,7 @@ public class Client {
             try{
                 messageQueue.get(i).join();
             }catch(Exception ex){
-                
+               
             }
         }
         synchronized(searchService){
@@ -60,17 +70,41 @@ public class Client {
     //@Renan
     //Manda requisição para o servidor de acordo com a serviceTable, se ela estiver vazia, chama o método searchService
     
-    public int sendMessage(Object o, String service, DataHandler dataHandler, Class c){
+    
+    /**
+     * Esse método é responsável pela comunicação de objetos entre o Cliente e o Servidor.
+     * O Cliente inicialmente requisita os endereços dos servidores oferecendo o serviço requisitado.
+     * Após receber o endereço dos sevidores o Cliente envia e trata o objeto de resposta recebido
+     * por meio do método 'handler' da classe que implementa a interface DataHandler. Caso nenhum servidor
+     * com o serviço solicitado seja localizado, o client continuar procurando até que consiga enviar seus dados.
+     * 
+     * Para lidar com os dados recebidos pelo servidor, é necessário implementar uma classe que implementa a interface
+     * DataHandler. Esse método recebe o Id da requisição enviada como parâmetro, e o object de resposta que o servidor
+     * envia. No corpo do método você deve implementar o código que vai lidar com a resposta recebida pelo servidor.
+     * 
+     * ATENÇÃO: O método handler recebe um Object como parâmetro. Realize um cast dele para o tipo da classe que
+     * é recebida como respsota. Ex:
+     * Response r = (Response) o;
+     * 
+     * 
+     * @param question Object enviado ao servidor
+     * @param service nome do serviço solicitado
+     * @param dataHandler Instancia do Objeto que implementa a classe DataHandler com o método handler sobreescrito
+     * @param response O nome da classe do objecto que você recebe como resposta do servidor. Ex: Response.class 
+     * @return O id da requisição enviada ao servidor
+     */
+    
+    public int sendMessage(Object question, String service, DataHandler dataHandler, Class response){
         
         Gson gson = new Gson();
-        String json = gson.toJson(o);
+        String json = gson.toJson(question);
         String message = service + "||" + json; // adicionando cabeçalho
-        sendMessage(message.getBytes(), service, dataHandler, c);
+        sendMessage(message.getBytes(), service, dataHandler, response);
         
         return 0;
     }
     
-    public int sendMessage(byte[] message, String service, DataHandler dataHandler, Class c) {
+    private int sendMessage(byte[] message, String service, DataHandler dataHandler, Class c) {
 
         //Adicionando serviço na serviceTable caso ele não exista
         int i;
@@ -90,69 +124,5 @@ public class Client {
         return messageId;
     
     }
-
-
-    /**
-     * Método que manda broadcast para os proxys e preenche a tabela
-     * 'serviceTable'
-     *
-     * @param service - código do serviço a ser solicitado
-     * @param nameOfService - nome do serviço a ser solicitado
-     * @return int - retorna '0' se preencher o arraylist, retorna '1' se não
-     * conseguir realizar o broadcast, retorna '2' em caso de erro na thread de
-     * espera, e retorna '3' caso não haja servidor disponível para o serviço
-     * requisitado.
-     */
-//    public int searchService(String nameOfService) {
-//        String cab = "M1";
-//        try {
-//            //fazendo broadcast 
-//            String stringOfMessege = cab + "||" + nameOfService;
-//            byte[] sendData = stringOfMessege.getBytes();
-//            ConnectionManager mc = new ConnectionManager();
-////            mc.broadcast(sendData, 24240);
-////
-////            //recebendo resposta do broadcast
-////            DatagramPacket receiveData = mc.listenerUDP(24240); //lembrar de definir taime alte(lembrar que isso significa time out)
-////            String messege = Arrays.toString(receiveData.getData());
-//            String message = " "; 
-//            int counter = 0;
-//            do{
-//
-//                if (counter == 3) {
-//                    return 3;
-//                }
-//                try {
-//                    Thread.sleep(3000);
-//                    mc.broadcast(sendData, 24240);
-//                    DatagramPacket receiveData = mc.listenerUDP(24240);
-//                    message = Arrays.toString(receiveData.getData());
-//
-//                    counter++;
-//                } catch (InterruptedException ex) {
-//                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-//                    return 2;
-//                }
-//            }while (message.equals(" "));
-//
-//            Address address;
-//            ArrayList<Address> arrayListAddress = new ArrayList<>();
-//
-//            String[] mTempFirstDivision = message.split(Pattern.quote("||"));
-//            String[] mTempSecondDivision;
-//
-//            for (String mTempFirstDivision1 : mTempFirstDivision) {
-//                mTempSecondDivision = mTempFirstDivision1.split(":");
-//                address = new Address(mTempSecondDivision[0], Integer.parseInt(mTempSecondDivision[1]));
-//                arrayListAddress.add(address);
-//            }
-//            serviceTable.add(new ServiceInfo(arrayListAddress, nameOfService));
-//
-//        } catch (Exception e) {
-//            return 1;
-//        }
-//
-//        return 0;
-//    }
 
 }

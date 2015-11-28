@@ -11,6 +11,13 @@ package middleware.client;
  */
 public interface DataHandler {
    
+    /**
+     * ATENÇÃO: O método handler recebe um Object como parâmetro. Realize um cast dele para o tipo da classe que
+     * é recebida como respsota. Ex:
+     * Resposta r = (Resposta) o
+     * @param id
+     * @param o 
+     */
     public void handler(int id, Object o);    
     
 }
