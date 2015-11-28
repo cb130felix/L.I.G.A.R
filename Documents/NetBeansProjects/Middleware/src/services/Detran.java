@@ -115,9 +115,7 @@ public class Detran implements ServiceProcess {
         }
         
         Resposta resp = new Resposta(importante);
-         
         return resp;
-    
     }
     
     
