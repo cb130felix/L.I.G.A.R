@@ -65,13 +65,7 @@ public class Service extends Thread{
                     
                     if(idServico != -1){
                         
-                        Gson gson = new Gson();
-                        
-                        Object object = gson.fromJson(mensages[1], this.classObject.get(idServico));
-                        
-                        object =  this.processServices.get(idServico).process(object);
-                       
-                        reply = gson.toJson(object);
+                        reply = this.ConvertStringToObject(mensages[1], idServico);// Passando o Json e o id do serviço
                         
                         //System.out.println("Olha a mensagem enviada: "+reply);
                         
@@ -166,4 +160,23 @@ public class Service extends Thread{
             }
         return -1;
     }
+    
+    /**
+     * Método que recebe o json, o converte em um objeto e o passa para o serviço que o servidor oferece.
+     * Depois ele pega o objeto retornado pelo serviço e o transforma em um json, que será retornado ao cliente.
+     * @param mensage json do objeto recebido pelo cliente
+     * @param id id do serviço que irá receber o objeto
+     * @return o json do objeto que será enviao ao cliente
+     */
+    public String ConvertStringToObject(String mensage,int id){
+    
+                        Gson gson = new Gson();
+                        
+                        Object object = gson.fromJson(mensage, this.classObject.get(id));
+                        
+                        object =  this.processServices.get(id).process(object);
+                        
+                        return gson.toJson(object);
+    }
+    
 }
