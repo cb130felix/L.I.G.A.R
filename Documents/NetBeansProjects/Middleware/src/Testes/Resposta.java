@@ -11,6 +11,6 @@ package Testes;
  */
 public class Resposta {
     
-    String consulta;
+    public String consulta;
     
 }

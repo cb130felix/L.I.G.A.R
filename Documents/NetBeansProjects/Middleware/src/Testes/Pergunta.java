@@ -11,6 +11,6 @@ package Testes;
  */
 public class Pergunta {
     
-    String placa;
+    public String placa;
     
 }
