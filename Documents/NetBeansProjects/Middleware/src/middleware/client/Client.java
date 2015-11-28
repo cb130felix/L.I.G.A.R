@@ -64,7 +64,7 @@ public class Client {
         
         Gson gson = new Gson();
         String json = gson.toJson(o);
-        String message = messageId + "||" + service + "||" + json; // adicionando cabeçalho
+        String message = service + "||" + json; // adicionando cabeçalho
         sendMessage(message.getBytes(), service, dataHandler, c);
         
         return 0;
