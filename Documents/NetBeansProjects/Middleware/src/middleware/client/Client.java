@@ -43,7 +43,7 @@ public class Client {
     }
     
     /**
-     * Espera o fim das transações dos dados solicitados pelo client e então finaliza o Client
+     * Espera o fim das transações dos dados solicitados pelo client e então finaliza o Cliente
      * @return true ou false, dependendo do sucesso da operação
      */
     
@@ -131,7 +131,7 @@ public class Client {
     }
     
     /**
-     * Esse método força o Cliente a dessistir de uma determinada conversa com o servidor em andamento,
+     * Esse método força o Cliente a desistir de uma determinada conversa com o servidor em andamento,
      * para isso basta informar o id da mensagem enviada ao servidor.
      * @param messadeId numero de Id da mensagem enviada ao servidor, OU -1 para finalizar todas as mensagens em andamento
      * @return 

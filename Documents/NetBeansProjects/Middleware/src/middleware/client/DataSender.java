@@ -117,35 +117,36 @@ public class DataSender extends Thread {
                 
             }
             
-            while(attempt < 3){
-                System.out.println("Tentando conectar ao servidor...("+attempt+")");
-                try{
+            if(dataSent != true){
+                while(attempt < 3){
+                    System.out.println("Tentando conectar ao servidor...("+attempt+")");
+                    try{
 
-                    mc.connectionServer(adrs);
-                    mc.sendData(this.data);
-                    byte[] data2 = mc.getData();
-                    String result = new String(data2, "UTF-8");
-                    mc.closeConnection();
-                    
-                    dataSent = true;
-                    Gson gson = new Gson();
-                    Object o = gson.fromJson(result, c);
-                    dataHandler.handler(id, o);
-                    break;
-                    
-                }catch(Exception ex){
-                    System.out.println("O servidor não foi encontrado...");
-                    attempt++;
+                        mc.connectionServer(adrs);
+                        mc.sendData(this.data);
+                        byte[] data2 = mc.getData();
+                        String result = new String(data2, "UTF-8");
+                        mc.closeConnection();
+
+                        dataSent = true;
+                        Gson gson = new Gson();
+                        Object o = gson.fromJson(result, c);
+                        dataHandler.handler(id, o);
+                        break;
+
+                    }catch(Exception ex){
+                        System.out.println("O servidor não foi encontrado...");
+                        attempt++;
+                    }
+
                 }
-                
+                if(attempt >= 3){
+                    System.out.println("Deletando servidor da lista de serviços...");
+                    deleteAddress(adrs);
+                    adrs = null;
+                    attempt = 0;
+                }
             }
-            if(attempt >= 3){
-                System.out.println("Deletando servidor da lista de serviços...");
-                deleteAddress(adrs);
-                adrs = null;
-                attempt = 0;
-            }
-        
             
             
         }
