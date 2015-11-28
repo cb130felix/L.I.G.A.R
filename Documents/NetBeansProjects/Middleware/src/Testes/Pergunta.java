@@ -12,5 +12,10 @@ package Testes;
 public class Pergunta {
     
     public String placa;
+
+    public Pergunta(String placa) {
+        this.placa = placa;
+    }
+    
     
 }

@@ -30,13 +30,16 @@ public class TestClient {
             @Override
             public void handler(int id, Object o) {
                 
+                Resposta r = (Resposta) o;
+                System.out.println("["+id+"]" + "Consulta: " + r.consulta);
+                
             }
         };
         
         mid.client.startClient();
 
-        mid.client.sendMessage(new Pergunta(), "detran", handler, Resposta.class);
-        mid.client.sendMessage(new Pergunta(), "detran", handler, Resposta.class);
+        mid.client.sendMessage(new Pergunta("pej3163"), "detran", handler, Resposta.class);
+        mid.client.sendMessage(new Pergunta("pej3163"), "detran", handler, Resposta.class);
         
         mid.client.stopClient();
 

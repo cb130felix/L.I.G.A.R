@@ -10,6 +10,10 @@ package Testes;
  * @author Renan
  */
 public class Resposta {
+
+    public Resposta(String consulta) {
+        this.consulta = consulta;
+    }
     
     public String consulta;
     
