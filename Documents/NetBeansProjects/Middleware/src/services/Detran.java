@@ -1,6 +1,8 @@
 
 package services;
 
+import Testes.Pergunta;
+import Testes.Resposta;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -15,8 +17,11 @@ import middleware.server.ServiceProcess;
  */
 public class Detran implements ServiceProcess {
     
+    
     @Override
-    public byte[] process(String placa) {
+    public Object process(Object obj) {
+        
+        Pergunta perg = (Pergunta) obj;
         
         /*String placa ="";
 
@@ -33,7 +38,7 @@ public class Detran implements ServiceProcess {
         
         try {
             
-            url = new URL("http://online4.detran.pe.gov.br//ServicosWeb/Veiculo/frmDetalhamentoDebitos.aspx?pPlaca="+ placa.replace("-", "") +"&pExtrato=N&pTerceiros=I&pPlacaOutraUF=N");
+            url = new URL("http://online4.detran.pe.gov.br//ServicosWeb/Veiculo/frmDetalhamentoDebitos.aspx?pPlaca="+ perg.placa.replace("-", "") +"&pExtrato=N&pTerceiros=I&pPlacaOutraUF=N");
             
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();             
             BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -109,8 +114,10 @@ public class Detran implements ServiceProcess {
             i++;
         }
         
-        
-        return importante.getBytes();
+         Resposta resp = new Resposta();
+         
+         resp.consulta = importante;
+        return resp;
     
     }
     
