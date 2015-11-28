@@ -1,17 +1,16 @@
 
 package middleware.proxy;
 
-/**
- * Classe Proxy (Balanceador de Carga)
- * @author arthur
- */
-
 import java.net.DatagramPacket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
 import middleware.ServiceInfo;
 
+/**
+ * Classe Proxy (Balanceador de Carga)
+ * @author arthur
+ */
 public class Proxy{
 
     ArrayList<ServiceInfo> listServices = new ArrayList<>();

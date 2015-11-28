@@ -6,9 +6,7 @@
 package Testes;
 
 import java.net.SocketException;
-import middleware.Middleware;
 import middleware.server.Server;
-import middleware.server.ServiceProcess;
 import services.Detran;
 
 /**

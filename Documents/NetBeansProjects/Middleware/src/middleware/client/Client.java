@@ -2,15 +2,9 @@ package middleware.client;
 
 
 import com.google.gson.Gson;
-import java.net.DatagramPacket;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
 import middleware.Address;
 import middleware.ServiceInfo;
-import middleware.communication.ConnectionManager;
 
 /**
  *

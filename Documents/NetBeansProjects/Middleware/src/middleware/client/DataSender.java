@@ -6,9 +6,6 @@
 package middleware.client;
 
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.net.Socket;
-import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;

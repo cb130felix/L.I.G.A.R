@@ -6,8 +6,6 @@
 package middleware.server;
 
 import com.google.gson.Gson;
-import java.io.InputStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 import middleware.communication.ConnectionManager;

@@ -6,7 +6,6 @@
 package Testes;
 
 import java.net.SocketException;
-import java.util.ArrayList;
 import middleware.Middleware;
 import middleware.client.DataHandler;
 
@@ -18,6 +17,8 @@ public class TestClient {
 
     /**
      * @param args the command line arguments
+     * @throws java.net.SocketException
+     * @throws java.lang.InterruptedException
      */
     public static void main(String[] args) throws SocketException, InterruptedException {
     

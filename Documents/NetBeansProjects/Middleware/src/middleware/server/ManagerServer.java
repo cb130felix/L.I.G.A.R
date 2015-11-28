@@ -8,7 +8,6 @@ package middleware.server;
 import java.net.SocketException;
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
-import middleware.ServiceInfo;
 
 /**
  * Classe que fará o gerenciamento do servidor

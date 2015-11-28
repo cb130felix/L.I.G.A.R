@@ -15,7 +15,6 @@ package middleware.server;
 import java.net.SocketException;
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
-import middleware.ServiceInfo;
 
 public class Server{
 
