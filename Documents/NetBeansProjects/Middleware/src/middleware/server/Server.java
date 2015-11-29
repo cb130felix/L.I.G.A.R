@@ -15,6 +15,7 @@ package middleware.server;
 import java.net.SocketException;
 import java.util.ArrayList;
 import middleware.communication.ConnectionManager;
+import middleware.proxy.Proxy;
 
 public class Server{
 
@@ -54,7 +55,7 @@ public class Server{
             this.edgeClients = 100;
             this.port = 24246;
             this.userCounter = new UserCounter(0);
-            this.enableProxy = true;
+            this.enableProxy = true;// Por padrão, o proxy vem ativado
             //mc.startServerTCP(this.port);
         }
         
@@ -98,12 +99,16 @@ public class Server{
                 System.out.println("Servidor pronto!");
             }
             
-            if(this.enableProxy == true){
+            if(this.enableProxy == false){// Se não quiser ativar o proxy
             
-                ManagerServer ms = new ManagerServer(this.userCounter, this.edgeClients, this.mapServices,this.port);
-                ms.start();
+                Proxy proxy = Proxy.getInstance();
+                proxy.startProxy();
                 
             }
+            
+            // Ativando o gerenciador do servior, que fará a comunicação com o Proxy
+            ManagerServer ms = new ManagerServer(this.userCounter, this.edgeClients, this.mapServices,this.port);
+            ms.start();
             
             while(true){
             
