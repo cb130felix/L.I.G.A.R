@@ -55,12 +55,12 @@ public class Client {
             try{
                 messageQueue.get(i).join();
             }catch(Exception ex){
-                System.out.println("opa... Erro no join para finalizar a Thread");
+                //System.out.println("opa... Erro no join para finalizar a Thread");
             }
         }
         try{
         while(searchService.getState() != Thread.State.WAITING){
-            System.out.println("Ela não tava dormindo!");
+            //System.out.println("Ela não tava dormindo!");
         }    
         synchronized(searchService){
             searchService.loop = false;

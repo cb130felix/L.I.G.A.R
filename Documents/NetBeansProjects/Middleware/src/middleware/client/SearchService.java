@@ -41,7 +41,7 @@ public class SearchService extends Thread {
         while (loop) {
 
             for (int i = 0; i < serviceTable.size(); i++) {
-                System.out.println("ciclo");
+                //System.out.println("ciclo");
                 if(serviceTable.get(i).getAddress().size() <= 0){
                     nameOfService = serviceTable.get(i).getService();
 
@@ -58,19 +58,19 @@ public class SearchService extends Thread {
     //            String messege = Arrays.toString(receiveData.getData());
                         String message = " ";
                         do {
-                            System.out.println("->Tentando procurar serviço: ["+nameOfService+"]");
+                            //System.out.println("->Tentando procurar serviço: ["+nameOfService+"]");
                             ConnectionManager mc = new ConnectionManager();
                             mc.broadcast(sendData, 24240);
                             do{
-                                System.out.println("------------------------travei");
+                                //System.out.println("------------------------travei");
                                 
                                 DatagramPacket receiveData = mc.listenerUDP(6969, true); //precisa colocar um timeout nesse socket aqui aqui
-                                System.out.println("----------------------detravei!");
+                                //System.out.println("----------------------detravei!");
                                 if(receiveData != null){
                                     //conseguiu mensagem do proxy
                                     message = new String(receiveData.getData(),"UTF-8");
                                     result = message.split(Pattern.quote("||"), 2);
-                                    System.out.println("->conseguiu pegar servico:" + message + " / Service: " + result[0]);
+                                    //System.out.println("->conseguiu pegar servico:" + message + " / Service: " + result[0]);
                                 }else{
                                     //proxy não respondeu
                                     break;
@@ -89,25 +89,25 @@ public class SearchService extends Thread {
                         for (String mTempFirstDivision1 : mTempFirstDivision) {
 
                             mTempSecondDivision = mTempFirstDivision1.split(Pattern.quote(":"));
-                            System.out.println("------> CHEGOU AQUI!!!");
-                            System.out.println("------>Total: " + mTempFirstDivision1);
+                            //System.out.println("------> CHEGOU AQUI!!!");
+                            //System.out.println("------>Total: " + mTempFirstDivision1);
 //                            arrayListAddress.add(new Address(mTempSecondDivision[0], Integer.parseInt(mTempSecondDivision[1].trim())));
                             serviceTable.get(i).getAddress().add(new Address(mTempSecondDivision[0], Integer.parseInt(mTempSecondDivision[1].trim())));
-                            System.out.println("------>p1: " + mTempSecondDivision[0] + " / p2:|" + Integer.parseInt(mTempSecondDivision[1].trim()) +"|");
-                            System.out.println("------>Endereco adicionado ao servico.");
+//                            System.out.println("------>p1: " + mTempSecondDivision[0] + " / p2:|" + Integer.parseInt(mTempSecondDivision[1].trim()) +"|");
+//                            System.out.println("------>Endereco adicionado ao servico.");
 
                         }
 
 //                        serviceTable.add(new ServiceInfo(arrayListAddress, nameOfService));
 
                     } catch (Exception e) {
-                        System.out.println("->Erro de alguma coisa...");
+//                        System.out.println("->Erro de alguma coisa...");
                         //return 1;
                     }
 
                     //return 0;
                 }
-                System.out.println("ciclo");
+//                System.out.println("ciclo");
             }
             try {
                 Thread.sleep(1000);
@@ -116,9 +116,9 @@ public class SearchService extends Thread {
             }
             synchronized(this){
             
-            System.out.println("hey!");
+//            System.out.println("hey!");
                 try {
-                    System.out.println("dormindo zZzZzzz");
+//                    System.out.println("dormindo zZzZzzz");
                     this.wait();
 
                 } catch (InterruptedException ex) {

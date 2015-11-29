@@ -79,7 +79,7 @@ public class DataSender extends Thread {
         
         if(ss.getState().WAITING == Thread.State.WAITING){
             synchronized(this.ss){
-                System.out.println("Acordando!!!!!");
+                //System.out.println("Acordando!!!!!");
                 ss.notify();
             }
             
@@ -98,15 +98,15 @@ public class DataSender extends Thread {
             while(adrs == null){
                 
                 //checa se a SearchServico tá dormindo, se não estiver, acorda ele
-                System.out.println("Datasent: " + dataSent);
+                //System.out.println("Datasent: " + dataSent);
                 if(dataSent == true) break;
                 wakeSearchService();
-                System.out.println("Tenando pegar algo...");
+                //System.out.println("Tenando pegar algo...");
                 adrs = this.getAddress();
                 if(adrs == null){
-                    System.out.println("Serviço desconhecido...");
+                    //System.out.println("Serviço desconhecido...");
                 }else{
-                    System.out.println("Serviço conhecido!");
+                    //System.out.println("Serviço conhecido!");
                 }
                 try {
                     Thread.sleep(1000);
@@ -119,7 +119,7 @@ public class DataSender extends Thread {
             
             if(dataSent != true){
                 while(attempt < 3){
-                    System.out.println("Tentando conectar ao servidor...("+attempt+")");
+                    //System.out.println("Tentando conectar ao servidor...("+attempt+")");
                     try{
 
                         mc.connectionServer(adrs);
@@ -135,13 +135,13 @@ public class DataSender extends Thread {
                         break;
 
                     }catch(Exception ex){
-                        System.out.println("O servidor não foi encontrado...");
+                        //System.out.println("O servidor não foi encontrado...");
                         attempt++;
                     }
 
                 }
                 if(attempt >= 3){
-                    System.out.println("Deletando servidor da lista de serviços...");
+                    //System.out.println("Deletando servidor da lista de serviços...");
                     deleteAddress(adrs);
                     adrs = null;
                     attempt = 0;
