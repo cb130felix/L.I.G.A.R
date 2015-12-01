@@ -79,6 +79,9 @@ public class Detran implements ServiceProcess {
             if (!legend) return "Placa nao existe na base de dados do Detran".getBytes();
                     
         } catch (Exception ex) {
+            
+            Resposta r = new Resposta("sem internet =[");
+            return r;
         }
         
         if (aux.isEmpty()) return "semnet".getBytes();
