@@ -20,12 +20,15 @@ public class Client {
     public ArrayList<ServiceInfo> serviceTable = null; // IMPORTANTE: serviceTable É UMA REGIÃO CRÍTICA!!!!!!!
     SearchService searchService;
 
-    public Client() throws InterruptedException {
+    public Client(){
         
+        try{
         messageId = 0;
         messageQueue = new ArrayList<>();
         serviceTable = new ArrayList<>();
+        }catch(Exception ex){
         
+        }
         
         
     }

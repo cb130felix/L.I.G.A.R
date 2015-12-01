@@ -20,7 +20,7 @@ public class Middleware {
     public Proxy proxy;
     public Server server;
 
-    public Middleware() throws SocketException, InterruptedException {
+    public Middleware() throws SocketException{
         this.client = new Client();
         this.proxy = Proxy.getInstance();
         this.server = new Server();
