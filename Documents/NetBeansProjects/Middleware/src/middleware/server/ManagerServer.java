@@ -21,7 +21,7 @@ public class ManagerServer extends Thread{
     private ArrayList<MapService> Services = new ArrayList<MapService>();
     int portServer;
     
-    public ManagerServer(UserCounter userCounter, int edge ,ArrayList<MapService> list, int port) throws SocketException {
+    public ManagerServer(UserCounter userCounter, int edge ,ArrayList<MapService> list, int port){
         this.mc = new ConnectionManager();
         this.userCounter = userCounter;
         this.edgeClients = edge;
