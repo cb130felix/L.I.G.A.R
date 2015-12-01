@@ -18,7 +18,7 @@ public class TestServer {
      public static void main(String[] args) throws SocketException {
         // TODO code application logic here
     
-        Server s = new Server();
+        Server s = new Server(5,true);
         
         Detran serv2 = new Detran();
                 
