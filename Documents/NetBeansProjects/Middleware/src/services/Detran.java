@@ -5,6 +5,7 @@ import Testes.Pergunta;
 import Testes.Resposta;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import static java.lang.Thread.sleep;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.Normalizer;
@@ -79,9 +80,15 @@ public class Detran implements ServiceProcess {
             if (!legend) return "Placa nao existe na base de dados do Detran".getBytes();
                     
         } catch (Exception ex) {
+            try {
             
-            Resposta r = new Resposta("sem internet =[");
-            return r;
+                sleep(500);
+                Resposta r = new Resposta("sem internet =[");
+                return r;
+                
+            } catch (Exception e) {
+            }
+            
         }
         
         if (aux.isEmpty()) return "semnet".getBytes();
