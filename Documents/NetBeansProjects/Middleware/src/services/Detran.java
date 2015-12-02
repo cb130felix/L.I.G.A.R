@@ -22,22 +22,12 @@ public class Detran implements ServiceProcess {
     public Object process(Object obj) {
         
         Pergunta perg = (Pergunta) obj;
-        Resposta r ;
-        
-        /*String placa ="";
-        try {
-            placa = new String(data, "UTF-8");
-        } catch (Exception ex) {
-            System.out.println("S:erro " + ex);
-        }*/
-        
         String importante="";
         ArrayList<String> aux = new ArrayList<>();
         boolean legend=false;
         URL url;
         
         try {
-
             url = new URL("http://online4.detran.pe.gov.br//ServicosWeb/Veiculo/frmDetalhamentoDebitos.aspx?pPlaca="+ perg.placa.replace("-", "") +"&pExtrato=N&pTerceiros=I&pPlacaOutraUF=N");
             
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -81,17 +71,18 @@ public class Detran implements ServiceProcess {
             if (!legend) return "Placa nao existe na base de dados do Detran".getBytes();
         
         } catch (java.net.SocketTimeoutException e){
-            
             Resposta resp = new Resposta("Servidor sem internet.");
             return resp;
             
         } catch (Exception ex) {
-            
-            Resposta resp = new Resposta("Servidor sem internet. ;( ");
+            Resposta resp = new Resposta("Servidor sem internet.");
             return resp;
         }
         
-        if (aux.isEmpty()) return "semnet".getBytes();
+        if (aux.isEmpty()) {
+            Resposta resp = new Resposta("Servidor sem internet.");
+            return resp;
+        }
         
         for (int i=0; i<aux.size(); i++){
             
@@ -128,10 +119,8 @@ public class Detran implements ServiceProcess {
         return resp;
     }
     
-    
     public static String removeAcentos(String str) {
  
         return Normalizer.normalize(str, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
     }
-    
 }
