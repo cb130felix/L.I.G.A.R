@@ -53,7 +53,7 @@ public class Service extends Thread{
         int count = 1;
         //System.out.println("ola");
         
-        while(check == false){
+        while(true){
        
             try {
             
@@ -72,9 +72,9 @@ public class Service extends Thread{
                         if(mc.sendData(reply.getBytes())){
                         
                             this.decrementsUserCounter();
-                            check = true;
+                            //check = true;
                             //System.out.println("contador: "+this.userCounter.cont);
-                            
+                            break;
                         }
 
                       
@@ -84,7 +84,8 @@ public class Service extends Thread{
                         
                         this.mc.sendData("Servico nao encontrado...".getBytes());
                         this.decrementsUserCounter();
-                        check = true;
+                        //check = true;
+                        break;
                         
                     }
             
@@ -104,9 +105,10 @@ public class Service extends Thread{
                     else{
                     
                         this.decrementsUserCounter();
-                        check = true;
+                        //check = true;
                         System.out.println("Cliente indisponivel!");
-                    
+                        break;
+                        
                     }
                     
                 }
