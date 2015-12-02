@@ -49,7 +49,7 @@ public class ManagerServer extends Thread{
             try {
                 
                     sleep(5000);// Madará mensagens de 5 em 5 segundos
-                    System.out.println("Olha aí no manager "+this.userCounter.cont);
+                    //System.out.println("Olha aí no manager "+this.userCounter.cont);
                     if(this.userCounter.cont < this.edgeClients){
 
                         msg = msg +this.AtualizaServicos();

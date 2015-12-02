@@ -55,7 +55,7 @@ public class Service extends Thread{
         //System.out.println("ola");
         
         while(true){
-            System.out.println("buceta: "+count);
+           
             try { 
             
                     data = mc.getData();
@@ -70,9 +70,9 @@ public class Service extends Thread{
                         
                         //System.out.println("Olha a mensagem enviada: "+reply);
                         
-                            System.out.println("Tentou mandar mensagem!");
+                            //System.out.println("Tentou mandar mensagem!");
                         if(mc.sendData(reply.getBytes())){
-                            System.out.println("mandou a mensagem!"); 
+                            //System.out.println("mandou a mensagem!"); 
                             this.userCounter.decrementsUserCounter();
                             //this.decrementsUserCounter();
                             //check = true;
@@ -120,7 +120,7 @@ public class Service extends Thread{
             
        }// fim do while
         
-        System.out.println("Clientes =] "+this.userCounter.cont);
+        //System.out.println("Clientes =] "+this.userCounter.cont);
         this.mc.closeConnection();
     
     }// fim do método run
