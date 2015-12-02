@@ -40,8 +40,9 @@ public class TestClient {
         mid.client.startClient();
 
         while(true){
-            mid.client.sendMessage(new Pergunta("pej3163"), "detran", handler, Resposta.class);
-            Thread.sleep(300);
+            int retorno = mid.client.sendMessage(new Pergunta("pej3163"), "detran", handler, Resposta.class);
+            System.out.println(retorno);
+            Thread.sleep(3000);
          //   mid.client.sendMessage(new Pergunta("kim2639"), "detran", handler, Resposta.class);
         }
         //mid.client.stopMessage(-1);

@@ -76,7 +76,7 @@ public class SearchService extends Thread {
                                     break;
                                     
                                 }
-                                Thread.sleep(1000);
+                                Thread.sleep(5000);
                             }while(!result[0].equals(nameOfService));
                             
                         } while (message.equals(" ") );
