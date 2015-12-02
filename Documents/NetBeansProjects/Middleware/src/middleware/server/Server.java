@@ -49,7 +49,7 @@ public class Server{
          * o valor padrão é 100 e o proxy é ativado por padrão.
          *
          */
-        public Server() throws SocketException {
+        public Server(){
         this.mc = new ConnectionManager();
 
             this.edgeClients = 100;
@@ -92,7 +92,7 @@ public class Server{
          * Método para inicializar o servidor. Esse método inicia o gerenciador do servidor e faz com que ele comece a escutar
          * requisições.
          */
-	public void startServer() throws SocketException{
+	public void startServer() {
         
             Integer i =0;
             if(mc.startServerTCP(this.port)){
@@ -100,11 +100,14 @@ public class Server{
                 System.out.println("Servidor pronto!");
             }
             
-            if(this.enableProxy == false){// Se não quiser ativar o proxy
+            try {
+                if(this.enableProxy == false){// Se não quiser ativar o proxy
             
-                Proxy proxy = Proxy.getInstance();
-                proxy.startProxy();
+                    Proxy proxy = Proxy.getInstance();
+                    proxy.startProxy();
                 
+                }
+            } catch (Exception e) {
             }
             
             // Ativando o gerenciador do servior, que fará a comunicação com o Proxy
