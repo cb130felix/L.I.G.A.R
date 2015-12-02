@@ -32,6 +32,7 @@ public class Service extends Thread{
      */
     public Service(ConnectionManager mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,UserCounter user,ArrayList<Class> obj) {
         this.mc = mc;
+        this.mc.setTCPTimeout(10000);
         this.processServices = process;
         this.mapServices = map;
         this.userCounter = user;
@@ -69,8 +70,9 @@ public class Service extends Thread{
                         
                         //System.out.println("Olha a mensagem enviada: "+reply);
                         
+                            System.out.println("Tentou mandar mensagem!");
                         if(mc.sendData(reply.getBytes())){
-                        
+                            System.out.println("mandou a mensagem!"); 
                             this.userCounter.decrementsUserCounter();
                             //this.decrementsUserCounter();
                             //check = true;
