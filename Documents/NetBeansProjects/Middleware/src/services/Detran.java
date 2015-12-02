@@ -23,6 +23,7 @@ public class Detran implements ServiceProcess {
     public Object process(Object obj) {
         
         Pergunta perg = (Pergunta) obj;
+        Resposta r ;
         
         /*String placa ="";
 
@@ -38,54 +39,56 @@ public class Detran implements ServiceProcess {
         URL url;
         
         try {
+            Resposta resp = new Resposta("Sport Campeão de 1987");
+            return resp;
             
-            url = new URL("http://online4.detran.pe.gov.br//ServicosWeb/Veiculo/frmDetalhamentoDebitos.aspx?pPlaca="+ perg.placa.replace("-", "") +"&pExtrato=N&pTerceiros=I&pPlacaOutraUF=N");
-            
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();             
-            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            
-            for (String line; (line = reader.readLine()) != null;) {
-                
-                if ((legend && !line.contains("value=\"Imprimir Detalhamento de Débitos\"")) || line.contains("<legend>Detalhamento de Débitos")){
-                    legend=true;
-                    
-                    for (int i=0; i<line.length(); i++){
-                        
-                        if (!line.substring(i, i+1).equals("<")){
-                            
-                            importante = importante + line.substring(i, i+1);
-                        }
-                        
-                        else if (line.substring(i, i+1).equals("<")){
-                            
-                            while(true){
-                                
-                                i++;
-                                if (line.substring(i, i+1).equals(">")) break;
-                            }
-                            
-                            aux.add(importante);
-                            importante="";
-                        }
-                    }
-                }
-                
-                for (int i=0; i<aux.size(); i++){
-                    if (aux.get(i).contains("   ") || aux.get(i).contains("&nbsp") || aux.get(i).contains("\t") || aux.get(i).length() < 2)                         
-                        aux.remove(i);
-                    else aux.set(i, removeAcentos(aux.get(i)));
-                }  
-            } 
-            
-            if (!legend) return "Placa nao existe na base de dados do Detran".getBytes();
+//            url = new URL("http://online4.detran.pe.gov.br//ServicosWeb/Veiculo/frmDetalhamentoDebitos.aspx?pPlaca="+ perg.placa.replace("-", "") +"&pExtrato=N&pTerceiros=I&pPlacaOutraUF=N");
+//            
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();             
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//            
+//            for (String line; (line = reader.readLine()) != null;) {
+//                
+//                if ((legend && !line.contains("value=\"Imprimir Detalhamento de Débitos\"")) || line.contains("<legend>Detalhamento de Débitos")){
+//                    legend=true;
+//                    
+//                    for (int i=0; i<line.length(); i++){
+//                        
+//                        if (!line.substring(i, i+1).equals("<")){
+//                            
+//                            importante = importante + line.substring(i, i+1);
+//                        }
+//                        
+//                        else if (line.substring(i, i+1).equals("<")){
+//                            
+//                            while(true){
+//                                
+//                                i++;
+//                                if (line.substring(i, i+1).equals(">")) break;
+//                            }
+//                            
+//                            aux.add(importante);
+//                            importante="";
+//                        }
+//                    }
+//                }
+//                
+//                for (int i=0; i<aux.size(); i++){
+//                    if (aux.get(i).contains("   ") || aux.get(i).contains("&nbsp") || aux.get(i).contains("\t") || aux.get(i).length() < 2)                         
+//                        aux.remove(i);
+//                    else aux.set(i, removeAcentos(aux.get(i)));
+//                }  
+//            } 
+//            
+//            if (!legend) return "Placa nao existe na base de dados do Detran".getBytes();
                     
         } catch (Exception ex) {
             try {
             
                 sleep(500);
-                Resposta r = new Resposta("sem internet =[");
-                return r;
+                r = new Resposta("sem internet =[");
                 
+               
             } catch (Exception e) {
             }
             
