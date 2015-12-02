@@ -160,7 +160,22 @@ public class ConnectionManager {
     public boolean listenerTCP() {
         try {
             this.connection = this.serverSocket.accept();
-
+            
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    
+    /**
+     * Seta o timeout do servidor.
+     * @param timeoutServer - Valor de timeout a ser setado.
+     * @return booolean - Se der certo retorna a 'true', se não retorna a 'false'.
+     */
+    public boolean setTCPTimeout(int timeoutServer){
+        try{
+            this.connection.setSoTimeout(timeoutServer);
+            
             return true;
         } catch (Exception e) {
             return false;
