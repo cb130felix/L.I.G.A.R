@@ -20,6 +20,17 @@ public class UserCounter {
         this.cont = cont;
     }
     
+    public synchronized void IncrementUser(){
     
+    
+        this.cont++;
+        
+    }
+    
+    synchronized void decrementsUserCounter(){
+    
+        this.cont--;
+        
+    }
     
 }

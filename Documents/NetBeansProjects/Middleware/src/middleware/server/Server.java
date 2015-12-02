@@ -94,6 +94,7 @@ public class Server{
          */
 	public void startServer() throws SocketException{
         
+            Integer i =0;
             if(mc.startServerTCP(this.port)){
             
                 System.out.println("Servidor pronto!");
@@ -118,13 +119,15 @@ public class Server{
                      //System.out.println("Valor antes: "+this.userCounter);
                     System.out.println("Uma requisicao!");
                     
-                    this.IncrementUser();
+                    //this.IncrementUser();
+                    this.userCounter.IncrementUser();
                     System.out.println("Numero de usuario no servidor: "+this.userCounter.cont);
                     //System.out.println("lol");
                     
                     Service serv = new Service(new ConnectionManager(this.mc),this.processServices,this.mapServices,this.userCounter,this.classObject);
+                    serv.setName("Thread-"+i.toString());
                     serv.start();
-                    
+                    i++;
                 }
             
             }// fim do while

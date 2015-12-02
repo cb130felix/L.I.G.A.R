@@ -54,8 +54,8 @@ public class Service extends Thread{
         //System.out.println("ola");
         
         while(true){
-       
-            try {
+            System.out.println("buceta: "+count);
+            try { 
             
                     data = mc.getData();
                     msg = new String(data, "UTF-8");//Detran||kcd-1232
@@ -71,7 +71,8 @@ public class Service extends Thread{
                         
                         if(mc.sendData(reply.getBytes())){
                         
-                            this.decrementsUserCounter();
+                            this.userCounter.decrementsUserCounter();
+                            //this.decrementsUserCounter();
                             //check = true;
                             //System.out.println("contador: "+this.userCounter.cont);
                             break;
@@ -82,8 +83,9 @@ public class Service extends Thread{
                     
                     else{
                         
+                        this.userCounter.decrementsUserCounter();
                         this.mc.sendData("Servico nao encontrado...".getBytes());
-                        this.decrementsUserCounter();
+                        //this.decrementsUserCounter();
                         //check = true;
                         break;
                         
@@ -94,7 +96,7 @@ public class Service extends Thread{
                     //System.out.println("Erro ao processar a requisicao");
                     if(count <= 3){
                     
-                        System.out.println("Tentativa "+count+" de enviar a resposta");
+                        //System.out.println("Tentativa "+count+" de enviar a resposta");
                         count++;
                         
                         try {
@@ -104,7 +106,8 @@ public class Service extends Thread{
                     }
                     else{
                     
-                        this.decrementsUserCounter();
+                        this.userCounter.decrementsUserCounter();
+                        //this.decrementsUserCounter();
                         //check = true;
                         System.out.println("Cliente indisponivel!");
                         break;
@@ -115,7 +118,7 @@ public class Service extends Thread{
             
        }// fim do while
         
-        
+        System.out.println("Clientes =] "+this.userCounter.cont);
         this.mc.closeConnection();
     
     }// fim do método run
