@@ -19,6 +19,11 @@ public class Love implements ServiceProcess{
     public Object process(Object o) {
         Pergunta p = (Pergunta) o;
         
+        try {
+            Thread.sleep(2000);
+        } catch (Exception e) {
+        }
+        
         return new Resposta("s2");
         
     }
