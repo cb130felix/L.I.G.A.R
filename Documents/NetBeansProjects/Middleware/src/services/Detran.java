@@ -87,11 +87,9 @@ public class Detran implements ServiceProcess {
             return resp;
             
         } catch (Exception ex) {
-            try {
-                sleep(500);
-                r = new Resposta("sem internet =[");
-                
-            } catch (Exception e) {}
+            
+            Resposta resp = new Resposta("Servidor sem internet. ;( ");
+            return resp;
         }
         
         if (aux.isEmpty()) return "semnet".getBytes();
