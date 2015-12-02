@@ -39,11 +39,14 @@ public class TestClient {
         
         mid.client.startClient();
 
-        mid.client.sendMessage(new Pergunta("pej3163"), "detran", handler, Resposta.class);
-        mid.client.sendMessage(new Pergunta("kim2639"), "detran", handler, Resposta.class);
+        while(true){
+            mid.client.sendMessage(new Pergunta("pej3163"), "detran", handler, Resposta.class);
+            Thread.sleep(300);
+         //   mid.client.sendMessage(new Pergunta("kim2639"), "detran", handler, Resposta.class);
+        }
         //mid.client.stopMessage(-1);
         //teste
-        mid.client.stopClient();
+//        mid.client.stopClient();
 
     }
     
