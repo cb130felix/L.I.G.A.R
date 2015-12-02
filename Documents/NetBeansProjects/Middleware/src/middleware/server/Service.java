@@ -32,7 +32,7 @@ public class Service extends Thread{
      */
     public Service(ConnectionManager mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,UserCounter user,ArrayList<Class> obj) {
         this.mc = mc;
-        this.mc.setTCPTimeout(10000);
+        //this.mc.setTCPTimeout(10000);
         this.processServices = process;
         this.mapServices = map;
         this.userCounter = user;
