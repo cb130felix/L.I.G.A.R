@@ -100,7 +100,7 @@ public class Client {
      * @return O id da requisição enviada ao servidor
      */
     
-    public int sendMessage(Object question, String service, DataHandler dataHandler, Class response){
+    public int sendMessage(Object question, String service, ClientHandler dataHandler, Class response){
         
         Gson gson = new Gson();
         String json = gson.toJson(question);
@@ -110,7 +110,7 @@ public class Client {
         
     }
     
-    private int sendMessage(byte[] message, String service, DataHandler dataHandler, Class c) {
+    private int sendMessage(byte[] message, String service, ClientHandler dataHandler, Class c) {
 
         //Adicionando serviço na serviceTable caso ele não exista
         int i;

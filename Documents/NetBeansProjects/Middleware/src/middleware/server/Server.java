@@ -24,7 +24,7 @@ public class Server{
 	public UserCounter userCounter;
         private ArrayList<MapService> mapServices = new ArrayList<MapService>();
         private int port;
-        public ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
+        public ArrayList<ServerHandler> processServices = new ArrayList<ServerHandler>();
         public int edgeClients;
         private boolean enableProxy;
         public ArrayList<Class> classObject = new ArrayList<Class>();
@@ -68,7 +68,7 @@ public class Server{
          * @param obj .Class da classe cujos objetos vão ser enviados e recevidos pela rede
          * @return 
          */
-        public boolean addService(String description,ServiceProcess service,Class obj){
+        public boolean addService(String description,ServerHandler service,Class obj){
         
             try {
                 

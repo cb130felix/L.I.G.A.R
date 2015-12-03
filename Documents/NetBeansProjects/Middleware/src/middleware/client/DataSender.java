@@ -23,13 +23,13 @@ public class DataSender extends Thread {
     int id;
     byte[] data;
     ArrayList<ServiceInfo> serviceTable;
-    DataHandler dataHandler;
+    ClientHandler dataHandler;
     public boolean dataSent;
     String service;
     SearchService ss;
     Class c;
     
-    public DataSender(String service,int id, byte[] data, ArrayList<ServiceInfo> serviceTable, DataHandler dataHandler, SearchService ss, Class c) {
+    public DataSender(String service,int id, byte[] data, ArrayList<ServiceInfo> serviceTable, ClientHandler dataHandler, SearchService ss, Class c) {
         
         this.id = id;
         this.service = service;

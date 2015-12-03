@@ -3,18 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Testes;
+package middleware.server;
 
 /**
- *
- * @author Renan
+ * Interface a ser implementada pela classe que tem os métodos do serviço.
+ * @author Guto Leoni
  */
-public class Resposta {
-
-    public Resposta(String consulta) {
-        this.consulta = consulta;
-    }
+public interface ServerHandler {
     
-    public String consulta;
+    public Object handler(Object o);
     
 }

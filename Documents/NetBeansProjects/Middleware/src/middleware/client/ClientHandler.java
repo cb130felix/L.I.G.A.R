@@ -9,7 +9,7 @@ package middleware.client;
  *
  * @author Renan
  */
-public interface DataHandler {
+public interface ClientHandler {
    
     /**
      * ATENÇÃO: O método handler recebe um Object como parâmetro. Realize um cast dele para o tipo da classe que

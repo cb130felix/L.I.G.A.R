@@ -18,7 +18,7 @@ public class Service extends Thread{
     
     ConnectionManager mc;
     ArrayList<MapService> mapServices = new ArrayList<MapService>();
-    ArrayList<ServiceProcess> processServices = new ArrayList<ServiceProcess>();
+    ArrayList<ServerHandler> processServices = new ArrayList<ServerHandler>();
     public UserCounter userCounter;
     public ArrayList<Class> classObject = new ArrayList<Class>();
 
@@ -30,7 +30,7 @@ public class Service extends Thread{
      * @param map Array com os mapeamentos entre nome do serviço e o ID do mesmo
      * @param user Inteiro que conta quantos usuários estão conectados ao servidor
      */
-    public Service(ConnectionManager mc,ArrayList<ServiceProcess> process,ArrayList<MapService> map,UserCounter user,ArrayList<Class> obj) {
+    public Service(ConnectionManager mc,ArrayList<ServerHandler> process,ArrayList<MapService> map,UserCounter user,ArrayList<Class> obj) {
         this.mc = mc;
         //this.mc.setTCPTimeout(10000);
         this.processServices = process;
@@ -182,7 +182,7 @@ public class Service extends Thread{
                         
                         Object object = gson.fromJson(mensage, this.classObject.get(id));
                         
-                        object =  this.processServices.get(id).process(object);
+                        object =  this.processServices.get(id).handler(object);
                         
                         return gson.toJson(object);
     }
