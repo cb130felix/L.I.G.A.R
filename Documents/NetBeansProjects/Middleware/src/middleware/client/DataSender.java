@@ -108,11 +108,7 @@ public class DataSender extends Thread {
                 }else{
                     //System.out.println("Serviço conhecido!");
                 }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(DataSender.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                
                 
                 
             }
